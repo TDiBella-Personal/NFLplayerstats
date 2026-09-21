@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#11151B">
+<title>Our Guys</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%88%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --base:#11151B; --panel:#1A2029; --panel2:#212936; --line:#2B3440;
+  --text:#F3F5F8; --muted:#9BA6B5;
+  --display:"Big Shoulders Display","Arial Narrow","Helvetica Neue",Impact,sans-serif;
+  --body:"Instrument Sans",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  box-sizing:border-box; color-scheme:dark;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--base);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ac,#fff);outline-offset:2px;border-radius:6px}
+.wrap{max-width:520px;margin:0 auto}
+img{max-width:100%}
+
+#home{padding:20px 16px 120px}
+.top{display:block}
+.top h1{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;margin:0;letter-spacing:.01em}
+.top p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.listhead{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 10px}
+.listhead h2{font-size:15px;font-weight:600;margin:0}
+.listhead span{font-size:13px;color:var(--muted)}
+.rows{display:flex;flex-direction:column;gap:8px;list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:62px 1fr auto;align-items:stretch;width:100%;text-align:left;background:var(--panel);border-radius:12px;overflow:hidden;min-height:68px}
+.row .slab{background:var(--c1);color:var(--c2);font-family:var(--display);font-weight:800;font-size:32px;display:flex;align-items:center;justify-content:center;position:relative}
+.row .slab::after{content:"";position:absolute;right:-9px;top:0;bottom:0;width:18px;background:var(--c1);transform:skewX(-9deg)}
+.row .who{padding:11px 8px 11px 20px;min-width:0}
+.row .nm{font-weight:600;font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .meta{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;margin-top:2px}
+.row .meta b{color:var(--ac);font-weight:600}
+.row .meta img{width:18px;height:18px;object-fit:contain}
+.row .hl{padding:0 14px 0 6px;text-align:right;display:flex;flex-direction:column;justify-content:center}
+.row .hl strong{font-family:var(--display);font-weight:800;font-size:28px;line-height:1}
+.row .hl small{font-size:11.5px;color:var(--muted)}
+.star-mini{color:var(--ac);font-size:12px}
+.empty{background:var(--panel);border-radius:12px;padding:18px;color:var(--muted);font-size:15px}
+.empty strong{color:var(--text);display:block;margin-bottom:2px}
+
+.dock{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(to top,var(--base) 70%,rgba(17,21,27,0));padding:22px 16px calc(14px + env(safe-area-inset-bottom,0px))}
+.dock .in{max-width:520px;margin:0 auto;display:flex;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:0 6px 0 14px}
+.dock svg{flex:none;color:var(--muted)}
+.dock input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:inherit;font-size:17px;padding:15px 10px;outline:none}
+.dock input::placeholder{color:var(--muted)}
+.dock .in:focus-within{border-color:#5d6b7e}
+.dock .clear{width:40px;height:40px;color:var(--muted);font-size:20px;display:none}
+.dock .clear.on{display:block}
+
+#card{position:fixed;inset:0;background:var(--base);overflow-y:auto;-webkit-overflow-scrolling:touch;transform:translateY(100%);visibility:hidden;transition:transform .2s ease-out,visibility 0s .2s;padding-bottom:calc(36px + env(safe-area-inset-bottom,0px))}
+#card.open{transform:none;visibility:visible;transition:transform .2s ease-out}
+.hdr{background:var(--c1);position:relative;overflow:hidden;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 20px}
+.hdr::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.42))}
+.hdr .big{position:absolute;right:-6px;bottom:-38px;font-family:var(--display);font-weight:800;font-size:210px;line-height:1;color:var(--c2);opacity:.26;letter-spacing:-.02em;pointer-events:none}
+.hdr .logo{position:absolute;right:14px;top:calc(56px + env(safe-area-inset-top,0px));width:64px;height:64px;object-fit:contain;opacity:.95}
+.hdr>*:not(.big):not(.logo){position:relative}
+.bar{display:flex;justify-content:space-between;align-items:center}
+.bar button{height:40px;padding:0 14px;border-radius:20px;background:rgba(0,0,0,.34);font-size:14.5px;font-weight:500;display:flex;align-items:center;gap:7px}
+.bar .fav[aria-pressed="true"]{background:#fff;color:#11151B}
+.id{display:flex;gap:14px;align-items:flex-end;margin-top:26px;padding-right:70px}
+.face{width:76px;height:76px;border-radius:50%;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:30px;flex:none;overflow:hidden}
+.face img{width:100%;height:100%;object-fit:cover;object-position:top}
+.id h2{font-family:var(--display);font-weight:800;font-size:40px;line-height:.95;margin:0;text-wrap:balance}
+.id .sub{margin-top:7px;font-size:14.5px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.03em;background:var(--c1);color:#fff;border:1.5px solid var(--c2);border-radius:6px;padding:1px 6px;line-height:1.35}
+.hdr .badge{background:rgba(0,0,0,.35)}
+
+.sec{padding:22px 16px 0}
+.sec h3{font-size:15px;font-weight:600;margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+.sec h3 span{font-weight:400;font-size:13px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 10px;margin:0}
+.stats div{border-left:2px solid var(--ac);padding-left:10px}
+.stats dd{margin:0;font-family:var(--display);font-weight:800;font-size:36px;line-height:1}
+.stats dt{font-size:12.5px;color:var(--muted);margin-top:3px}
+.nostat{color:var(--muted);font-size:15px;margin:0}
+.more{margin-top:18px;width:100%;height:46px;border-radius:12px;border:1px solid var(--line);font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:8px}
+.more i{display:inline-block;transition:transform .15s;font-style:normal;color:var(--ac)}
+.more[aria-expanded="true"] i{transform:rotate(180deg)}
+.drawer{display:none;margin-top:16px;background:var(--panel);border-radius:12px;padding:16px 14px}
+.drawer.on{display:block}
+.drawer .thru{font-size:12.5px;color:var(--muted);margin:14px 0 0}
+.drawer .stats dd{font-size:30px}
+
+.last{background:var(--panel);border-radius:12px;padding:14px}
+.last .g{font-size:14.5px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.last .g img{width:22px;height:22px;object-fit:contain}
+.last .g b{font-weight:600}
+.last .line{display:flex;flex-wrap:wrap;gap:6px 18px}
+.last .line span{font-size:13px;color:var(--muted)}
+.last .line strong{font-family:var(--display);font-weight:800;font-size:24px;color:var(--text);margin-right:4px}
+
+.bio{margin:0;display:grid;grid-template-columns:auto 1fr;gap:9px 18px;font-size:15px}
+.bio dt{color:var(--muted)}
+.bio dd{margin:0}
+.path{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.path li{display:flex;align-items:center;gap:8px;background:var(--panel);border-radius:10px;padding:7px 11px 7px 7px;font-size:14px}
+.path li img{width:24px;height:24px;object-fit:contain}
+.path li small{color:var(--muted);font-size:12.5px}
+.path li.now{outline:1.5px solid var(--ac)}
+
+.story ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.story li{padding-left:16px;position:relative;font-size:15.5px;line-height:1.5}
+.story li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;background:var(--ac);transform:skewX(-12deg)}
+.btn{margin-top:16px;width:100%;height:50px;border-radius:12px;font-weight:600;font-size:15.5px;background:var(--ac);color:#0d1117;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--text);font-weight:500}
+.working{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:15px;background:var(--panel);border-radius:12px;padding:16px}
+.spin{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--ac);animation:sp .8s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.thin{color:var(--muted);font-size:15px;background:var(--panel);border-radius:12px;padding:16px;margin:0}
+
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);background:#fff;color:#11151B;font-size:14.5px;font-weight:500;padding:10px 16px;border-radius:22px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;max-width:88vw;text-align:center;z-index:9}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){#card,.toast,.more i{transition:none}.spin{animation-duration:2.4s}}
+</style>
+</head>
+<body>
+<main id="home" class="wrap">
+  <div class="top">
+    <h1>Our Guys</h1>
+    <p id="upd">Loading</p>
+  </div>
+  <div class="listhead"><h2 id="lh">Favorites</h2><span id="lc"></span></div>
+  <ul class="rows" id="rows"><li class="empty">Loading players</li></ul>
+</main>
+
+<div class="dock">
+  <label class="in">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+    <input id="q" type="search" placeholder="Find any player" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Find any player">
+    <button class="clear" id="clr" aria-label="Clear search">&times;</button>
+  </label>
+</div>
+
+<section id="card" aria-hidden="true"></section>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// ---- SETUP: paste your Cloudflare Worker URL here. Leave blank to run favorites on this phone only. ----
+var WORKER = "";
+
+var TEAMS={
+ ARI:{n:"Cardinals",c1:"#97233F",c2:"#FFB612",ac:"#F06A8A"},ATL:{n:"Falcons",c1:"#A71930",c2:"#000000",ac:"#FF6478"},
+ BAL:{n:"Ravens",c1:"#241773",c2:"#C9A227",ac:"#A08FFF"},BUF:{n:"Bills",c1:"#00338D",c2:"#C60C30",ac:"#6F9BFF"},
+ CAR:{n:"Panthers",c1:"#0085CA",c2:"#101820",ac:"#5CC3FF"},CHI:{n:"Bears",c1:"#0B162A",c2:"#C83803",ac:"#FF8A4C"},
+ CIN:{n:"Bengals",c1:"#E04A12",c2:"#000000",ac:"#FF8A5C"},CLE:{n:"Browns",c1:"#D9430C",c2:"#311D00",ac:"#FF7A45"},
+ DAL:{n:"Cowboys",c1:"#041E42",c2:"#869397",ac:"#9FB3C8"},DEN:{n:"Broncos",c1:"#FB4F14",c2:"#002244",ac:"#FF8C5A"},
+ DET:{n:"Lions",c1:"#0076B6",c2:"#B0B7BC",ac:"#4DB5F0"},GB:{n:"Packers",c1:"#203731",c2:"#FFB612",ac:"#FFB612"},
+ HOU:{n:"Texans",c1:"#03202F",c2:"#A71930",ac:"#E0566B"},IND:{n:"Colts",c1:"#002C5F",c2:"#FFFFFF",ac:"#6FA8FF"},
+ JAX:{n:"Jaguars",c1:"#006778",c2:"#D7A22A",ac:"#4FD0DF"},KC:{n:"Chiefs",c1:"#C8102E",c2:"#FFB81C",ac:"#FF6478"},
+ LA:{n:"Rams",c1:"#003594",c2:"#FFA300",ac:"#FFA300"},LAC:{n:"Chargers",c1:"#0080C6",c2:"#FFC20E",ac:"#FFC20E"},
+ LV:{n:"Raiders",c1:"#2B2B2B",c2:"#A5ACAF",ac:"#C9CFD3"},MIA:{n:"Dolphins",c1:"#008E97",c2:"#FC4C02",ac:"#4FD3DA"},
+ MIN:{n:"Vikings",c1:"#4F2683",c2:"#FFC62F",ac:"#B48CFF"},NE:{n:"Patriots",c1:"#002244",c2:"#C60C30",ac:"#7BA4FF"},
+ NO:{n:"Saints",c1:"#2B2A26",c2:"#D3BC8D",ac:"#D3BC8D"},NYG:{n:"Giants",c1:"#0B2265",c2:"#A71930",ac:"#7C97FF"},
+ NYJ:{n:"Jets",c1:"#125740",c2:"#FFFFFF",ac:"#4FC28F"},PHI:{n:"Eagles",c1:"#004C54",c2:"#A5ACAF",ac:"#4FC2B2"},
+ PIT:{n:"Steelers",c1:"#2B2A26",c2:"#FFB612",ac:"#FFB612"},SEA:{n:"Seahawks",c1:"#002244",c2:"#69BE28",ac:"#69BE28"},
+ SF:{n:"49ers",c1:"#AA0000",c2:"#B3995D",ac:"#FF6B5E"},TB:{n:"Buccaneers",c1:"#D50A0A",c2:"#34302B",ac:"#FF6B6B"},
+ TEN:{n:"Titans",c1:"#0C2340",c2:"#4B92DB",ac:"#4B92DB"},WAS:{n:"Commanders",c1:"#5A1414",c2:"#FFB612",ac:"#FFB612"},
+ FA:{n:"Free agent",c1:"#3A4250",c2:"#C9CFD3",ac:"#C9CFD3"}
+};
+var LOGO_MAP={LA:"lar",WAS:"wsh"};
+function logo(t){return TEAMS[t]&&t!=="FA"?'<img src="https://a.espncdn.com/i/teamlogos/nfl/500/'+(LOGO_MAP[t]||t.toLowerCase())+'.png" alt="" loading="lazy" onerror="this.style.display=\'none\'">':''}
+function team(t){return TEAMS[t]||TEAMS.FA}
+
+// stat rows per position: [key, label]. Derived keys are computed in val().
+var LAYOUT={
+ QB:[["comp","Comp / att"],["passing_yards","Pass yards"],["passing_tds","Pass TD"],["passing_interceptions","INT"],["rating","Rating"],["rushing_yards","Rush yards"]],
+ RB:[["carries","Carries"],["rushing_yards","Rush yards"],["ypc","Yards / carry"],["rushing_tds","Rush TD"],["receptions","Catches"],["receiving_yards","Rec yards"]],
+ WR:[["targets","Targets"],["receptions","Catches"],["receiving_yards","Rec yards"],["receiving_tds","TD"],["ypr","Yards / catch"]],
+ EDGE:[["def_sacks","Sacks"],["tackles","Tackles"],["def_tackles_for_loss","Tackles for loss"],["def_qb_hits","QB hits"],["def_fumbles_forced","Forced fumbles"]],
+ LB:[["tackles","Tackles"],["def_sacks","Sacks"],["def_tackles_for_loss","Tackles for loss"],["def_interceptions","INT"],["def_pass_defended","Passes defended"]],
+ CB:[["def_interceptions","INT"],["def_pass_defended","Passes defended"],["tackles","Tackles"]],
+ S:[["tackles","Tackles"],["def_interceptions","INT"],["def_pass_defended","Passes defended"],["def_fumbles_forced","Forced fumbles"],["def_sacks","Sacks"]],
+ K:[["fg","Field goals"],["fg_long","Longest"],["pat","Extra points"],["points","Points"]],
+ P:[["pt_att","Punts"],["pt_avg","Average"],["pt_inside_20","Inside 20"],["pt_long","Longest"]]
+};
+LAYOUT.TE=LAYOUT.WR;LAYOUT.DL=LAYOUT.EDGE;
+var SHORT={comp:"comp",passing_yards:"yds",passing_tds:"TD",passing_interceptions:"INT",rating:"rtg",rushing_yards:"rush yds",carries:"car",ypc:"ypc",rushing_tds:"TD",receptions:"rec",receiving_yards:"rec yds",targets:"tgt",receiving_tds:"TD",ypr:"ypr",def_sacks:"sacks",tackles:"tkl",def_tackles_for_loss:"TFL",def_qb_hits:"QB hits",def_fumbles_forced:"FF",def_interceptions:"INT",def_pass_defended:"PD",fg:"FG",fg_long:"long",pat:"XP",points:"pts",pt_att:"punts",pt_avg:"avg",pt_inside_20:"in 20",pt_long:"long"};
+var HEAD={QB:["passing_yards","pass yds"],RB:["rushing_yards","rush yds"],WR:["receiving_yards","rec yds"],TE:["receiving_yards","rec yds"],EDGE:["def_sacks","sacks"],DL:["def_sacks","sacks"],LB:["tackles","tackles"],CB:["def_pass_defended","pass def"],S:["tackles","tackles"],K:["points","points"],P:["pt_avg","avg"]};
+var DRAWER={EDGE:"pass rush",DL:"pass rush",LB:"pass rush",CB:"coverage",S:"coverage"};
+var ADV={coverage:[["targets","Targets"],["comp_pct","Comp % allowed","%"],["yds_allowed","Yards allowed"],["rating_allowed","Rating allowed"],["missed","Missed tackles"]],
+         "pass rush":[["pressures","Pressures"],["hurries","Hurries"],["blitzes","Blitzes"],["missed","Missed tackles"]]};
+
+function g(s,k){return +(s&&s[k])||0}
+function val(k,s){
+  switch(k){
+    case "comp":return g(s,"completions")+"/"+g(s,"attempts");
+    case "rating":if(s.rating!=null)return s.rating;var a=g(s,"attempts");if(!a)return 0;
+      var x=Math.max(0,Math.min(2.375,(g(s,"completions")/a-.3)*5)),y=Math.max(0,Math.min(2.375,(g(s,"passing_yards")/a-3)*.25)),z=Math.max(0,Math.min(2.375,g(s,"passing_tds")/a*20)),w=Math.max(0,Math.min(2.375,2.375-g(s,"passing_interceptions")/a*25));return ((x+y+z+w)/6*100).toFixed(1);
+    case "ypc":return g(s,"carries")?(g(s,"rushing_yards")/g(s,"carries")).toFixed(1):0;
+    case "ypr":return g(s,"receptions")?(g(s,"receiving_yards")/g(s,"receptions")).toFixed(1):0;
+    case "tackles":return s.tackles!=null?s.tackles:g(s,"def_tackles_solo")+g(s,"def_tackles_with_assist");
+    case "fg":return g(s,"fg_made")+"/"+g(s,"fg_att");
+    case "pat":return g(s,"pat_made")+"/"+g(s,"pat_att");
+    case "points":return g(s,"fg_made")*3+g(s,"pat_made");
+    case "pt_avg":return g(s,"pt_att")?(g(s,"pt_yards")/g(s,"pt_att")).toFixed(1):0;
+    default:var v=g(s,k);return Number.isInteger(v)?v:v.toFixed(1);
+  }
+}
+
+var P=[],S={},META={},byIdMap={},favs=[],stories={},drawerOpen=false,current=null;
+var $=function(s){return document.querySelector(s)};
+function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function tv(t){var x=team(t);return "--c1:"+x.c1+";--c2:"+x.c2+";--ac:"+x.ac}
+function initials(n){return n.split(" ").map(function(w){return w[0]}).join("").slice(0,3)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function wiki(p){return "https://en.wikipedia.org/wiki/Special:Search?search="+encodeURIComponent(p.name+" American football")}
+
+function rowHTML(p,showStar){
+  var t=team(p.team),s=S[p.id]||{},h=HEAD[p.pos];
+  return '<li><button class="row" style="'+tv(p.team)+'" data-id="'+p.id+'">'+
+    '<span class="slab">'+(p.num||"")+'</span>'+
+    '<span class="who"><span class="nm">'+esc(p.name)+'</span>'+
+    '<span class="meta"><b>'+p.pos+'</b>'+logo(p.team)+'<span>'+t.n+'</span>'+(showStar&&favs.indexOf(p.id)>=0?'<span class="star-mini" aria-label="in favorites">&#9733;</span>':'')+'</span></span>'+
+    (h?'<span class="hl"><strong>'+val(h[0],s)+'</strong><small>'+h[1]+'</small></span>':'<span class="hl"></span>')+'</button></li>';
+}
+function search(q){
+  q=q.toLowerCase().replace(/[^a-z0-9 ]/g,"");var terms=q.split(/\s+/).filter(Boolean);
+  function score(p){var s=S[p.id]||{},ln=p.name.split(" ").pop().toLowerCase();
+    return (terms.some(function(t){return ln.indexOf(t)===0})?1000:0)+g(s,"fantasy_points")+g(s,"tackles")*2+g(s,"def_sacks")*10+g(s,"def_pass_defended")*5+g(s,"gp")*3}
+  var POS={qb:1,rb:1,wr:1,te:1,ol:1,edge:1,dl:1,lb:1,cb:1,s:1,k:1,p:1,ls:1};
+  return P.filter(function(p){return terms.every(function(t){return POS[t]?p.pos.toLowerCase()===t:p._k.indexOf(t)>=0})})
+    .sort(function(a,b){return score(b)-score(a)||a.name.localeCompare(b.name)}).slice(0,40);
+}
+function renderList(){
+  var q=$("#q").value.trim(),rows=$("#rows"),list;
+  $("#clr").classList.toggle("on",!!q);
+  if(q){
+    list=search(q);
+    $("#lh").textContent="Results";$("#lc").textContent=list.length===40?"first 40":list.length+(list.length===1?" player":" players");
+    rows.innerHTML=list.length?list.map(function(p){return rowHTML(p,true)}).join(""):
+      '<li class="empty"><strong>Nobody by that name.</strong>Try a last name, a team, or a position.</li>';
+  }else{
+    list=favs.map(function(id){return byIdMap[id]}).filter(Boolean);
+    $("#lh").textContent="Favorites";$("#lc").textContent=list.length?(WORKER?"Shared":"This phone only"):"";
+    rows.innerHTML=list.length?list.map(function(p){return rowHTML(p,false)}).join(""):
+      '<li class="empty"><strong>No favorites yet.</strong>Find a player below and tap the star on his card.</li>';
+  }
+}
+function statsHTML(pairs,s){return '<dl class="stats">'+pairs.map(function(r){return '<div><dd>'+val(r[0],s)+(r[2]||"")+'</dd><dt>'+r[1]+'</dt></div>'}).join("")+'</dl>'}
+function advHTML(pairs,a){return '<dl class="stats">'+pairs.map(function(r){var v=a[r[0]];return '<div><dd>'+(v==null?0:v)+(r[2]||"")+'</dd><dt>'+r[1]+'</dt></div>'}).join("")+'</dl>'}
+
+function storyHTML(p){
+  var st=stories[p.id];
+  var deep='<a class="btn ghost" href="'+wiki(p)+'" target="_blank" rel="noopener">Read his full bio</a>';
+  if(!st){
+    if(!WORKER)return '<p class="thin">Stories switch on once the worker is set up.</p>'+deep;
+    return '<p class="thin">Nobody has looked him up yet. The first time takes a few seconds, then it is saved for both of you.</p><button class="btn" data-act="story">Get his story</button>';
+  }
+  if(!st.bullets||!st.bullets.length)return '<p class="thin">Not much out there on him yet. Nothing solid enough to repeat.</p>'+deep;
+  return '<ul>'+st.bullets.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ul>'+deep;
+}
+function renderCard(p){
+  var t=team(p.team),fav=favs.indexOf(p.id)>=0,s=S[p.id]||{},kind=DRAWER[p.pos],lay=LAYOUT[p.pos],st=stories[p.id];
+  var h='<div class="wrap" style="'+tv(p.team)+'">'+
+   '<header class="hdr"><span class="big" aria-hidden="true">'+(p.num||"")+'</span>'+logo(p.team).replace('<img','<img class="logo"')+
+   '<div class="bar"><button data-act="back" aria-label="Back to list"><span aria-hidden="true">&#8249;</span> Back</button>'+
+   '<button class="fav" data-act="fav" aria-pressed="'+fav+'">'+(fav?'&#9733; In favorites':'&#9734; Add to favorites')+'</button></div>'+
+   '<div class="id"><div class="face" aria-hidden="true">'+(p.headshot?'<img src="'+esc(p.headshot)+'" alt="" onerror="this.parentNode.textContent=\''+initials(p.name)+'\'">':initials(p.name))+'</div><div><h2>'+esc(p.name)+'</h2>'+
+   '<div class="sub"><span class="badge">'+p.team+'</span><span>'+t.n+'</span><span>'+p.pos+'</span>'+(p.num?'<span>#'+p.num+'</span>':'')+'</div></div></div></header>';
+
+  h+='<section class="sec"><h3>This season <span>'+(s.gp?s.gp+' games, through Week '+META.week:'through Week '+META.week)+'</span></h3>';
+  if(lay&&s.gp)h+=statsHTML(lay,s);
+  else if(lay)h+='<p class="nostat">No stats yet this season.</p>';
+  else h+='<p class="nostat">Nobody keeps stats on '+(p.pos==="OL"?"linemen":"long snappers")+'.'+(s.gp?' He has played in '+s.gp+' game'+(s.gp>1?'s':'')+'.':'')+'</p>';
+  if(kind&&s.adv){
+    h+='<button class="more" data-act="more" aria-expanded="'+drawerOpen+'" aria-controls="drw"><span>'+(drawerOpen?'Hide ':'More ')+kind+' numbers</span><i aria-hidden="true">&#9662;</i></button>'+
+       '<div class="drawer'+(drawerOpen?' on':'')+'" id="drw">'+advHTML(ADV[kind],s.adv)+'<p class="thru">These run a little behind. Through Week '+s.adv.thru+'.</p></div>';
+  }
+  h+='</section>';
+
+  if(s.last){
+    var L=s.last,opp=team(L.opp),keys=(lay||[]).map(function(r){return r[0]}).slice(0,4);
+    var line=keys.map(function(k){return {k:k,v:val(k,L.line)}}).filter(function(x){return x.v!==0&&x.v!=="0/0"});
+    h+='<section class="sec"><h3>Last game</h3><div class="last"><div class="g">Week '+L.wk+' '+(L.home?'vs':'at')+' '+logo(L.opp)+'<b>'+opp.n+(L.res?',</b> '+L.res:'</b>')+'</div>'+
+       (line.length?'<div class="line">'+line.map(function(x){return '<span><strong>'+x.v+'</strong>'+(SHORT[x.k]||x.k)+'</span>'}).join("")+'</div>':'<div class="line"><span>Played, nothing on the stat sheet.</span></div>')+'</div></section>';
+  }
+
+  h+='<section class="sec"><h3>Bio</h3><dl class="bio"><dt>Age</dt><dd>'+(p.age||"")+'</dd><dt>College</dt><dd>'+esc(p.college||"")+'</dd><dt>Drafted</dt><dd>'+esc(p.drafted)+'</dd>'+
+     (st&&st.hometown?'<dt>Hometown</dt><dd>'+esc(st.hometown)+'</dd>':'')+'</dl></section>';
+
+  h+='<section class="sec"><h3>Teams</h3><ol class="path">'+p.past.map(function(x,i){var pt=team(x[0]);
+     return '<li'+(i===p.past.length-1?' class="now"':'')+'>'+(logo(x[0])||'<span class="badge" style="--c1:'+pt.c1+';--c2:'+pt.c2+'">'+x[0]+'</span>')+pt.n+' <small>'+x[1]+'</small></li>'}).join("")+'</ol></section>';
+
+  h+='<section class="sec story"><h3>His story</h3><div id="story">'+storyHTML(p)+'</div></section></div>';
+  $("#card").innerHTML=h;
+}
+function openCard(id){
+  current=byIdMap[id];if(!current)return;
+  renderCard(current);
+  var c=$("#card");c.scrollTop=0;c.classList.add("open");c.setAttribute("aria-hidden","false");
+  $("#home").setAttribute("aria-hidden","true");$("#q").blur();
+  if(WORKER&&!stories[id])fetchStory(id);
+  var b=c.querySelector('[data-act="back"]');if(b)b.focus({preventScroll:true});
+}
+function closeCard(){
+  var c=$("#card");c.classList.remove("open");c.setAttribute("aria-hidden","true");
+  $("#home").removeAttribute("aria-hidden");
+  var id=current&&current.id;current=null;renderList();
+  var r=id&&document.querySelector('.row[data-id="'+id+'"]');if(r)r.focus({preventScroll:true});
+}
+function toast(m){var t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2200)}
+
+// ---- worker sync ----
+function api(path,opt){return fetch(WORKER.replace(/\/$/,"")+path,Object.assign({headers:{"Content-Type":"application/json"}},opt||{})).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||r.status);return j})})}
+function fetchStory(id){
+  api("/story/"+id).then(function(st){stories[id]=st;save("og_stories",stories);if(current&&current.id===id)renderCard(current)}).catch(function(){})
+}
+function getStory(){
+  var p=current,box=$("#story");
+  box.innerHTML='<div class="working"><span class="spin"></span><span>Searching for articles about him</span></div>';
+  var t1=setTimeout(function(){if(current===p)box.querySelector("span:last-child").textContent="Reading what turned up"},6000);
+  var t2=setTimeout(function(){if(current===p)box.querySelector("span:last-child").textContent="Writing it up"},13000);
+  api("/story/"+p.id,{method:"POST",body:JSON.stringify({name:p.name,team:team(p.team).n,pos:p.pos,college:p.college,drafted:p.drafted})})
+    .then(function(st){stories[p.id]=st;save("og_stories",stories);if(current===p)renderCard(p)})
+    .catch(function(e){if(current===p){box.innerHTML='<p class="thin">Could not get his story right now ('+esc(e.message)+').</p><button class="btn" data-act="story">Try again</button>'}})
+    .then(function(){clearTimeout(t1);clearTimeout(t2)});
+}
+function pushFavs(){if(WORKER)api("/favs",{method:"PUT",body:JSON.stringify(favs)}).catch(function(){toast("Saved on this phone. Could not reach the shared list.")})}
+
+$("#rows").addEventListener("click",function(e){var b=e.target.closest(".row");if(b)openCard(b.getAttribute("data-id"))});
+$("#q").addEventListener("input",renderList);
+$("#clr").addEventListener("click",function(e){e.preventDefault();$("#q").value="";renderList();$("#q").focus()});
+$("#card").addEventListener("click",function(e){
+  var b=e.target.closest("[data-act]");if(!b||!current)return;var a=b.getAttribute("data-act");
+  if(a==="back")closeCard();
+  else if(a==="fav"){
+    var i=favs.indexOf(current.id);
+    if(i>=0){favs.splice(i,1);toast("Removed from favorites")}else{favs.push(current.id);toast("Added to favorites")}
+    save("og_favs",favs);pushFavs();
+    var on=favs.indexOf(current.id)>=0;b.setAttribute("aria-pressed",on);b.innerHTML=on?"&#9733; In favorites":"&#9734; Add to favorites";
+  }
+  else if(a==="more"){
+    drawerOpen=!drawerOpen;b.setAttribute("aria-expanded",drawerOpen);
+    b.querySelector("span").textContent=(drawerOpen?"Hide ":"More ")+DRAWER[current.pos]+" numbers";
+    $("#drw").classList.toggle("on",drawerOpen);
+  }
+  else if(a==="story")getStory();
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&current)closeCard()});
+
+// ---- boot ----
+favs=load("og_favs",[]);stories=load("og_stories",{});
+var bust="?v="+Math.floor(Date.now()/3600000);
+Promise.all([fetch("data/players.json"+bust).then(function(r){return r.json()}),fetch("data/stats.json"+bust).then(function(r){return r.json()}),fetch("data/meta.json"+bust).then(function(r){return r.json()})])
+.then(function(res){
+  P=res[0];S=res[1];META=res[2];
+  P.forEach(function(p){byIdMap[p.id]=p;p._k=(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+(p.college||"")).toLowerCase().replace(/[^a-z0-9 ]/g,"")});
+  var d=new Date(META.updated);
+  $("#upd").textContent=META.season+" season, through Week "+META.week+". Updated "+d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+  renderList();
+  if(WORKER)api("/favs").then(function(list){favs=list;save("og_favs",favs);if(!current)renderList()}).catch(function(){$("#lc").textContent="Shared list unreachable"});
+})
+.catch(function(){$("#rows").innerHTML='<li class="empty"><strong>Could not load player data.</strong>Check the connection and pull down to refresh.</li>';$("#upd").textContent=""});
+</script>
+</body>
+</html>
