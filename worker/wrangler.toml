@@ -1,0 +1,12 @@
+name = "our-guys"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+PAGES_ORIGIN = "https://YOUR-GITHUB-USERNAME.github.io"
+MODEL = "claude-sonnet-4-6"
+DAILY_STORY_CAP = "40"
+
+[[kv_namespaces]]
+binding = "OG"
+id = "PASTE-KV-NAMESPACE-ID"
