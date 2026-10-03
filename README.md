@@ -1,6 +1,6 @@
 # Our Guys
 
-Phone app for tracking favorite NFL players. Season line, last game, bio, past teams, and a short human-interest story per player. Shared favorites between two phones.
+Game-day NFL companion for two phones. One search bar finds players, penalties, rules and announcer terms. Player cards (season line, last game, bio, past teams, human-interest story), side-by-side compare, a built-in rulebook with diagrams, and Ask for anything not in it. Shared favorites and saved answers between both phones.
 
 Three pieces:
 
@@ -40,6 +40,8 @@ At this point the app runs with favorites saved per phone and no stories. Test i
 Open the app URL in Safari > Share > **Add to Home Screen**. Do it on both phones. Same link, same favorites.
 
 ## How it works
+- `data/reference.json` is the built-in rulebook: 42 penalties, 29 rules, and about 175 offense, defense, position and lingo entries, 124 with diagrams. Hand-edited, not touched by the nightly job.
+- Ask sends the question to the worker (`POST /ask`), which has Claude check current rules with web search, saves the answer in KV, and lists recent questions at `GET /asks`. Capped at 80 questions a day (`DAILY_ASK_CAP`).
 - `scripts/pull.py` reads nflverse weekly stats, PFR advanced defense, the player table, and 2000-present rosters. Writes `data/players.json`, `data/stats.json`, `data/meta.json`. Run it locally with `python3 scripts/pull.py`.
 - Stats are per completed game. They update overnight, not live.
 - Advanced defensive numbers (coverage, pressures) come from a separate feed that lags a day or so. The drawer shows which week it is through.

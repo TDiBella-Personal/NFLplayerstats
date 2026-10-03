@@ -15,7 +15,8 @@
 <style>
 :root{
   --base:#11151B; --panel:#1A2029; --panel2:#212936; --line:#2B3440;
-  --text:#F3F5F8; --muted:#9BA6B5;
+  --text:#F3F5F8; --muted:#9BA6B5; --field:#16231C; --fieldline:#2A3B31;
+  --off:#E9EDF2; --def:#F2B84B;
   --display:"Big Shoulders Display","Arial Narrow","Helvetica Neue",Impact,sans-serif;
   --body:"Instrument Sans",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   box-sizing:border-box; color-scheme:dark;
@@ -32,9 +33,13 @@ a{color:inherit}
 img{max-width:100%}
 
 #home{padding:20px 16px 120px}
-.top{display:block}
 .top h1{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;margin:0;letter-spacing:.01em}
 .top p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.quick button{background:var(--panel);border-radius:12px;padding:12px 14px;text-align:left;display:flex;align-items:center;gap:10px;min-height:56px}
+.quick b{font-weight:600;font-size:15.5px;display:block}
+.quick small{color:var(--muted);font-size:12.5px;display:block;line-height:1.25}
+.quick svg{flex:none}
 .listhead{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 10px}
 .listhead h2{font-size:15px;font-weight:600;margin:0}
 .listhead span{font-size:13px;color:var(--muted)}
@@ -43,7 +48,7 @@ img{max-width:100%}
 .row .slab{background:var(--c1);color:var(--c2);font-family:var(--display);font-weight:800;font-size:32px;display:flex;align-items:center;justify-content:center;position:relative}
 .row .slab::after{content:"";position:absolute;right:-9px;top:0;bottom:0;width:18px;background:var(--c1);transform:skewX(-9deg)}
 .row .who{padding:11px 8px 11px 20px;min-width:0}
-.row .nm{font-weight:600;font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .nm{font-weight:600;font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .row .meta{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;margin-top:2px}
 .row .meta b{color:var(--ac);font-weight:600}
 .row .meta img{width:18px;height:18px;object-fit:contain}
@@ -51,27 +56,43 @@ img{max-width:100%}
 .row .hl strong{font-family:var(--display);font-weight:800;font-size:28px;line-height:1}
 .row .hl small{font-size:11.5px;color:var(--muted)}
 .star-mini{color:var(--ac);font-size:12px}
-.empty{background:var(--panel);border-radius:12px;padding:18px;color:var(--muted);font-size:15px}
+.empty{background:var(--panel);border-radius:12px;padding:18px;color:var(--muted);font-size:15px;list-style:none}
 .empty strong{color:var(--text);display:block;margin-bottom:2px}
 
-.dock{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(to top,var(--base) 70%,rgba(17,21,27,0));padding:22px 16px calc(14px + env(safe-area-inset-bottom,0px))}
+/* reference rows */
+.ref{display:block;width:100%;text-align:left;background:var(--panel);border-radius:12px;padding:12px 14px 13px;border-left:3px solid var(--cc)}
+.ref .rt{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.ref .rn{font-weight:600;font-size:16px}
+.ref .rs{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--muted);font-size:14px;margin-top:3px;line-height:1.4}
+.tag{font-size:11.5px;font-weight:600;color:var(--cc);white-space:nowrap}
+.grp{font-size:13px;color:var(--muted);font-weight:600;margin:20px 0 8px;display:flex;justify-content:space-between}
+.grp:first-child{margin-top:0}
+.morebtn{width:100%;padding:11px;border-radius:12px;border:1px dashed var(--line);color:var(--muted);font-size:14px;list-style:none}
+.askrow{width:100%;margin-top:18px;padding:14px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);text-align:left;display:flex;gap:12px;align-items:center}
+.askrow b{display:block;font-weight:600}
+.askrow small{color:var(--muted);font-size:13px}
+.askrow.big{background:#233042;border-color:#3A5170}
+
+.dock{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(to top,var(--base) 70%,rgba(17,21,27,0));padding:22px 16px calc(14px + env(safe-area-inset-bottom,0px));z-index:3}
 .dock .in{max-width:520px;margin:0 auto;display:flex;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:0 6px 0 14px}
 .dock svg{flex:none;color:var(--muted)}
 .dock input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:inherit;font-size:17px;padding:15px 10px;outline:none}
 .dock input::placeholder{color:var(--muted)}
 .dock .in:focus-within{border-color:#5d6b7e}
+.dock input::-webkit-search-cancel-button,.pickin input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
 .dock .clear{width:40px;height:40px;color:var(--muted);font-size:20px;display:none}
 .dock .clear.on{display:block}
 
-#card{position:fixed;inset:0;background:var(--base);overflow-y:auto;-webkit-overflow-scrolling:touch;transform:translateY(100%);visibility:hidden;transition:transform .2s ease-out,visibility 0s .2s;padding-bottom:calc(36px + env(safe-area-inset-bottom,0px))}
+#card{position:fixed;inset:0;background:var(--base);overflow-y:auto;-webkit-overflow-scrolling:touch;transform:translateY(100%);visibility:hidden;transition:transform .2s ease-out,visibility 0s .2s;padding-bottom:calc(36px + env(safe-area-inset-bottom,0px));z-index:5}
 #card.open{transform:none;visibility:visible;transition:transform .2s ease-out}
 .hdr{background:var(--c1);position:relative;overflow:hidden;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 20px}
 .hdr::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.42))}
 .hdr .big{position:absolute;right:-6px;bottom:-38px;font-family:var(--display);font-weight:800;font-size:210px;line-height:1;color:var(--c2);opacity:.26;letter-spacing:-.02em;pointer-events:none}
 .hdr .logo{position:absolute;right:14px;top:calc(56px + env(safe-area-inset-top,0px));width:64px;height:64px;object-fit:contain;opacity:.95}
 .hdr>*:not(.big):not(.logo){position:relative}
-.bar{display:flex;justify-content:space-between;align-items:center}
-.bar button{height:40px;padding:0 14px;border-radius:20px;background:rgba(0,0,0,.34);font-size:14.5px;font-weight:500;display:flex;align-items:center;gap:7px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bar .r{display:flex;gap:8px}
+.bar button{height:40px;padding:0 14px;border-radius:20px;background:rgba(0,0,0,.34);font-size:14.5px;font-weight:500;display:flex;align-items:center;gap:7px;white-space:nowrap}
 .bar .fav[aria-pressed="true"]{background:#fff;color:#11151B}
 .id{display:flex;gap:14px;align-items:flex-end;margin-top:26px;padding-right:70px}
 .face{width:76px;height:76px;border-radius:50%;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:30px;flex:none;overflow:hidden}
@@ -114,15 +135,81 @@ img{max-width:100%}
 .path li small{color:var(--muted);font-size:12.5px}
 .path li.now{outline:1.5px solid var(--ac)}
 
-.story ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
-.story li{padding-left:16px;position:relative;font-size:15.5px;line-height:1.5}
-.story li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;background:var(--ac);transform:skewX(-12deg)}
+.story ul,.deep ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.story li,.deep li{padding-left:16px;position:relative;font-size:15.5px;line-height:1.5}
+.story li::before,.deep li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;background:var(--ac);transform:skewX(-12deg)}
 .btn{margin-top:16px;width:100%;height:50px;border-radius:12px;font-weight:600;font-size:15.5px;background:var(--ac);color:#0d1117;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .btn.ghost{background:none;border:1px solid var(--line);color:var(--text);font-weight:500}
 .working{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:15px;background:var(--panel);border-radius:12px;padding:16px}
 .spin{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--ac);animation:sp .8s linear infinite;flex:none}
 @keyframes sp{to{transform:rotate(360deg)}}
 .thin{color:var(--muted);font-size:15px;background:var(--panel);border-radius:12px;padding:16px;margin:0}
+
+/* plain sheet header (rulebook, ask, compare, picker) */
+.phdr{padding:calc(10px + env(safe-area-inset-top,0px)) 16px 18px;background:linear-gradient(180deg,#1B2330,var(--base))}
+.phdr .bar button{background:var(--panel2)}
+.phdr h2{font-family:var(--display);font-weight:800;font-size:40px;line-height:.98;margin:22px 0 0;text-wrap:balance}
+.phdr .kick{margin-top:18px;display:flex;gap:10px;align-items:center;font-size:13.5px}
+.phdr .kick .tag{font-size:13px}
+.chg{font-size:12.5px;color:#0d1117;background:var(--def);border-radius:6px;padding:1px 7px;font-weight:600}
+
+/* reference entry */
+.lead{font-size:19px;line-height:1.45;margin:0;padding:4px 16px 0;text-wrap:pretty}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-radius:12px;overflow:hidden;margin:0}
+.facts div{background:var(--panel);padding:12px 14px}
+.facts div.w{grid-column:1/-1}
+.facts dt{font-size:12.5px;color:var(--muted)}
+.facts dd{margin:3px 0 0;font-weight:600;font-size:16px}
+.facts div.w dd{font-weight:400;font-size:15px;line-height:1.45}
+.onTV{background:var(--panel);border-radius:12px;padding:13px 14px;font-size:15px;line-height:1.5;margin:0}
+.onTV b{color:var(--ac);font-weight:600}
+.dia{background:var(--field);border-radius:12px;overflow:hidden}
+.dia svg{display:block;width:100%;height:auto}
+.dia p{margin:0;padding:0 14px 12px;color:#B7C4BB;font-size:13.5px}
+.deep{display:none;margin-top:14px}
+.deep.on{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:7px 13px;font-size:14px}
+
+/* browse */
+.cats{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.cats::-webkit-scrollbar{display:none}
+.cats button{flex:none;border:1px solid var(--line);border-radius:18px;padding:8px 14px;font-size:14.5px;white-space:nowrap}
+.cats button[aria-pressed="true"]{background:var(--cc);border-color:var(--cc);color:#0d1117;font-weight:600}
+.cats small{opacity:.7;margin-left:4px}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+
+/* ask */
+.askbox{display:flex;gap:8px;margin:0 16px}
+.askbox input{flex:1;min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:12px;color:var(--text);font:inherit;font-size:17px;padding:13px 14px;outline:none}
+.askbox input:focus{border-color:#5d6b7e}
+.askbox button{background:var(--ac);color:#0d1117;border-radius:12px;font-weight:600;padding:0 18px}
+.note{color:var(--muted);font-size:13px;margin:10px 0 0}
+
+/* compare */
+.cmph{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px}
+.cmph .side{background:var(--c1);border-radius:12px;padding:12px;position:relative;overflow:hidden;min-height:128px;text-align:left;display:flex;flex-direction:column;justify-content:flex-end}
+.cmph .side::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.45))}
+.cmph .side>*{position:relative}
+.cmph .side .num{position:absolute;right:-2px;top:-14px;font-family:var(--display);font-weight:800;font-size:92px;color:var(--c2);opacity:.28;line-height:1}
+.cmph .face{width:48px;height:48px;font-size:18px;margin-bottom:8px}
+.cmph .nm{font-family:var(--display);font-weight:800;font-size:23px;line-height:1;text-wrap:balance}
+.cmph .ps{font-size:13px;margin-top:4px;opacity:.9}
+.cmph .chg2{position:absolute;top:8px;left:8px;font-size:12px;background:rgba(0,0,0,.4);border-radius:12px;padding:3px 9px}
+.cmpt{width:100%;border-collapse:collapse;margin:0}
+.cmpt td{padding:11px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
+.cmpt td.l{text-align:center;color:var(--muted);font-size:13px;width:36%}
+.cmpt td.a,.cmpt td.b{font-family:var(--display);font-weight:800;font-size:25px;line-height:1;width:32%;color:#6E7887}
+.cmpt td.b{text-align:right}
+.cmpt td.win{color:var(--wc)}
+.cmpt td.tie{color:var(--text)}
+.cmpt td.txt{font-family:var(--body);font-weight:500;font-size:14px;color:var(--text);line-height:1.3}
+.lg2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lg2 div{background:var(--panel);border-radius:12px;padding:12px;font-size:14px;line-height:1.45}
+.swap{display:flex;gap:8px;padding:12px 16px 0}
+.swap button{flex:1;height:42px;border-radius:12px;border:1px solid var(--line);font-size:14.5px}
+.pickin{display:flex;align-items:center;margin:0 16px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:0 12px}
+.pickin input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:inherit;font-size:17px;padding:13px 8px;outline:none}
 
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);background:#fff;color:#11151B;font-size:14.5px;font-weight:500;padding:10px 16px;border-radius:22px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;max-width:88vw;text-align:center;z-index:9}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -135,14 +222,18 @@ img{max-width:100%}
     <h1>Our Guys</h1>
     <p id="upd">Loading</p>
   </div>
+  <div class="quick" id="quick">
+    <button data-go="browse"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F2B84B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg><span><b>Rulebook</b><small>Penalties, rules, terms</small></span></button>
+    <button data-go="compare"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="7" height="14" rx="2"/><rect x="14" y="5" width="7" height="14" rx="2"/></svg><span><b>Compare</b><small id="cmpHint">Two players, side by side</small></span></button>
+  </div>
   <div class="listhead"><h2 id="lh">Favorites</h2><span id="lc"></span></div>
-  <ul class="rows" id="rows"><li class="empty">Loading players</li></ul>
+  <div id="results"><ul class="rows" id="rows"><li class="empty">Loading players</li></ul></div>
 </main>
 
 <div class="dock">
   <label class="in">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-    <input id="q" type="search" placeholder="Find any player" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Find any player">
+    <input id="q" type="search" placeholder="Player, penalty, or term" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Search players, penalties, rules and terms" enterkeyhint="search">
     <button class="clear" id="clr" aria-label="Clear search">&times;</button>
   </label>
 </div>
@@ -177,6 +268,18 @@ var LOGO_MAP={LA:"lar",WAS:"wsh"};
 function logo(t){return TEAMS[t]&&t!=="FA"?'<img src="https://a.espncdn.com/i/teamlogos/nfl/500/'+(LOGO_MAP[t]||t.toLowerCase())+'.png" alt="" loading="lazy" onerror="this.style.display=\'none\'">':''}
 function team(t){return TEAMS[t]||TEAMS.FA}
 
+// reference categories: label, color, group
+var CATS={
+ penalty:{n:"Penalties",one:"Penalty",c:"#F2B84B"},
+ rule:{n:"Key rules",one:"Rule",c:"#6FA8FF"},
+ offense:{n:"Offense",one:"Offense",c:"#7FD49B"},
+ defense:{n:"Defense",one:"Defense",c:"#FF8A73"},
+ position:{n:"Positions",one:"Position",c:"#C8A2FF"},
+ lingo:{n:"Announcer lingo",one:"Lingo",c:"#9FC3E0"},
+ other:{n:"Other",one:"Answer",c:"#9FB3C8"}
+};
+var CAT_ORDER=["penalty","rule","offense","defense","position","lingo"];
+
 // stat rows per position: [key, label]. Derived keys are computed in val().
 var LAYOUT={
  QB:[["comp","Comp / att"],["passing_yards","Pass yards"],["passing_tds","Pass TD"],["passing_interceptions","INT"],["rating","Rating"],["rushing_yards","Rush yards"]],
@@ -195,6 +298,8 @@ var HEAD={QB:["passing_yards","pass yds"],RB:["rushing_yards","rush yds"],WR:["r
 var DRAWER={EDGE:"pass rush",DL:"pass rush",LB:"pass rush",CB:"coverage",S:"coverage"};
 var ADV={coverage:[["targets","Targets"],["comp_pct","Comp % allowed","%"],["yds_allowed","Yards allowed"],["rating_allowed","Rating allowed"],["missed","Missed tackles"]],
          "pass rush":[["pressures","Pressures"],["hurries","Hurries"],["blitzes","Blitzes"],["missed","Missed tackles"]]};
+var LOWER_BETTER={passing_interceptions:1,comp_pct:1,yds_allowed:1,rating_allowed:1,missed:1};
+var NO_WINNER={targets:1,blitzes:1,pt_att:1};
 
 function g(s,k){return +(s&&s[k])||0}
 function val(k,s){
@@ -212,8 +317,10 @@ function val(k,s){
     default:var v=g(s,k);return Number.isInteger(v)?v:v.toFixed(1);
   }
 }
+function num(v){if(typeof v==="string"&&v.indexOf("/")>0){var p=v.split("/");return +p[1]?p[0]/p[1]:0}return +v||0}
 
-var P=[],S={},META={},byIdMap={},favs=[],stories={},drawerOpen=false,current=null;
+var P=[],S={},META={},REF=[],REFMAP={},byIdMap={},favs=[],stories={},asks=[],askCache={};
+var drawerOpen=false,deepOpen=false,browseCat="penalty",expandGroup={},current=null,stack=[];
 var $=function(s){return document.querySelector(s)};
 function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -221,7 +328,12 @@ function tv(t){var x=team(t);return "--c1:"+x.c1+";--c2:"+x.c2+";--ac:"+x.ac}
 function initials(n){return n.split(" ").map(function(w){return w[0]}).join("").slice(0,3)}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function wiki(p){return "https://en.wikipedia.org/wiki/Special:Search?search="+encodeURIComponent(p.name+" American football")}
+function norm(s){return String(s||"").toLowerCase().replace(/['’]/g,"").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
+function cc(cat){return "--cc:"+(CATS[cat]||CATS.other).c+";--ac:"+(CATS[cat]||CATS.other).c}
+function faceHTML(p){return p.headshot?'<img src="'+esc(p.headshot)+'" alt="" onerror="this.parentNode.textContent=\''+initials(p.name)+'\'">':initials(p.name)}
+var BACK='<button data-act="back" aria-label="Back"><span aria-hidden="true">&#8249;</span> Back</button>';
 
+// ================= search =================
 function rowHTML(p,showStar){
   var t=team(p.team),s=S[p.id]||{},h=HEAD[p.pos];
   return '<li><button class="row" style="'+tv(p.team)+'" data-id="'+p.id+'">'+
@@ -230,32 +342,130 @@ function rowHTML(p,showStar){
     '<span class="meta"><b>'+p.pos+'</b>'+logo(p.team)+'<span>'+t.n+'</span>'+(showStar&&favs.indexOf(p.id)>=0?'<span class="star-mini" aria-label="in favorites">&#9733;</span>':'')+'</span></span>'+
     (h?'<span class="hl"><strong>'+val(h[0],s)+'</strong><small>'+h[1]+'</small></span>':'<span class="hl"></span>')+'</button></li>';
 }
-function search(q){
-  q=q.toLowerCase().replace(/[^a-z0-9 ]/g,"");var terms=q.split(/\s+/).filter(Boolean);
+function refHTML(e){
+  return '<li><button class="ref" style="'+cc(e.cat)+'" data-ref="'+e.id+'"><span class="rt"><span class="rn">'+esc(e.name)+'</span><span class="tag">'+(CATS[e.cat]||CATS.other).one+'</span></span><span class="rs">'+esc(e.short)+'</span></button></li>';
+}
+var POSQ={qb:1,rb:1,wr:1,te:1,ol:1,edge:1,dl:1,lb:1,cb:1,s:1,k:1,p:1,ls:1};
+function searchPlayers(q){
+  var terms=norm(q).split(" ").filter(Boolean);if(!terms.length)return [];
   function score(p){var s=S[p.id]||{},ln=p.name.split(" ").pop().toLowerCase();
     return (terms.some(function(t){return ln.indexOf(t)===0})?1000:0)+g(s,"fantasy_points")+g(s,"tackles")*2+g(s,"def_sacks")*10+g(s,"def_pass_defended")*5+g(s,"gp")*3}
-  var POS={qb:1,rb:1,wr:1,te:1,ol:1,edge:1,dl:1,lb:1,cb:1,s:1,k:1,p:1,ls:1};
-  return P.filter(function(p){return terms.every(function(t){return POS[t]?p.pos.toLowerCase()===t:p._k.indexOf(t)>=0})})
-    .sort(function(a,b){return score(b)-score(a)||a.name.localeCompare(b.name)}).slice(0,40);
+  var r=P.filter(function(p){return terms.every(function(t){return POSQ[t]?p.pos.toLowerCase()===t:p._k.indexOf(t)>=0})});
+  r.forEach(function(p){p._s=score(p)});
+  return r.sort(function(a,b){return b._s-a._s||a.name.localeCompare(b.name)});
+}
+function searchRef(q){
+  var n=norm(q);if(n.length<2)return [];
+  var terms=n.split(" ");
+  var out=[];
+  REF.forEach(function(e){
+    var s=0;
+    if(e._n===n)s=1000;
+    else if(e._a.indexOf(n)>=0)s=900;
+    else if(e._n.indexOf(n)===0)s=700;
+    else if(e._a.some(function(a){return a.indexOf(n)===0}))s=600;
+    else if((" "+e._n).indexOf(" "+n)>=0)s=500;
+    else if(terms.every(function(t){return e._n.indexOf(t)>=0||e._a.some(function(a){return a.indexOf(t)>=0})}))s=400;
+    else if(n.length>=4&&e._s.indexOf(n)>=0)s=150;
+    if(s){if(e.cat==="penalty"||e.cat==="rule")s+=5;out.push([s,e])}
+  });
+  return out.sort(function(a,b){return b[0]-a[0]||a[1].name.localeCompare(b[1].name)});
+}
+function group(key,title,items,limit,html){
+  if(!items.length)return "";
+  var open=expandGroup[key],shown=open?items:items.slice(0,limit);
+  return '<div class="grp"><span>'+title+'</span><span>'+items.length+'</span></div><ul class="list">'+shown.map(html).join("")+
+    (items.length>shown.length?'<li><button class="morebtn" data-more="'+key+'">Show all '+items.length+'</button></li>':'')+'</ul>';
 }
 function renderList(){
-  var q=$("#q").value.trim(),rows=$("#rows"),list;
+  var q=$("#q").value.trim(),box=$("#results");
   $("#clr").classList.toggle("on",!!q);
+  $("#quick").style.display=q?"none":"";
   if(q){
-    list=search(q);
-    $("#lh").textContent="Results";$("#lc").textContent=list.length===40?"first 40":list.length+(list.length===1?" player":" players");
-    rows.innerHTML=list.length?list.map(function(p){return rowHTML(p,true)}).join(""):
-      '<li class="empty"><strong>Nobody by that name.</strong>Try a last name, a team, or a position.</li>';
+    var pl=searchPlayers(q),rf=searchRef(q);
+    var rules=rf.filter(function(x){return x[1].cat==="penalty"||x[1].cat==="rule"}),terms=rf.filter(function(x){return x[1].cat!=="penalty"&&x[1].cat!=="rule"});
+    var bestP=pl.length?(pl[0]._s>=1000?800:300):0,bestR=rules.length?rules[0][0]:0,bestT=terms.length?terms[0][0]:0;
+    var groups=[
+      [bestP,group("p","Players",pl.slice(0,40),5,function(p){return rowHTML(p,true)})],
+      [bestR,group("r","Rules &amp; penalties",rules.map(function(x){return x[1]}),5,refHTML)],
+      [bestT,group("t","Terms",terms.map(function(x){return x[1]}),5,refHTML)]
+    ].filter(function(x){return x[1]}).sort(function(a,b){return b[0]-a[0]});
+    var total=pl.length+rf.length;
+    $("#lh").textContent="Results";$("#lc").textContent="";
+    var past=asks.filter(function(a){return norm(a.q).indexOf(norm(q))>=0||norm(a.title).indexOf(norm(q))>=0}).slice(0,3);
+    var askHTML=WORKER&&q.length>=3?'<button class="askrow'+(rf.length?'':' big')+'" data-ask="'+esc(q)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask about “'+esc(q)+'”</b><small>'+(rf.length?'Not what you meant? Get a researched answer.':'Not in the rulebook. Get a researched answer.')+'</small></span></button>':'';
+    box.innerHTML=(groups.map(function(x){return x[1]}).join("")||(total?'':'<ul class="rows"><li class="empty"><strong>Nothing by that name.</strong>Try a last name, a team, a position, or what the announcer said.</li></ul>'))+
+      (past.length?'<div class="grp" style="margin-top:20px"><span>Asked before</span></div><ul class="list">'+past.map(askRowHTML).join("")+'</ul>':'')+askHTML;
   }else{
-    list=favs.map(function(id){return byIdMap[id]}).filter(Boolean);
+    expandGroup={};
+    var list=favs.map(function(id){return byIdMap[id]}).filter(Boolean);
     $("#lh").textContent="Favorites";$("#lc").textContent=list.length?(WORKER?"Shared":"This phone only"):"";
-    rows.innerHTML=list.length?list.map(function(p){return rowHTML(p,false)}).join(""):
-      '<li class="empty"><strong>No favorites yet.</strong>Find a player below and tap the star on his card.</li>';
+    box.innerHTML='<ul class="rows">'+(list.length?list.map(function(p){return rowHTML(p,false)}).join(""):
+      '<li class="empty"><strong>No favorites yet.</strong>Find a player below and tap the star on his card.</li>')+'</ul>';
   }
+  var c=load("og_cmp",null);
+  $("#cmpHint").textContent=c&&byIdMap[c[0]]&&byIdMap[c[1]]?byIdMap[c[0]].name.split(" ").pop()+" vs "+byIdMap[c[1]].name.split(" ").pop():"Two players, side by side";
 }
+function askRowHTML(a){return '<li><button class="ref" style="'+cc("other")+'" data-askkey="'+esc(a.key)+'"><span class="rt"><span class="rn">'+esc(a.q)+'</span><span class="tag">Asked</span></span><span class="rs">'+esc(a.short||"")+'</span></button></li>'}
+
+// ================= diagrams =================
+// x: 0..100 across the field, the box (36..64) gets 56% of the width so linemen don't overlap.
+var LIN=false;
+function fx(x){var W=360;if(LIN)return 8+x/100*(W-16);if(x<=36)return 8+x/36*(W-16)*.22;if(x<=64)return 8+(W-16)*(.22+(x-36)/28*.56);return 8+(W-16)*(.78+(x-64)/36*.22)}
+function diagramSVG(d){
+  var ys=[],pts=(d.players||[]);
+  LIN=pts.some(function(p){return p.s==="o"&&(p.t==="T"||p.t==="G")&&(p.x<40||p.x>60)});
+  pts.forEach(function(p){ys.push(p.y)});(d.paths||[]).forEach(function(p){p.pts.forEach(function(q){ys.push(q[1])})});(d.zones||[]).forEach(function(z){ys.push(z.cy-z.ry,z.cy+z.ry)});
+  var y0=Math.min(-4,Math.min.apply(null,ys))-2.5,y1=Math.max(3,Math.max.apply(null,ys))+2.5,Y=11,W=360,H=Math.round((y1-y0)*Y);
+  function fy(y){return (y-y0)*Y}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(d.caption||"Diagram")+'" font-family="Instrument Sans, sans-serif">';
+  s+='<defs><marker id="ao" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#E9EDF2"/></marker><marker id="ad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F2B84B"/></marker></defs>';
+  for(var yl=Math.ceil(y0/5)*5;yl<=y1;yl+=5){if(yl!==0)s+='<line x1="0" x2="'+W+'" y1="'+fy(yl)+'" y2="'+fy(yl)+'" stroke="#2A3B31" stroke-width="1"/>'}
+  for(var yh=Math.ceil(y0);yh<=y1;yh++){[44,56].forEach(function(h){s+='<line x1="'+fx(h)+'" x2="'+fx(h)+'" y1="'+(fy(yh)-2)+'" y2="'+(fy(yh)+2)+'" stroke="#2A3B31" stroke-width="1"/>'})}
+  s+='<line x1="0" x2="'+W+'" y1="'+fy(0)+'" y2="'+fy(0)+'" stroke="#5B7FA8" stroke-width="1.5" stroke-dasharray="4 3"/>';
+  (d.zones||[]).forEach(function(z){var l=fx(z.cx-z.rx),r=fx(z.cx+z.rx),col=z.s==="o"?"#E9EDF2":"#F2B84B";
+    s+='<ellipse cx="'+((l+r)/2)+'" cy="'+fy(z.cy)+'" rx="'+((r-l)/2)+'" ry="'+(z.ry*Y)+'" fill="'+col+'" fill-opacity=".13" stroke="'+col+'" stroke-opacity=".5" stroke-dasharray="3 3"/>';
+    if(z.label)s+='<text x="'+((l+r)/2)+'" y="'+(fy(z.cy)+4)+'" text-anchor="middle" font-size="11" fill="'+col+'" fill-opacity=".9">'+esc(z.label)+'</text>'});
+  (d.paths||[]).forEach(function(p){var col=p.s==="d"?"#F2B84B":"#E9EDF2";
+    s+='<polyline points="'+p.pts.map(function(q){return fx(q[0]).toFixed(1)+","+fy(q[1]).toFixed(1)}).join(" ")+'" fill="none" stroke="'+col+'" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"'+(p.dash?' stroke-dasharray="4 4"':'')+(p.arrow===false?'':' marker-end="url(#a'+(p.s==="d"?"d":"o")+')"')+' opacity=".9"/>'});
+  pts.forEach(function(p){var cx=fx(p.x),cy=fy(p.y),t=esc(String(p.t).slice(0,3)),fs=t.length>2?7.4:t.length>1?9:10.5;
+    var R=LIN?7:8.4;
+    if(p.s==="d"){
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="#1E2A22" stroke="#F2B84B" stroke-width="'+(p.hl?3:1.6)+'"/><text x="'+cx+'" y="'+(cy+fs*.36)+'" text-anchor="middle" font-size="'+fs+'" font-weight="700" fill="#F2B84B">'+t+'</text>';
+    }else{
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="'+(p.hl?"#6FA8FF":"#E9EDF2")+'" stroke="'+(p.hl?"#fff":"none")+'" stroke-width="2"/><text x="'+cx+'" y="'+(cy+fs*.36)+'" text-anchor="middle" font-size="'+fs+'" font-weight="700" fill="#11151B">'+t+'</text>';
+    }});
+  return s+'</svg>';
+}
+
+// ================= sheet navigation =================
+function show(view,replace){
+  if(replace)stack.pop();
+  stack.push(view);render();
+  var c=$("#card");c.scrollTop=0;
+  if(!c.classList.contains("open")){c.classList.add("open");c.setAttribute("aria-hidden","false");$("#home").setAttribute("aria-hidden","true");$("#q").blur()}
+  var b=c.querySelector('[data-act="back"]');if(b)b.focus({preventScroll:true});
+}
+function back(){
+  stack.pop();
+  if(stack.length){render();$("#card").scrollTop=0;return}
+  var c=$("#card");c.classList.remove("open");c.setAttribute("aria-hidden","true");$("#home").removeAttribute("aria-hidden");
+  current=null;renderList();
+}
+function cur(){return stack[stack.length-1]}
+function render(){
+  var v=cur();current=null;
+  if(v.t==="player"){current=byIdMap[v.id];renderPlayer(current);if(WORKER&&!stories[v.id])fetchStory(v.id)}
+  else if(v.t==="ref")renderRef(REFMAP[v.id]);
+  else if(v.t==="browse")renderBrowse();
+  else if(v.t==="ask")renderAsk(v);
+  else if(v.t==="pick")renderPick(v);
+  else if(v.t==="compare")renderCompare(v);
+}
+
+// ================= player card =================
 function statsHTML(pairs,s){return '<dl class="stats">'+pairs.map(function(r){return '<div><dd>'+val(r[0],s)+(r[2]||"")+'</dd><dt>'+r[1]+'</dt></div>'}).join("")+'</dl>'}
 function advHTML(pairs,a){return '<dl class="stats">'+pairs.map(function(r){var v=a[r[0]];return '<div><dd>'+(v==null?0:v)+(r[2]||"")+'</dd><dt>'+r[1]+'</dt></div>'}).join("")+'</dl>'}
-
 function storyHTML(p){
   var st=stories[p.id];
   var deep='<a class="btn ghost" href="'+wiki(p)+'" target="_blank" rel="noopener">Read his full bio</a>';
@@ -266,13 +476,13 @@ function storyHTML(p){
   if(!st.bullets||!st.bullets.length)return '<p class="thin">Not much out there on him yet. Nothing solid enough to repeat.</p>'+deep;
   return '<ul>'+st.bullets.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ul>'+deep;
 }
-function renderCard(p){
+function renderPlayer(p){
   var t=team(p.team),fav=favs.indexOf(p.id)>=0,s=S[p.id]||{},kind=DRAWER[p.pos],lay=LAYOUT[p.pos],st=stories[p.id];
   var h='<div class="wrap" style="'+tv(p.team)+'">'+
    '<header class="hdr"><span class="big" aria-hidden="true">'+(p.num||"")+'</span>'+logo(p.team).replace('<img','<img class="logo"')+
-   '<div class="bar"><button data-act="back" aria-label="Back to list"><span aria-hidden="true">&#8249;</span> Back</button>'+
-   '<button class="fav" data-act="fav" aria-pressed="'+fav+'">'+(fav?'&#9733; In favorites':'&#9734; Add to favorites')+'</button></div>'+
-   '<div class="id"><div class="face" aria-hidden="true">'+(p.headshot?'<img src="'+esc(p.headshot)+'" alt="" onerror="this.parentNode.textContent=\''+initials(p.name)+'\'">':initials(p.name))+'</div><div><h2>'+esc(p.name)+'</h2>'+
+   '<div class="bar">'+BACK+'<span class="r"><button data-act="cmp">Compare</button>'+
+   '<button class="fav" data-act="fav" aria-pressed="'+fav+'" aria-label="'+(fav?'Remove from favorites':'Add to favorites')+'">'+(fav?'&#9733; Favorite':'&#9734; Favorite')+'</button></span></div>'+
+   '<div class="id"><div class="face" aria-hidden="true">'+faceHTML(p)+'</div><div><h2>'+esc(p.name)+'</h2>'+
    '<div class="sub"><span class="badge">'+p.team+'</span><span>'+t.n+'</span><span>'+p.pos+'</span>'+(p.num?'<span>#'+p.num+'</span>':'')+'</div></div></div></header>';
 
   h+='<section class="sec"><h3>This season <span>'+(s.gp?s.gp+' games, through Week '+META.week:'through Week '+META.week)+'</span></h3>';
@@ -301,26 +511,164 @@ function renderCard(p){
   h+='<section class="sec story"><h3>His story</h3><div id="story">'+storyHTML(p)+'</div></section></div>';
   $("#card").innerHTML=h;
 }
-function openCard(id){
-  current=byIdMap[id];if(!current)return;
-  renderCard(current);
-  var c=$("#card");c.scrollTop=0;c.classList.add("open");c.setAttribute("aria-hidden","false");
-  $("#home").setAttribute("aria-hidden","true");$("#q").blur();
-  if(WORKER&&!stories[id])fetchStory(id);
-  var b=c.querySelector('[data-act="back"]');if(b)b.focus({preventScroll:true});
-}
-function closeCard(){
-  var c=$("#card");c.classList.remove("open");c.setAttribute("aria-hidden","true");
-  $("#home").removeAttribute("aria-hidden");
-  var id=current&&current.id;current=null;renderList();
-  var r=id&&document.querySelector('.row[data-id="'+id+'"]');if(r)r.focus({preventScroll:true});
-}
-function toast(m){var t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2200)}
 
-// ---- worker sync ----
-function api(path,opt){return fetch(WORKER.replace(/\/$/,"")+path,Object.assign({headers:{"Content-Type":"application/json"}},opt||{})).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||r.status);return j})})}
+// ================= reference entry =================
+function renderRef(e){
+  if(!e){back();return}
+  var c=CATS[e.cat]||CATS.other,h='<div class="wrap" style="'+cc(e.cat)+'">';
+  h+='<header class="phdr"><div class="bar">'+BACK+'<span class="r"><button data-act="browse">Rulebook</button></span></div>'+
+     '<div class="kick"><span class="tag">'+c.one+'</span>'+(e.changed?'<span class="chg">'+esc(e.changed)+'</span>':'')+'</div>'+
+     '<h2>'+esc(e.name)+'</h2></header>';
+  h+='<p class="lead">'+esc(e.short)+'</p>';
+  if(e.penalty){var pz=e.penalty;
+    h+='<section class="sec"><dl class="facts"><div><dt>Yards</dt><dd>'+esc(pz.yards)+'</dd></div><div><dt>Automatic first down</dt><dd>'+esc(pz.firstDown)+'</dd></div>'+
+       '<div class="w"><dt>Usually on</dt><dd>'+esc(pz.on)+'</dd></div>'+(pz.signal?'<div class="w"><dt>Ref\'s signal</dt><dd>'+esc(pz.signal)+'</dd></div>':'')+'</dl></section>';
+  }
+  if(e.diagram)h+='<section class="sec"><div class="dia">'+diagramSVG(e.diagram)+(e.diagram.caption?'<p>'+esc(e.diagram.caption)+'</p>':'')+'</div></section>';
+  if(e.watch)h+='<section class="sec"><p class="onTV"><b>On TV:</b> '+esc(e.watch)+'</p></section>';
+  if(e.deep&&e.deep.length){
+    h+='<section class="sec"><button class="more" data-act="deep" aria-expanded="'+deepOpen+'" aria-controls="dp"><span>'+(deepOpen?'Less':'Go deeper')+'</span><i aria-hidden="true">&#9662;</i></button>'+
+       '<div class="deep'+(deepOpen?' on':'')+'" id="dp"><ul>'+e.deep.map(function(d){return '<li>'+esc(d)+'</li>'}).join("")+'</ul></div></section>';
+  }
+  var rel=(e.related||[]).map(function(id){return REFMAP[id]}).filter(Boolean);
+  if(rel.length)h+='<section class="sec"><h3>Related</h3><div class="chips">'+rel.map(function(r){return '<button class="chip" data-ref="'+r.id+'">'+esc(r.name)+'</button>'}).join("")+'</div></section>';
+  $("#card").innerHTML=h+'</div>';
+}
+
+// ================= browse =================
+function renderBrowse(){
+  var items=REF.filter(function(e){return e.cat===browseCat}).sort(function(a,b){var da=/^\d/.test(a.name),db=/^\d/.test(b.name);return da-db||a.name.localeCompare(b.name,undefined,{numeric:true})});
+  var h='<div class="wrap" style="'+cc(browseCat)+'"><header class="phdr"><div class="bar">'+BACK+'</div><h2>Rulebook</h2></header>';
+  h+='<div class="cats" role="toolbar" aria-label="Sections">'+CAT_ORDER.map(function(k){var n=REF.filter(function(e){return e.cat===k}).length;
+    return '<button style="'+cc(k)+'" data-cat="'+k+'" aria-pressed="'+(k===browseCat)+'">'+CATS[k].n+'<small>'+n+'</small></button>'}).join("")+'</div>';
+  if(WORKER)h+='<div class="sec" style="padding-top:14px"><button class="askrow" data-act="askscreen"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask a question</b><small>For whatever the announcer just said</small></span></button></div>';
+  h+='<section class="sec" style="padding-top:14px"><ul class="list">'+items.map(refHTML).join("")+'</ul></section></div>';
+  $("#card").innerHTML=h;
+}
+
+// ================= ask =================
+function answerHTML(a){
+  var c=CATS[a.cat]||CATS.other;
+  var h='<section class="sec" style="'+cc(a.cat)+'"><div class="kick" style="display:flex;gap:10px;align-items:center;margin-bottom:6px"><span class="tag">'+c.one+'</span></div>'+
+    '<h3 style="font-family:var(--display);font-weight:800;font-size:30px;line-height:1;margin:0 0 10px">'+esc(a.title||a.q)+'</h3>'+
+    '<p style="font-size:18px;line-height:1.45;margin:0">'+esc(a.short)+'</p>';
+  if(a.deep&&a.deep.length)h+='<button class="more" data-act="deep" aria-expanded="'+deepOpen+'" aria-controls="dp"><span>'+(deepOpen?'Less':'Go deeper')+'</span><i aria-hidden="true">&#9662;</i></button>'+
+    '<div class="deep'+(deepOpen?' on':'')+'" id="dp"><ul>'+a.deep.map(function(d){return '<li>'+esc(d)+'</li>'}).join("")+'</ul></div>';
+  var hit=searchRef(a.title||a.q).filter(function(x){return x[0]>=500}).slice(0,3).map(function(x){return x[1]});
+  if(hit.length)h+='<div style="margin-top:18px"><div class="grp"><span>In the rulebook</span></div><div class="chips">'+hit.map(function(r){return '<button class="chip" data-ref="'+r.id+'">'+esc(r.name)+'</button>'}).join("")+'</div></div>';
+  return h+'<p class="note">Researched answer, saved for both of you.</p></section>';
+}
+function renderAsk(v){
+  var h='<div class="wrap" style="--ac:#6FA8FF"><header class="phdr"><div class="bar">'+BACK+'</div><h2>Ask</h2></header>';
+  h+='<form class="askbox" id="askf"><input id="askq" type="text" placeholder="What’s a trips bunch?" value="'+esc(v.q||"")+'" enterkeyhint="send" autocomplete="off" aria-label="Your question"><button type="submit">Ask</button></form>';
+  h+='<div id="askout">';
+  if(v.state==="working")h+='<section class="sec"><div class="working"><span class="spin"></span><span id="askmsg">Checking the current rules</span></div></section>';
+  else if(v.state==="error")h+='<section class="sec"><p class="thin">Could not get an answer right now ('+esc(v.err)+').</p><button class="btn" data-act="askagain">Try again</button></section>';
+  else if(v.ans)h+=answerHTML(v.ans);
+  h+='</div>';
+  var recent=asks.filter(function(a){return !v.ans||a.key!==v.ans.key}).slice(0,12);
+  if(recent.length)h+='<section class="sec"><h3>Asked before</h3><ul class="list">'+recent.map(askRowHTML).join("")+'</ul></section>';
+  $("#card").innerHTML=h+'</div>';
+  $("#askf").addEventListener("submit",function(ev){ev.preventDefault();var q=$("#askq").value.trim();if(q)doAsk(q)});
+}
+function doAsk(q){
+  var v=cur();if(!v||v.t!=="ask")return;
+  v.q=q;v.state="working";v.ans=null;renderAsk(v);$("#askq").blur();
+  var t1=setTimeout(function(){var m=$("#askmsg");if(m)m.textContent="Reading what turned up"},5000);
+  var t2=setTimeout(function(){var m=$("#askmsg");if(m)m.textContent="Writing it up"},11000);
+  api("/ask",{method:"POST",body:JSON.stringify({q:q})}).then(function(a){
+    askCache[a.key]=a;save("og_askcache",askCache);
+    asks=[{q:a.q,key:a.key,title:a.title,short:a.short,at:a.at}].concat(asks.filter(function(x){return x.key!==a.key})).slice(0,40);save("og_asks",asks);
+    if(cur()===v){v.state="done";v.ans=a;renderAsk(v)}
+  }).catch(function(e){if(cur()===v){v.state="error";v.err=e.message;renderAsk(v)}})
+  .then(function(){clearTimeout(t1);clearTimeout(t2)});
+}
+function openAsked(key){
+  var v={t:"ask",q:"",state:"done",ans:askCache[key]||null};
+  show(v);
+  if(!v.ans){v.state="working";renderAsk(v);
+    api("/ask/"+key).then(function(a){askCache[key]=a;save("og_askcache",askCache);if(cur()===v){v.q=a.q;v.state="done";v.ans=a;renderAsk(v)}})
+    .catch(function(e){if(cur()===v){v.state="error";v.err=e.message;renderAsk(v)}});
+  }else v.q=v.ans.q;
+  if(v.ans)renderAsk(v);
+}
+
+// ================= compare =================
+function topAtPos(pos,n,skip){
+  var h=HEAD[pos];if(!h)return [];
+  return P.filter(function(p){return p.pos===pos&&S[p.id]&&p.id!==skip}).sort(function(a,b){return num(val(h[0],S[b.id]))-num(val(h[0],S[a.id]))}).slice(0,n);
+}
+function renderPick(v){
+  var a=v.keep?byIdMap[v.keep]:null;
+  var h='<div class="wrap" style="--ac:#6FA8FF"><header class="phdr"><div class="bar">'+BACK+'</div><h2>'+(a?'Compare '+esc(a.name.split(" ").pop())+' with':'Pick a player')+'</h2></header>';
+  h+='<label class="pickin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9BA6B5" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><input id="pickq" type="search" placeholder="Search any player" autocomplete="off" autocorrect="off" spellcheck="false" value="'+esc(v.q||"")+'" aria-label="Search players"></label>';
+  h+='<div id="pickres"></div></div>';
+  $("#card").innerHTML=h;
+  var inp=$("#pickq");inp.addEventListener("input",function(){v.q=inp.value;pickResults(v)});
+  pickResults(v);
+}
+function pickResults(v){
+  var a=v.keep?byIdMap[v.keep]:null,q=(v.q||"").trim(),h="";
+  if(q){var r=searchPlayers(q).filter(function(p){return p.id!==v.keep}).slice(0,25);
+    h='<section class="sec" style="padding-top:14px"><ul class="rows">'+(r.length?r.map(function(p){return rowHTML(p,true)}).join(""):'<li class="empty">Nobody by that name.</li>')+'</ul></section>';
+  }else{
+    var f=favs.map(function(id){return byIdMap[id]}).filter(function(p){return p&&p.id!==v.keep});
+    if(f.length)h+='<section class="sec"><h3>Favorites</h3><ul class="rows">'+f.map(function(p){return rowHTML(p,false)}).join("")+'</ul></section>';
+    if(a&&HEAD[a.pos]){var t=topAtPos(a.pos,8,a.id);
+      if(t.length)h+='<section class="sec"><h3>Top '+a.pos+'s this season <span>by '+HEAD[a.pos][1]+'</span></h3><ul class="rows">'+t.map(function(p){return rowHTML(p,true)}).join("")+'</ul></section>'}
+    if(!h)h='<section class="sec"><p class="thin">Search for anyone above, or star a few favorites so they show up here.</p></section>';
+  }
+  $("#pickres").innerHTML=h;
+}
+function pickDone(v,id){
+  if(!v.keep){show({t:"pick",keep:id,side:"b"},true);return}
+  var pair=v.side==="a"?[id,v.keep]:[v.keep,id];
+  save("og_cmp",pair);show({t:"compare",a:pair[0],b:pair[1]},true);
+}
+function cmpCell(k,va,vb,side,wc){
+  var na=num(va),nb=num(vb),mine=side==="a"?na:nb,other=side==="a"?nb:na,cls="";
+  if(NO_WINNER[k]||na===nb)cls=na===nb&&na!==0?"tie":"";
+  else if(LOWER_BETTER[k]?mine<other:mine>other)cls="win";
+  return '<td class="'+side+(cls?' '+cls:'')+'" style="--wc:'+wc+'">'+(side==="a"?va:vb)+'</td>';
+}
+function renderCompare(v){
+  var A=byIdMap[v.a],B=byIdMap[v.b];if(!A||!B){back();return}
+  var sa=S[A.id]||{},sb=S[B.id]||{},ta=team(A.team),tb=team(B.team);
+  var la=LAYOUT[A.pos]||[],lb=LAYOUT[B.pos]||[],same=la===lb,rows;
+  if(same)rows=la;else{var kb={};lb.forEach(function(r){kb[r[0]]=1});rows=la.filter(function(r){return kb[r[0]]})}
+  function side(p,t,s){return '<button class="side" style="'+tv(p.team)+'" data-open="'+p.id+'"><span class="num" aria-hidden="true">'+(p.num||"")+'</span><span class="face" aria-hidden="true">'+faceHTML(p)+'</span><span class="nm">'+esc(p.name)+'</span><span class="ps">'+p.pos+' &middot; '+t.n+'</span></button>'}
+  var h='<div class="wrap" style="--ac:#6FA8FF"><header class="phdr"><div class="bar">'+BACK+'</div><h2>Compare</h2></header>';
+  h+='<div class="cmph">'+side(A,ta,sa)+side(B,tb,sb)+'</div>';
+  h+='<div class="swap"><button data-act="chgA">Change left</button><button data-act="swap">Swap</button><button data-act="chgB">Change right</button></div>';
+  function tr(label,va,vb,k){return '<tr>'+cmpCell(k,va,vb,"a",ta.ac)+'<td class="l">'+label+'</td>'+cmpCell(k,va,vb,"b",tb.ac)+'</tr>'}
+  h+='<section class="sec"><h3>This season <span>through Week '+META.week+'</span></h3><table class="cmpt"><tbody>';
+  h+=tr("Games",sa.gp||0,sb.gp||0,"_gp");
+  rows.forEach(function(r){h+=tr(r[1],val(r[0],sa),val(r[0],sb),r[0])});
+  h+='</tbody></table>';
+  if(!rows.length)h+='<p class="note">Different jobs, no stats in common. Here’s the rest.</p>';
+  h+='</section>';
+  var ka=DRAWER[A.pos],kb2=DRAWER[B.pos];
+  if(ka&&ka===kb2&&sa.adv&&sb.adv){
+    h+='<section class="sec"><h3>'+ka.charAt(0).toUpperCase()+ka.slice(1)+' <span>through Week '+Math.min(sa.adv.thru,sb.adv.thru)+'</span></h3><table class="cmpt"><tbody>';
+    ADV[ka].forEach(function(r){h+=tr(r[1],(sa.adv[r[0]]||0)+(r[2]||""),(sb.adv[r[0]]||0)+(r[2]||""),r[0])});
+    h+='</tbody></table></section>';
+  }
+  function lastLine(p,s){if(!s.last)return "Didn’t play";var L=s.last,lay=LAYOUT[p.pos]||[];
+    var bits=lay.slice(0,3).map(function(r){var x=val(r[0],L.line);return x&&x!=="0/0"?x+" "+(SHORT[r[0]]||""):""}).filter(Boolean);
+    return 'Wk '+L.wk+' '+(L.home?'vs':'at')+' '+L.opp+(L.res?', '+L.res.split(" ")[0]:'')+(bits.length?'<br>'+bits.join(", "):'')}
+  function txt(label,a,b){return '<tr><td class="a txt">'+a+'</td><td class="l">'+label+'</td><td class="b txt">'+b+'</td></tr>'}
+  h+='<section class="sec"><h3>Last game</h3><div class="lg2"><div>'+lastLine(A,sa)+'</div><div>'+lastLine(B,sb)+'</div></div></section>';
+  h+='<section class="sec"><h3>Bio</h3><table class="cmpt"><tbody>'+txt("Age",A.age||"",B.age||"")+txt("College",esc(A.college||""),esc(B.college||""))+
+     txt("Drafted",esc(A.drafted).replace(", round"," rd").replace(", pick"," pk"),esc(B.drafted).replace(", round"," rd").replace(", pick"," pk"))+
+     txt("Teams",A.past.length,B.past.length)+'</tbody></table></section></div>';
+  $("#card").innerHTML=h;
+}
+
+// ================= misc =================
+function toast(m){var t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2200)}
+function api(path,opt){return fetch(WORKER.replace(/\/$/,"")+path,Object.assign({headers:{"Content-Type":"application/json"}},opt||{})).then(function(r){return r.json().then(function(j){if(!r.ok||j.ok===false)throw new Error(j.error||(j.ok===false?"no clean answer, try rewording":r.status));return j})})}
 function fetchStory(id){
-  api("/story/"+id).then(function(st){stories[id]=st;save("og_stories",stories);if(current&&current.id===id)renderCard(current)}).catch(function(){})
+  api("/story/"+id).then(function(st){stories[id]=st;save("og_stories",stories);if(current&&current.id===id)renderPlayer(current)}).catch(function(){})
 }
 function getStory(){
   var p=current,box=$("#story");
@@ -328,46 +676,83 @@ function getStory(){
   var t1=setTimeout(function(){if(current===p)box.querySelector("span:last-child").textContent="Reading what turned up"},6000);
   var t2=setTimeout(function(){if(current===p)box.querySelector("span:last-child").textContent="Writing it up"},13000);
   api("/story/"+p.id,{method:"POST",body:JSON.stringify({name:p.name,team:team(p.team).n,pos:p.pos,college:p.college,drafted:p.drafted})})
-    .then(function(st){stories[p.id]=st;save("og_stories",stories);if(current===p)renderCard(p)})
+    .then(function(st){stories[p.id]=st;save("og_stories",stories);if(current===p)renderPlayer(p)})
     .catch(function(e){if(current===p){box.innerHTML='<p class="thin">Could not get his story right now ('+esc(e.message)+').</p><button class="btn" data-act="story">Try again</button>'}})
     .then(function(){clearTimeout(t1);clearTimeout(t2)});
 }
 function pushFavs(){if(WORKER)api("/favs",{method:"PUT",body:JSON.stringify(favs)}).catch(function(){toast("Saved on this phone. Could not reach the shared list.")})}
+function openCompareHome(){
+  var c=load("og_cmp",null);
+  if(c&&byIdMap[c[0]]&&byIdMap[c[1]])show({t:"compare",a:c[0],b:c[1]});
+  else show({t:"pick",keep:null,side:"a"});
+}
 
-$("#rows").addEventListener("click",function(e){var b=e.target.closest(".row");if(b)openCard(b.getAttribute("data-id"))});
-$("#q").addEventListener("input",renderList);
+$("#results").addEventListener("click",function(e){
+  var b=e.target.closest("[data-id],[data-ref],[data-more],[data-ask],[data-askkey]");if(!b)return;
+  if(b.dataset.id)show({t:"player",id:b.dataset.id});
+  else if(b.dataset.ref){deepOpen=false;show({t:"ref",id:b.dataset.ref})}
+  else if(b.dataset.more){expandGroup[b.dataset.more]=1;renderList()}
+  else if(b.dataset.askkey)openAsked(b.dataset.askkey);
+  else if(b.dataset.ask){var v={t:"ask",q:b.dataset.ask};show(v);doAsk(b.dataset.ask)}
+});
+$("#quick").addEventListener("click",function(e){var b=e.target.closest("[data-go]");if(!b)return;if(b.dataset.go==="browse")show({t:"browse"});else openCompareHome()});
+$("#q").addEventListener("input",function(){expandGroup={};renderList()});
+$("#q").addEventListener("keydown",function(e){if(e.key==="Enter")this.blur()});
 $("#clr").addEventListener("click",function(e){e.preventDefault();$("#q").value="";renderList();$("#q").focus()});
 $("#card").addEventListener("click",function(e){
-  var b=e.target.closest("[data-act]");if(!b||!current)return;var a=b.getAttribute("data-act");
-  if(a==="back")closeCard();
-  else if(a==="fav"){
+  var v=cur();if(!v)return;
+  var b=e.target.closest("[data-act],[data-ref],[data-cat],[data-id],[data-open],[data-askkey]");if(!b)return;
+  if(b.dataset.ref){deepOpen=false;show({t:"ref",id:b.dataset.ref});return}
+  if(b.dataset.cat){browseCat=b.dataset.cat;var sx=$(".cats").scrollLeft;renderBrowse();var cs=$(".cats");cs.scrollLeft=sx;var on=cs.querySelector('[aria-pressed="true"]');if(on)on.scrollIntoView({inline:"nearest",block:"nearest"});return}
+  if(b.dataset.askkey){openAsked(b.dataset.askkey);return}
+  if(b.dataset.open){show({t:"player",id:b.dataset.open});return}
+  if(b.dataset.id){if(v.t==="pick")pickDone(v,b.dataset.id);else show({t:"player",id:b.dataset.id});return}
+  var a=b.dataset.act;
+  if(a==="back")back();
+  else if(a==="browse")show({t:"browse"});
+  else if(a==="askscreen")show({t:"ask",q:""});
+  else if(a==="askagain")doAsk(v.q);
+  else if(a==="deep"){deepOpen=!deepOpen;b.setAttribute("aria-expanded",deepOpen);b.querySelector("span").textContent=deepOpen?"Less":"Go deeper";$("#dp").classList.toggle("on",deepOpen)}
+  else if(a==="cmp"&&current)show({t:"pick",keep:current.id,side:"b"});
+  else if(a==="swap"){var t=v.a;v.a=v.b;v.b=t;save("og_cmp",[v.a,v.b]);renderCompare(v)}
+  else if(a==="chgA")show({t:"pick",keep:v.b,side:"a"},true);
+  else if(a==="chgB")show({t:"pick",keep:v.a,side:"b"},true);
+  else if(a==="fav"&&current){
     var i=favs.indexOf(current.id);
     if(i>=0){favs.splice(i,1);toast("Removed from favorites")}else{favs.push(current.id);toast("Added to favorites")}
     save("og_favs",favs);pushFavs();
-    var on=favs.indexOf(current.id)>=0;b.setAttribute("aria-pressed",on);b.innerHTML=on?"&#9733; In favorites":"&#9734; Add to favorites";
+    var on=favs.indexOf(current.id)>=0;b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites");b.innerHTML=on?"&#9733; Favorite":"&#9734; Favorite";
   }
-  else if(a==="more"){
+  else if(a==="more"&&current){
     drawerOpen=!drawerOpen;b.setAttribute("aria-expanded",drawerOpen);
     b.querySelector("span").textContent=(drawerOpen?"Hide ":"More ")+DRAWER[current.pos]+" numbers";
     $("#drw").classList.toggle("on",drawerOpen);
   }
-  else if(a==="story")getStory();
+  else if(a==="story"&&current)getStory();
 });
-document.addEventListener("keydown",function(e){if(e.key==="Escape"&&current)closeCard()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.length)back()});
 
-// ---- boot ----
-favs=load("og_favs",[]);stories=load("og_stories",{});
+// ================= boot =================
+favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
 var bust="?v="+Math.floor(Date.now()/3600000);
-Promise.all([fetch("data/players.json"+bust).then(function(r){return r.json()}),fetch("data/stats.json"+bust).then(function(r){return r.json()}),fetch("data/meta.json"+bust).then(function(r){return r.json()})])
+function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+getJSON("data/reference.json").then(function(r){
+  REF=r;REF.forEach(function(e){REFMAP[e.id]=e;e._n=norm(e.name);e._a=(e.aka||[]).map(norm);e._s=norm(e.short)});
+  if($("#q").value.trim())renderList();
+}).catch(function(){});
+Promise.all([getJSON("data/players.json"),getJSON("data/stats.json"),getJSON("data/meta.json")])
 .then(function(res){
   P=res[0];S=res[1];META=res[2];
-  P.forEach(function(p){byIdMap[p.id]=p;p._k=(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+(p.college||"")).toLowerCase().replace(/[^a-z0-9 ]/g,"")});
+  P.forEach(function(p){byIdMap[p.id]=p;p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+(p.college||""))});
   var d=new Date(META.updated);
   $("#upd").textContent=META.season+" season, through Week "+META.week+". Updated "+d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
   renderList();
-  if(WORKER)api("/favs").then(function(list){favs=list;save("og_favs",favs);if(!current)renderList()}).catch(function(){$("#lc").textContent="Shared list unreachable"});
+  if(WORKER){
+    api("/favs").then(function(list){favs=list;save("og_favs",favs);if(!stack.length)renderList()}).catch(function(){$("#lc").textContent="Shared list unreachable"});
+    api("/asks").then(function(list){asks=list;save("og_asks",asks)}).catch(function(){});
+  }
 })
-.catch(function(){$("#rows").innerHTML='<li class="empty"><strong>Could not load player data.</strong>Check the connection and pull down to refresh.</li>';$("#upd").textContent=""});
+.catch(function(){$("#results").innerHTML='<ul class="rows"><li class="empty"><strong>Could not load player data.</strong>Check the connection and pull down to refresh.</li></ul>';$("#upd").textContent=""});
 </script>
 </body>
 </html>
