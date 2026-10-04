@@ -219,6 +219,10 @@ def main():
         build_career(active, season)
     except Exception as e:   # never let the career file break the nightly stats
         print("career skipped:", e)
+    try:
+        import colts; colts.main(False)
+    except Exception as e:   # the Colts game-day file is optional too
+        print("colts skipped:", e)
 
 if __name__ == "__main__":
     main()

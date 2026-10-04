@@ -1,7 +1,8 @@
 name: Nightly stats pull
 on:
   schedule:
-    - cron: "0 9 * * *"   # 5am ET (9:00 UTC), daily
+    - cron: "0 9 * * *"    # 5am ET (9:00 UTC), daily: everything
+    - cron: "20 * * * *"   # hourly: Colts game-day file only, and only on a Colts game day before kickoff
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,7 +14,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python scripts/pull.py
+      - name: Full pull
+        if: github.event.schedule != '20 * * * *'
+        run: python scripts/pull.py
+      - name: Colts game-day refresh
+        if: github.event.schedule == '20 * * * *'
+        run: python scripts/colts.py --hourly
       - name: Commit data
         run: |
           git config user.name "our-guys-bot"
