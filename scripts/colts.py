@@ -12,6 +12,7 @@ API = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/"
 TEAM, TEAM_ID = "IND", "11"
 ET = ZoneInfo("America/New_York")
 ABBR = {"WSH": "WAS", "LAR": "LA"}
+RECORDS = {}
 
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (our-guys)"})
@@ -71,7 +72,10 @@ def next_game(now):
 def injuries(event_id):
     out = {"ind": [], "opp": []}
     if not event_id: return out
-    for block in get(API + f"summary?event={event_id}").get("injuries") or []:
+    summary = get(API + f"summary?event={event_id}")
+    for c in (((summary.get("header") or {}).get("competitions") or [{}])[0].get("competitors") or []):
+        RECORDS["ind" if (c.get("team") or {}).get("id") == TEAM_ID else "opp"] = record(c)
+    for block in summary.get("injuries") or []:
         side = "ind" if (block.get("team") or {}).get("id") == TEAM_ID else "opp"
         for i in block.get("injuries") or []:
             a = i.get("athlete") or {}; d = i.get("details") or {}
@@ -105,6 +109,8 @@ def main(hourly=False):
             print("colts:", key, "skipped:", e)
             try: data[key] = json.load(open(OUT)).get(key)
             except Exception: data[key] = None
+    if game:
+        game["rec"] = game["rec"] or RECORDS.get("ind", ""); game["opp_rec"] = game["opp_rec"] or RECORDS.get("opp", "")
     json.dump(data, open(OUT, "w"), separators=(",", ":"), ensure_ascii=False)
     print("colts:", (game or {}).get("kickoff"), "vs", ((game or {}).get("opp") or {}).get("abbr"), "|", len((data.get("injuries") or {}).get("ind") or []), "Colts injuries |", len(data.get("headlines") or []), "headlines")
 

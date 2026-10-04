@@ -40,6 +40,7 @@ At this point the app runs with favorites saved per phone and no stories. Test i
 Open the app URL in Safari > Share > **Add to Home Screen**. Do it on both phones. Same link, same favorites.
 
 ## How it works
+- `data/colts.json` is the Colts game-day file (next game, injury report, headlines) from ESPN's public feed, written by `scripts/colts.py`. The 5am job refreshes it daily; on a Colts game day it also refreshes about hourly from midnight Eastern until kickoff. The Colts tile only shows on game days. Add `?colts=1` to the URL to preview it any day.
 - `data/retired.json` holds every retired player since 1999 plus 135 stars with hand-verified full-career totals (`scripts/legends.json`). Rebuild it once a year with `python3 scripts/build_history.py`. The app only loads it when someone taps "Search retired players".
 - `data/career.json` is career totals for active players, rebuilt by the nightly job.
 - `data/announcers.json` is the Announcers section: booths, documented quotes and terms, each with a source link.
