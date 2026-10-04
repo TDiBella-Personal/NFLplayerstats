@@ -1,5 +1,5 @@
 """Builds data/*.json from free nflverse feeds. Run nightly by GitHub Actions.
-Outputs: players.json (bio + past teams), stats.json (season, last game, advanced), meta.json
+Outputs: players.json (bio + past teams), stats.json (season, last game, advanced), meta.json, career.json (career totals, active players)
 """
 import csv, io, json, os, sys, urllib.request, datetime as dt
 from collections import defaultdict
@@ -49,6 +49,71 @@ def runs(d):
         else:
             cur = [t, yr, yr]; out.append(cur)
     return [[t, str(a) if a == b else f"{a}-{str(b)[2:]}"] for t, a, b in out]
+
+# ---- career totals (shared with build_history.py) ----
+CAREER_KEYS = ["completions","attempts","passing_yards","passing_tds","passing_interceptions","carries","rushing_yards","rushing_tds",
+               "targets","receptions","receiving_yards","receiving_tds","def_sacks","def_tackles_for_loss","def_qb_hits","def_fumbles_forced",
+               "def_interceptions","def_pass_defended","fg_made","fg_att","pat_made","pat_att","pt_att","pt_yards","pt_inside_20"]
+TEAM_ALIAS = {"OAK":"LV","SD":"LAC","STL":"LA","RAM":"LA","RAI":"LV","PHO":"ARI","SL":"LA","JAC":"JAX","HST":"HOU","BLT":"BAL","CLV":"CLE","ARZ":"ARI","GNB":"GB","KAN":"KC","NWE":"NE","NOR":"NO","SFO":"SF","TAM":"TB","SDG":"LAC","LAR":"LA"}
+
+def norm_team(t, yr=None):
+    if t == "HOU" and yr and yr <= 1996: return "TEN"   # Oilers became the Titans
+    return TEAM_ALIAS.get(t, t)
+
+def add_season(tot, r):
+    tot["gp"] += n(r.get("games"))
+    for k in CAREER_KEYS: tot[k] += n(r.get(k))
+    tot["tackles"] += n(r.get("def_tackles_solo")) + n(r.get("def_tackles_with_assist"))
+    tot["fg_long"] = max(tot["fg_long"], n(r.get("fg_long")))
+    tot["pt_long"] = max(tot["pt_long"], n(r.get("pt_long")))
+
+def finish_career(tot):
+    out = {}
+    for k, v in tot.items():
+        if v: out[k] = int(v) if float(v).is_integer() else round(v, 1)
+    return out
+
+def _f(x):
+    x = n(x); return f"{int(x):,}" if float(x).is_integer() else f"{x:,.1f}"
+
+def best_season(pos, rows):
+    """Pick the signature season by the position's headline stat. Returns [year, text] or None."""
+    key = {"QB":"passing_yards","RB":"rushing_yards","WR":"receiving_yards","TE":"receiving_yards","EDGE":"def_sacks","DL":"def_sacks",
+           "CB":"def_interceptions","S":"def_interceptions","DB":"def_interceptions","K":"fg_made","P":"pt_yards"}.get(pos)
+    if pos == "LB": score = lambda r: n(r.get("def_tackles_solo")) + n(r.get("def_tackles_with_assist"))
+    elif key: score = lambda r: n(r.get(key))
+    else: return None
+    rows = [r for r in rows if score(r) > 0]
+    if not rows: return None
+    r = max(rows, key=lambda r: (score(r), n(r.get("season"))))
+    tk = n(r.get("def_tackles_solo")) + n(r.get("def_tackles_with_assist"))
+    if pos == "QB": t = f"{_f(r['passing_yards'])} pass yards, {_f(r['passing_tds'])} TD, {_f(r['passing_interceptions'])} INT"
+    elif pos == "RB": t = f"{_f(r['rushing_yards'])} rush yards, {_f(r['rushing_tds'])} TD"
+    elif pos in ("WR", "TE"): t = f"{_f(r['receptions'])} catches, {_f(r['receiving_yards'])} yards, {_f(r['receiving_tds'])} TD"
+    elif pos in ("EDGE", "DL"): t = f"{_f(r['def_sacks'])} sacks, {_f(tk)} tackles"
+    elif pos == "LB": t = f"{_f(tk)} tackles, {_f(r['def_sacks'])} sacks"
+    elif pos in ("CB", "S", "DB"): t = f"{_f(r['def_interceptions'])} INT, {_f(tk)} tackles"
+    elif pos == "K": t = f"{_f(r['fg_made'])} of {_f(r['fg_att'])} field goals"
+    else: t = f"{_f(r['pt_att'])} punts, {n(r['pt_yards'])/max(1,n(r['pt_att'])):.1f} average"
+    return [int(n(r["season"])), t]
+
+def build_career(active, season):
+    """Career totals for active players: data/career.json = {id: {s: totals, b: [year, text], f: first season in data}}"""
+    pos = {p["gsis_id"]: pos_of(p) for p in active}
+    tot = defaultdict(lambda: defaultdict(float)); rows = defaultdict(list)
+    for yr in range(1999, season + 1):
+        for r in fetch(REL + f"stats_player/stats_player_reg_{yr}.csv", required=False):
+            pid = r.get("player_id")
+            if pid in pos:
+                add_season(tot[pid], r); rows[pid].append(r)
+    out = {}
+    for pid, t in tot.items():
+        rec = {"s": finish_career(t)}
+        b = best_season(pos[pid], rows[pid])
+        if b: rec["b"] = b
+        out[pid] = rec
+    json.dump(out, open(os.path.join(OUT, "career.json"), "w"), separators=(",", ":"))
+    print(len(out), "career lines")
 
 def main():
     season = int(sys.argv[1]) if len(sys.argv) > 1 else season_now()
@@ -150,6 +215,10 @@ def main():
     json.dump({"season": season, "week": last_week, "updated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")},
               open(os.path.join(OUT, "meta.json"), "w"))
     print(len(out_players), "players,", len(stats), "with stats")
+    try:
+        build_career(active, season)
+    except Exception as e:   # never let the career file break the nightly stats
+        print("career skipped:", e)
 
 if __name__ == "__main__":
     main()

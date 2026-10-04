@@ -40,6 +40,10 @@ At this point the app runs with favorites saved per phone and no stories. Test i
 Open the app URL in Safari > Share > **Add to Home Screen**. Do it on both phones. Same link, same favorites.
 
 ## How it works
+- `data/retired.json` holds every retired player since 1999 plus 135 stars with hand-verified full-career totals (`scripts/legends.json`). Rebuild it once a year with `python3 scripts/build_history.py`. The app only loads it when someone taps "Search retired players".
+- `data/career.json` is career totals for active players, rebuilt by the nightly job.
+- `data/announcers.json` is the Announcers section: booths, documented quotes and terms, each with a source link.
+- Rules and penalties carry the official rule number and a link to the NFL rulebook. The rulebook text itself is not copied into the app.
 - `data/reference.json` is the built-in rulebook: 42 penalties, 29 rules, and about 175 offense, defense, position and lingo entries, 124 with diagrams. Hand-edited, not touched by the nightly job.
 - Ask sends the question to the worker (`POST /ask`), which has Claude check current rules with web search, saves the answer in KV, and lists recent questions at `GET /asks`. Capped at 80 questions a day (`DAILY_ASK_CAP`).
 - `scripts/pull.py` reads nflverse weekly stats, PFR advanced defense, the player table, and 2000-present rosters. Writes `data/players.json`, `data/stats.json`, `data/meta.json`. Run it locally with `python3 scripts/pull.py`.

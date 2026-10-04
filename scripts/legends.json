@@ -1,0 +1,2636 @@
+[
+{
+"id": "00-0005106",
+"name": "Brett Favre",
+"pos": "QB",
+"first": 1991,
+"last": 2010,
+"career": {
+"gp": 302,
+"completions": 6300,
+"attempts": 10169,
+"passing_yards": 71838,
+"passing_tds": 508,
+"passing_interceptions": 336,
+"rating": 86.0,
+"rushing_yards": 1844
+},
+"best": {
+"year": 1995,
+"text": "4,413 passing yards, 38 TD, 13 INT, 99.5 rating"
+},
+"src": "https://www.pro-football-reference.com/players/F/FavrBr00.htm"
+},
+{
+"id": "00-0010379",
+"name": "Dan Marino",
+"pos": "QB",
+"first": 1983,
+"last": 1999,
+"career": {
+"gp": 242,
+"completions": 4967,
+"attempts": 8358,
+"passing_yards": 61361,
+"passing_tds": 420,
+"passing_interceptions": 252,
+"rating": 86.4,
+"rushing_yards": 87
+},
+"best": {
+"year": 1984,
+"text": "5,084 passing yards, 48 TD, 17 INT, 108.9 rating"
+},
+"src": "https://www.pro-football-reference.com/players/M/MariDa00.htm"
+},
+{
+"id": "00-0004884",
+"name": "John Elway",
+"pos": "QB",
+"first": 1983,
+"last": 1998,
+"career": {
+"gp": 234,
+"completions": 4123,
+"attempts": 7250,
+"passing_yards": 51475,
+"passing_tds": 300,
+"passing_interceptions": 226,
+"rating": 79.9,
+"rushing_yards": 3407
+},
+"best": {
+"year": 1993,
+"text": "4,030 passing yards, 25 TD, 10 INT, 92.8 rating"
+},
+"src": "https://www.pro-football-reference.com/players/E/ElwaJo00.htm"
+},
+{
+"id": "00-0018441",
+"name": "Steve Young",
+"pos": "QB",
+"first": 1985,
+"last": 1999,
+"career": {
+"gp": 169,
+"completions": 2667,
+"attempts": 4149,
+"passing_yards": 33124,
+"passing_tds": 232,
+"passing_interceptions": 107,
+"rating": 96.8,
+"rushing_yards": 4239
+},
+"best": {
+"year": 1998,
+"text": "4,170 passing yards, 36 TD, 12 INT, 101.1 rating"
+},
+"src": "https://www.pro-football-reference.com/players/Y/YounSt00.htm"
+},
+{
+"id": "00-0000104",
+"name": "Troy Aikman",
+"pos": "QB",
+"first": 1989,
+"last": 2000,
+"career": {
+"gp": 165,
+"completions": 2898,
+"attempts": 4715,
+"passing_yards": 32942,
+"passing_tds": 165,
+"passing_interceptions": 141,
+"rating": 81.6,
+"rushing_yards": 1016
+},
+"best": {
+"year": 1995,
+"text": "3,304 passing yards, 16 TD, 7 INT, 93.6 rating"
+},
+"src": "https://www.pro-football-reference.com/players/A/AikmTr00.htm"
+},
+{
+"id": "00-0009111",
+"name": "Jim Kelly",
+"pos": "QB",
+"first": 1986,
+"last": 1996,
+"career": {
+"gp": 160,
+"completions": 2874,
+"attempts": 4779,
+"passing_yards": 35467,
+"passing_tds": 237,
+"passing_interceptions": 175,
+"rating": 84.4,
+"rushing_yards": 1049
+},
+"best": {
+"year": 1991,
+"text": "3,844 passing yards, 33 TD, 17 INT, 97.6 rating"
+},
+"src": "https://www.pro-football-reference.com/players/K/KellJi00.htm"
+},
+{
+"id": "00-0011524",
+"name": "Warren Moon",
+"pos": "QB",
+"first": 1984,
+"last": 2000,
+"career": {
+"gp": 208,
+"completions": 3988,
+"attempts": 6823,
+"passing_yards": 49325,
+"passing_tds": 291,
+"passing_interceptions": 233,
+"rating": 80.9,
+"rushing_yards": 1736
+},
+"best": {
+"year": 1990,
+"text": "4,689 passing yards, 33 TD, 13 INT, 96.8 rating"
+},
+"src": "https://www.pro-football-reference.com/players/M/MoonWa00.htm"
+},
+{
+"id": "00-0001361",
+"name": "Drew Bledsoe",
+"pos": "QB",
+"first": 1993,
+"last": 2006,
+"career": {
+"gp": 194,
+"completions": 3839,
+"attempts": 6717,
+"passing_yards": 44611,
+"passing_tds": 251,
+"passing_interceptions": 206,
+"rating": 77.1,
+"rushing_yards": 764
+},
+"best": {
+"year": 1994,
+"text": "4,555 passing yards, 25 TD, 27 INT, 73.6 rating"
+},
+"src": "https://www.pro-football-reference.com/players/B/BledDr00.htm"
+},
+{
+"id": "00-0010346",
+"name": "Peyton Manning",
+"pos": "QB",
+"first": 1998,
+"last": 2015,
+"career": {
+"gp": 266,
+"completions": 6125,
+"attempts": 9380,
+"passing_yards": 71940,
+"passing_tds": 539,
+"passing_interceptions": 251,
+"rating": 96.5,
+"rushing_yards": 667
+},
+"best": {
+"year": 2013,
+"text": "5,477 passing yards, 55 TD, 10 INT, 115.1 rating"
+},
+"src": "https://www.pro-football-reference.com/players/M/MannPe00.htm"
+},
+{
+"id": "00-0011024",
+"name": "Steve McNair",
+"pos": "QB",
+"first": 1995,
+"last": 2007,
+"career": {
+"gp": 161,
+"completions": 2733,
+"attempts": 4544,
+"passing_yards": 31304,
+"passing_tds": 174,
+"passing_interceptions": 119,
+"rating": 82.8,
+"rushing_yards": 3590
+},
+"best": {
+"year": 2003,
+"text": "3,215 passing yards, 24 TD, 7 INT, 100.4 rating"
+},
+"src": "https://www.pro-football-reference.com/players/M/McNaSt00.htm"
+},
+{
+"id": "00-0002110",
+"name": "Mark Brunell",
+"pos": "QB",
+"first": 1994,
+"last": 2011,
+"career": {
+"gp": 193,
+"completions": 2761,
+"attempts": 4640,
+"passing_yards": 32072,
+"passing_tds": 184,
+"passing_interceptions": 108,
+"rating": 84.0,
+"rushing_yards": 2421
+},
+"best": {
+"year": 1996,
+"text": "4,367 passing yards, 19 TD, 20 INT, 84.0 rating"
+},
+"src": "https://www.pro-football-reference.com/players/B/BrunMa00.htm"
+},
+{
+"id": "00-0016193",
+"name": "Vinny Testaverde",
+"pos": "QB",
+"first": 1987,
+"last": 2007,
+"career": {
+"gp": 233,
+"completions": 3787,
+"attempts": 6701,
+"passing_yards": 46233,
+"passing_tds": 275,
+"passing_interceptions": 267,
+"rating": 75.0,
+"rushing_yards": 1335
+},
+"best": {
+"year": 1998,
+"text": "3,256 passing yards, 29 TD, 7 INT, 101.6 rating"
+},
+"src": "https://www.pro-football-reference.com/players/T/TestVi00.htm"
+},
+{
+"id": "00-0003761",
+"name": "Randall Cunningham",
+"pos": "QB",
+"first": 1985,
+"last": 2001,
+"career": {
+"gp": 161,
+"completions": 2429,
+"attempts": 4289,
+"passing_yards": 29979,
+"passing_tds": 207,
+"passing_interceptions": 134,
+"rating": 81.5,
+"rushing_yards": 4928
+},
+"best": {
+"year": 1998,
+"text": "3,704 passing yards, 34 TD, 10 INT, 106.0 rating"
+},
+"src": "https://www.pro-football-reference.com/players/C/CunnRa00.htm"
+},
+{
+"id": "00-0005741",
+"name": "Rich Gannon",
+"pos": "QB",
+"first": 1987,
+"last": 2004,
+"career": {
+"gp": 157,
+"completions": 2533,
+"attempts": 4206,
+"passing_yards": 28743,
+"passing_tds": 180,
+"passing_interceptions": 104,
+"rating": 84.7,
+"rushing_yards": 2449
+},
+"best": {
+"year": 2002,
+"text": "4,689 passing yards, 26 TD, 10 INT, 97.3 rating"
+},
+"src": "https://www.pro-football-reference.com/players/G/GannRi00.htm"
+},
+{
+"id": "00-0017200",
+"name": "Kurt Warner",
+"pos": "QB",
+"first": 1998,
+"last": 2009,
+"career": {
+"gp": 124,
+"completions": 2666,
+"attempts": 4070,
+"passing_yards": 32344,
+"passing_tds": 208,
+"passing_interceptions": 128,
+"rating": 93.7,
+"rushing_yards": 286
+},
+"best": {
+"year": 2001,
+"text": "4,830 passing yards, 36 TD, 22 INT, 101.4 rating"
+},
+"src": "https://www.pro-football-reference.com/players/W/WarnKu00.htm"
+},
+{
+"id": "00-0005363",
+"name": "Doug Flutie",
+"pos": "QB",
+"first": 1986,
+"last": 2005,
+"career": {
+"gp": 92,
+"completions": 1177,
+"attempts": 2151,
+"passing_yards": 14715,
+"passing_tds": 86,
+"passing_interceptions": 68,
+"rating": 76.3,
+"rushing_yards": 1634
+},
+"best": {
+"year": 1998,
+"text": "2,711 passing yards, 20 TD, 11 INT, 87.4 rating"
+},
+"src": "https://www.pro-football-reference.com/players/F/FlutDo00.htm"
+},
+{
+"id": "00-0004937",
+"name": "Boomer Esiason",
+"pos": "QB",
+"first": 1984,
+"last": 1997,
+"career": {
+"gp": 187,
+"completions": 2969,
+"attempts": 5205,
+"passing_yards": 37920,
+"passing_tds": 247,
+"passing_interceptions": 184,
+"rating": 81.1,
+"rushing_yards": 1598
+},
+"best": {
+"year": 1988,
+"text": "3,572 passing yards, 28 TD, 14 INT, 97.4 rating"
+},
+"src": "https://www.pro-football-reference.com/players/E/EsiaBo00.htm"
+},
+{
+"id": "00-0006808",
+"name": "Jim Harbaugh",
+"pos": "QB",
+"first": 1987,
+"last": 2000,
+"career": {
+"gp": 177,
+"completions": 2305,
+"attempts": 3918,
+"passing_yards": 26288,
+"passing_tds": 129,
+"passing_interceptions": 117,
+"rating": 77.6,
+"rushing_yards": 2787
+},
+"best": {
+"year": 1995,
+"text": "2,575 passing yards, 17 TD, 5 INT, 100.7 rating"
+},
+"src": "https://www.pro-football-reference.com/players/H/HarbJi00.htm"
+},
+{
+"id": "00-0003292",
+"name": "Kerry Collins",
+"pos": "QB",
+"first": 1995,
+"last": 2011,
+"career": {
+"gp": 198,
+"completions": 3487,
+"attempts": 6261,
+"passing_yards": 40922,
+"passing_tds": 208,
+"passing_interceptions": 196,
+"rating": 73.8,
+"rushing_yards": 686
+},
+"best": {
+"year": 2002,
+"text": "4,073 passing yards, 19 TD, 14 INT, 85.4 rating"
+},
+"src": "https://www.pro-football-reference.com/players/C/CollKe00.htm"
+},
+{
+"id": "00-0006355",
+"name": "Trent Green",
+"pos": "QB",
+"first": 1997,
+"last": 2008,
+"career": {
+"gp": 120,
+"completions": 2266,
+"attempts": 3740,
+"passing_yards": 28475,
+"passing_tds": 162,
+"passing_interceptions": 114,
+"rating": 86.0,
+"rushing_yards": 914
+},
+"best": {
+"year": 2004,
+"text": "4,591 passing yards, 27 TD, 17 INT, 95.2 rating"
+},
+"src": "https://www.pro-football-reference.com/players/G/GreeTr00.htm"
+},
+{
+"id": "00-0005885",
+"name": "Jeff George",
+"pos": "QB",
+"first": 1990,
+"last": 2001,
+"career": {
+"gp": 131,
+"completions": 2298,
+"attempts": 3967,
+"passing_yards": 27602,
+"passing_tds": 154,
+"passing_interceptions": 113,
+"rating": 80.4,
+"rushing_yards": 307
+},
+"best": {
+"year": 1997,
+"text": "3,917 passing yards, 29 TD, 9 INT, 91.2 rating"
+},
+"src": "https://www.pro-football-reference.com/players/G/GeorJe00.htm"
+},
+{
+"id": "00-0008442",
+"name": "Brad Johnson",
+"pos": "QB",
+"first": 1994,
+"last": 2008,
+"career": {
+"gp": 177,
+"completions": 2668,
+"attempts": 4326,
+"passing_yards": 29054,
+"passing_tds": 166,
+"passing_interceptions": 122,
+"rating": 82.5,
+"rushing_yards": 657
+},
+"best": {
+"year": 1999,
+"text": "4,005 passing yards, 24 TD, 13 INT, 90.0 rating"
+},
+"src": "https://www.pro-football-reference.com/players/J/JohnBr00.htm"
+},
+{
+"id": "00-0013042",
+"name": "Jake Plummer",
+"pos": "QB",
+"first": 1997,
+"last": 2006,
+"career": {
+"gp": 143,
+"completions": 2484,
+"attempts": 4350,
+"passing_yards": 29253,
+"passing_tds": 161,
+"passing_interceptions": 161,
+"rating": 74.6,
+"rushing_yards": 1853
+},
+"best": {
+"year": 2004,
+"text": "4,089 passing yards, 27 TD, 20 INT, 84.5 rating"
+},
+"src": "https://www.pro-football-reference.com/players/P/PlumJa00.htm"
+},
+{
+"id": "00-0015165",
+"name": "Emmitt Smith",
+"pos": "RB",
+"first": 1990,
+"last": 2004,
+"career": {
+"gp": 226,
+"carries": 4409,
+"rushing_yards": 18355,
+"rushing_tds": 164,
+"receptions": 515,
+"receiving_yards": 3224
+},
+"best": {
+"year": 1995,
+"text": "1,773 rushing yards, 25 rushing TD, 62 catches"
+},
+"src": "https://www.pro-football-reference.com/players/S/SmitEm00.htm"
+},
+{
+"id": "00-0014313",
+"name": "Barry Sanders",
+"pos": "RB",
+"first": 1989,
+"last": 1998,
+"career": {
+"gp": 153,
+"carries": 3062,
+"rushing_yards": 15269,
+"rushing_tds": 99,
+"receptions": 352,
+"receiving_yards": 2921
+},
+"best": {
+"year": 1997,
+"text": "2,053 rushing yards, 11 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/S/SandBa00.htm"
+},
+{
+"id": "00-0001215",
+"name": "Jerome Bettis",
+"pos": "RB",
+"first": 1993,
+"last": 2005,
+"career": {
+"gp": 192,
+"carries": 3479,
+"rushing_yards": 13662,
+"rushing_tds": 91,
+"receptions": 200,
+"receiving_yards": 1449
+},
+"best": {
+"year": 1997,
+"text": "1,665 rushing yards, 7 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/B/BettJe00.htm"
+},
+{
+"id": "00-0010442",
+"name": "Curtis Martin",
+"pos": "RB",
+"first": 1995,
+"last": 2005,
+"career": {
+"gp": 168,
+"carries": 3518,
+"rushing_yards": 14101,
+"rushing_tds": 90,
+"receptions": 484,
+"receiving_yards": 3329
+},
+"best": {
+"year": 2004,
+"text": "1,697 rushing yards, 12 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/M/MartCu00.htm"
+},
+{
+"id": "00-0005092",
+"name": "Marshall Faulk",
+"pos": "RB",
+"first": 1994,
+"last": 2005,
+"career": {
+"gp": 176,
+"carries": 2836,
+"rushing_yards": 12279,
+"rushing_tds": 100,
+"receptions": 767,
+"receiving_yards": 6875
+},
+"best": {
+"year": 2000,
+"text": "1,359 rushing yards, 18 rushing TD, 81 catches for 830 yards"
+},
+"src": "https://www.pro-football-reference.com/players/F/FaulMa00.htm"
+},
+{
+"id": "00-0004054",
+"name": "Terrell Davis",
+"pos": "RB",
+"first": 1995,
+"last": 2001,
+"career": {
+"gp": 78,
+"carries": 1655,
+"rushing_yards": 7607,
+"rushing_tds": 60,
+"receptions": 169,
+"receiving_yards": 1280
+},
+"best": {
+"year": 1998,
+"text": "2,008 rushing yards, 21 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/D/DaviTe00.htm"
+},
+{
+"id": "00-0016331",
+"name": "Thurman Thomas",
+"pos": "RB",
+"first": 1988,
+"last": 2000,
+"career": {
+"gp": 182,
+"carries": 2877,
+"rushing_yards": 12074,
+"rushing_tds": 65,
+"receptions": 472,
+"receiving_yards": 4458
+},
+"best": {
+"year": 1992,
+"text": "1,487 rushing yards, 9 rushing TD, 58 catches for 626 yards"
+},
+"src": "https://www.pro-football-reference.com/players/T/ThomTh00.htm"
+},
+{
+"id": "00-0005883",
+"name": "Eddie George",
+"pos": "RB",
+"first": 1996,
+"last": 2004,
+"career": {
+"gp": 141,
+"carries": 2865,
+"rushing_yards": 10441,
+"rushing_tds": 68,
+"receptions": 268,
+"receiving_yards": 2227
+},
+"best": {
+"year": 2000,
+"text": "1,509 rushing yards, 14 rushing TD, 50 catches"
+},
+"src": "https://www.pro-football-reference.com/players/G/GeorEd00.htm"
+},
+{
+"id": "00-0004304",
+"name": "Corey Dillon",
+"pos": "RB",
+"first": 1997,
+"last": 2006,
+"career": {
+"gp": 150,
+"carries": 2618,
+"rushing_yards": 11241,
+"rushing_tds": 82,
+"receptions": 244,
+"receiving_yards": 1913
+},
+"best": {
+"year": 2004,
+"text": "1,635 rushing yards, 12 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/D/DillCo00.htm"
+},
+{
+"id": "00-0000745",
+"name": "Tiki Barber",
+"pos": "RB",
+"first": 1997,
+"last": 2006,
+"career": {
+"gp": 154,
+"carries": 2217,
+"rushing_yards": 10449,
+"rushing_tds": 55,
+"receptions": 586,
+"receiving_yards": 5183
+},
+"best": {
+"year": 2005,
+"text": "1,860 rushing yards, 9 rushing TD, 54 catches for 530 yards"
+},
+"src": "https://www.pro-football-reference.com/players/B/BarbTi00.htm"
+},
+{
+"id": "00-0017322",
+"name": "Ricky Watters",
+"pos": "RB",
+"first": 1992,
+"last": 2001,
+"career": {
+"gp": 144,
+"carries": 2622,
+"rushing_yards": 10643,
+"rushing_tds": 78,
+"receptions": 467,
+"receiving_yards": 4248
+},
+"best": {
+"year": 1996,
+"text": "1,411 rushing yards, 13 rushing TD, 51 catches for 444 yards"
+},
+"src": "https://www.pro-football-reference.com/players/W/WattRi00.htm"
+},
+{
+"id": "00-0016098",
+"name": "Fred Taylor",
+"pos": "RB",
+"first": 1998,
+"last": 2010,
+"career": {
+"gp": 153,
+"carries": 2534,
+"rushing_yards": 11695,
+"rushing_tds": 66,
+"receptions": 290,
+"receiving_yards": 2384
+},
+"best": {
+"year": 2003,
+"text": "1,572 rushing yards, 6 rushing TD, 48 catches"
+},
+"src": "https://www.pro-football-reference.com/players/T/TaylFr00.htm"
+},
+{
+"id": "00-0004640",
+"name": "Warrick Dunn",
+"pos": "RB",
+"first": 1997,
+"last": 2008,
+"career": {
+"gp": 181,
+"carries": 2669,
+"rushing_yards": 10967,
+"rushing_tds": 49,
+"receptions": 510,
+"receiving_yards": 4339
+},
+"best": {
+"year": 2005,
+"text": "1,416 rushing yards, 3 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/D/DunnWa00.htm"
+},
+{
+"id": "00-0006305",
+"name": "Ahman Green",
+"pos": "RB",
+"first": 1998,
+"last": 2009,
+"career": {
+"gp": 148,
+"carries": 2056,
+"rushing_yards": 9205,
+"rushing_tds": 60,
+"receptions": 378,
+"receiving_yards": 2883
+},
+"best": {
+"year": 2003,
+"text": "1,883 rushing yards, 15 rushing TD, 50 catches"
+},
+"src": "https://www.pro-football-reference.com/players/G/GreeAh00.htm"
+},
+{
+"id": "00-0000220",
+"name": "Marcus Allen",
+"pos": "RB",
+"first": 1982,
+"last": 1997,
+"career": {
+"gp": 222,
+"carries": 3022,
+"rushing_yards": 12243,
+"rushing_tds": 123,
+"receptions": 587,
+"receiving_yards": 5411
+},
+"best": {
+"year": 1985,
+"text": "1,759 rushing yards, 11 rushing TD, 67 catches for 555 yards"
+},
+"src": "https://www.pro-football-reference.com/players/A/AlleMa00.htm"
+},
+{
+"id": "00-0017035",
+"name": "Herschel Walker",
+"pos": "RB",
+"first": 1986,
+"last": 1997,
+"career": {
+"gp": 187,
+"carries": 1954,
+"rushing_yards": 8225,
+"rushing_tds": 61,
+"receptions": 512,
+"receiving_yards": 4859
+},
+"best": {
+"year": 1988,
+"text": "1,514 rushing yards, 5 rushing TD, 53 catches for 505 yards"
+},
+"src": "https://www.pro-football-reference.com/players/W/WalkHe00.htm"
+},
+{
+"id": "00-0000316",
+"name": "Jamal Anderson",
+"pos": "RB",
+"first": 1994,
+"last": 2001,
+"career": {
+"gp": 88,
+"carries": 1329,
+"rushing_yards": 5336,
+"rushing_tds": 34,
+"receptions": 156,
+"receiving_yards": 1645
+},
+"best": {
+"year": 1998,
+"text": "1,846 rushing yards, 14 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/A/AndeJa00.htm"
+},
+{
+"id": "00-0007180",
+"name": "Garrison Hearst",
+"pos": "RB",
+"first": 1993,
+"last": 2004,
+"career": {
+"gp": 126,
+"carries": 1831,
+"rushing_yards": 7966,
+"rushing_tds": 30,
+"receptions": 229,
+"receiving_yards": 2065
+},
+"best": {
+"year": 1998,
+"text": "1,570 rushing yards, 7 rushing TD, 39 catches for 535 yards"
+},
+"src": "https://www.pro-football-reference.com/players/H/HearGa00.htm"
+},
+{
+"id": "00-0007661",
+"name": "Priest Holmes",
+"pos": "RB",
+"first": 1997,
+"last": 2007,
+"career": {
+"gp": 113,
+"carries": 1780,
+"rushing_yards": 8172,
+"rushing_tds": 86,
+"receptions": 339,
+"receiving_yards": 2962
+},
+"best": {
+"year": 2003,
+"text": "1,420 rushing yards, 27 rushing TD, 74 catches for 690 yards"
+},
+"src": "https://www.pro-football-reference.com/players/H/HolmPr00.htm"
+},
+{
+"id": "00-0000251",
+"name": "Mike Alstott",
+"pos": "RB",
+"first": 1996,
+"last": 2006,
+"career": {
+"gp": 158,
+"carries": 1359,
+"rushing_yards": 5088,
+"rushing_tds": 58,
+"receptions": 305,
+"receiving_yards": 2284
+},
+"best": {
+"year": 1999,
+"text": "949 rushing yards, 7 rushing TD"
+},
+"src": "https://www.pro-football-reference.com/players/A/AlstMi00.htm"
+},
+{
+"id": "00-0013639",
+"name": "Jerry Rice",
+"pos": "WR",
+"first": 1985,
+"last": 2004,
+"career": {
+"gp": 303,
+"receptions": 1549,
+"receiving_yards": 22895,
+"receiving_tds": 197
+},
+"best": {
+"year": 1995,
+"text": "122 catches, 1,848 yards, 15 TD"
+},
+"src": "https://www.pro-football-reference.com/players/R/RiceJe00.htm"
+},
+{
+"id": "00-0011754",
+"name": "Randy Moss",
+"pos": "WR",
+"first": 1998,
+"last": 2012,
+"career": {
+"gp": 218,
+"receptions": 982,
+"receiving_yards": 15292,
+"receiving_tds": 156
+},
+"best": {
+"year": 2007,
+"text": "98 catches, 1,493 yards, 23 TD"
+},
+"src": "https://www.pro-football-reference.com/players/M/MossRa00.htm"
+},
+{
+"id": "00-0012478",
+"name": "Terrell Owens",
+"pos": "WR",
+"first": 1996,
+"last": 2010,
+"career": {
+"gp": 219,
+"receptions": 1078,
+"receiving_yards": 15934,
+"receiving_tds": 153
+},
+"best": {
+"year": 2001,
+"text": "93 catches, 1,412 yards, 16 TD"
+},
+"src": "https://en.wikipedia.org/wiki/Terrell_Owens"
+},
+{
+"id": "00-0002721",
+"name": "Cris Carter",
+"pos": "WR",
+"first": 1987,
+"last": 2002,
+"career": {
+"gp": 234,
+"receptions": 1101,
+"receiving_yards": 13899,
+"receiving_tds": 130
+},
+"best": {
+"year": 1995,
+"text": "122 catches, 1,371 yards, 17 TD"
+},
+"src": "https://www.pro-football-reference.com/players/C/CartCr00.htm"
+},
+{
+"id": "00-0002058",
+"name": "Tim Brown",
+"pos": "WR",
+"first": 1988,
+"last": 2004,
+"career": {
+"gp": 255,
+"receptions": 1094,
+"receiving_yards": 14934,
+"receiving_tds": 100
+},
+"best": {
+"year": 1997,
+"text": "104 catches, 1,408 yards, 5 TD"
+},
+"src": "https://www.pro-football-reference.com/players/B/BrowTi00.htm"
+},
+{
+"id": "00-0007024",
+"name": "Marvin Harrison",
+"pos": "WR",
+"first": 1996,
+"last": 2008,
+"career": {
+"gp": 190,
+"receptions": 1102,
+"receiving_yards": 14580,
+"receiving_tds": 128
+},
+"best": {
+"year": 2002,
+"text": "143 catches, 1,722 yards, 11 TD"
+},
+"src": "https://www.pro-football-reference.com/players/H/HarrMa00.htm"
+},
+{
+"id": "00-0008044",
+"name": "Michael Irvin",
+"pos": "WR",
+"first": 1988,
+"last": 1999,
+"career": {
+"gp": 159,
+"receptions": 750,
+"receiving_yards": 11904,
+"receiving_tds": 65
+},
+"best": {
+"year": 1995,
+"text": "111 catches, 1,603 yards, 10 TD"
+},
+"src": "https://www.pro-football-reference.com/players/I/IrviMi00.htm"
+},
+{
+"id": "00-0002099",
+"name": "Isaac Bruce",
+"pos": "WR",
+"first": 1994,
+"last": 2009,
+"career": {
+"gp": 223,
+"receptions": 1024,
+"receiving_yards": 15208,
+"receiving_tds": 91
+},
+"best": {
+"year": 1995,
+"text": "119 catches, 1,781 yards, 13 TD"
+},
+"src": "https://www.pro-football-reference.com/players/B/BrucIs00.htm"
+},
+{
+"id": "00-0013499",
+"name": "Andre Reed",
+"pos": "WR",
+"first": 1985,
+"last": 2000,
+"career": {
+"gp": 234,
+"receptions": 951,
+"receiving_yards": 13198,
+"receiving_tds": 87
+},
+"best": {
+"year": 1989,
+"text": "88 catches, 1,312 yards, 9 TD"
+},
+"src": "https://www.pro-football-reference.com/players/R/ReedAn00.htm"
+},
+{
+"id": "00-0015218",
+"name": "Jimmy Smith",
+"pos": "WR",
+"first": 1992,
+"last": 2005,
+"career": {
+"gp": 178,
+"receptions": 862,
+"receiving_yards": 12287,
+"receiving_tds": 67
+},
+"best": {
+"year": 1999,
+"text": "116 catches, 1,636 yards, 6 TD"
+},
+"src": "https://www.pro-football-reference.com/players/S/SmitJi00.htm"
+},
+{
+"id": "00-0015290",
+"name": "Rod Smith",
+"pos": "WR",
+"first": 1995,
+"last": 2006,
+"career": {
+"gp": 183,
+"receptions": 849,
+"receiving_yards": 11389,
+"receiving_tds": 68
+},
+"best": {
+"year": 2000,
+"text": "100 catches, 1,602 yards, 8 TD"
+},
+"src": "https://www.pro-football-reference.com/players/S/SmitRo01.htm"
+},
+{
+"id": "00-0017162",
+"name": "Hines Ward",
+"pos": "WR",
+"first": 1998,
+"last": 2011,
+"career": {
+"gp": 217,
+"receptions": 1000,
+"receiving_yards": 12083,
+"receiving_tds": 85
+},
+"best": {
+"year": 2002,
+"text": "112 catches, 1,329 yards, 12 TD"
+},
+"src": "https://www.pro-football-reference.com/players/W/WardHi00.htm"
+},
+{
+"id": "00-0008561",
+"name": "Keyshawn Johnson",
+"pos": "WR",
+"first": 1996,
+"last": 2006,
+"career": {
+"gp": 167,
+"receptions": 814,
+"receiving_yards": 10571,
+"receiving_tds": 64
+},
+"best": {
+"year": 2001,
+"text": "106 catches, 1,266 yards, 1 TD"
+},
+"src": "https://www.pro-football-reference.com/players/J/JohnKe00.htm"
+},
+{
+"id": "00-0011483",
+"name": "Art Monk",
+"pos": "WR",
+"first": 1980,
+"last": 1995,
+"career": {
+"gp": 224,
+"receptions": 940,
+"receiving_yards": 12721,
+"receiving_tds": 68
+},
+"best": {
+"year": 1984,
+"text": "106 catches, 1,372 yards, 7 TD"
+},
+"src": "https://www.pro-football-reference.com/players/M/MonkAr00.htm"
+},
+{
+"id": "00-0004830",
+"name": "Henry Ellard",
+"pos": "WR",
+"first": 1983,
+"last": 1998,
+"career": {
+"gp": 228,
+"receptions": 814,
+"receiving_yards": 13777,
+"receiving_tds": 65
+},
+"best": {
+"year": 1988,
+"text": "86 catches, 1,414 yards, 10 TD"
+},
+"src": "https://www.pro-football-reference.com/players/E/EllaHe00.htm"
+},
+{
+"id": "00-0005616",
+"name": "Irving Fryar",
+"pos": "WR",
+"first": 1984,
+"last": 2000,
+"career": {
+"gp": 255,
+"receptions": 851,
+"receiving_yards": 12785,
+"receiving_tds": 84
+},
+"best": {
+"year": 1997,
+"text": "86 catches, 1,316 yards, 6 TD"
+},
+"src": "https://en.wikipedia.org/wiki/Irving_Fryar"
+},
+{
+"id": "00-0013770",
+"name": "Andre Rison",
+"pos": "WR",
+"first": 1989,
+"last": 2000,
+"career": {
+"gp": 186,
+"receptions": 743,
+"receiving_yards": 10205,
+"receiving_tds": 84
+},
+"best": {
+"year": 1993,
+"text": "86 catches, 1,242 yards, 15 TD"
+},
+"src": "https://www.pro-football-reference.com/players/R/RisoAn00.htm"
+},
+{
+"id": "00-0011568",
+"name": "Herman Moore",
+"pos": "WR",
+"first": 1991,
+"last": 2002,
+"career": {
+"gp": 146,
+"receptions": 670,
+"receiving_yards": 9174,
+"receiving_tds": 62
+},
+"best": {
+"year": 1995,
+"text": "123 catches, 1,686 yards, 14 TD"
+},
+"src": "https://www.pro-football-reference.com/players/M/MoorHe00.htm"
+},
+{
+"id": "00-0010500",
+"name": "Derrick Mason",
+"pos": "WR",
+"first": 1997,
+"last": 2011,
+"career": {
+"gp": 230,
+"receptions": 943,
+"receiving_yards": 12061,
+"receiving_tds": 66
+},
+"best": {
+"year": 2003,
+"text": "95 catches, 1,303 yards, 8 TD"
+},
+"src": "https://www.pro-football-reference.com/players/M/MasoDe00.htm"
+},
+{
+"id": "00-0011770",
+"name": "Eric Moulds",
+"pos": "WR",
+"first": 1996,
+"last": 2007,
+"career": {
+"gp": 186,
+"receptions": 764,
+"receiving_yards": 9995,
+"receiving_tds": 49
+},
+"best": {
+"year": 1998,
+"text": "67 catches, 1,368 yards, 9 TD"
+},
+"src": "https://www.pro-football-reference.com/players/M/MoulEr00.htm"
+},
+{
+"id": "00-0010650",
+"name": "Ed McCaffrey",
+"pos": "WR",
+"first": 1991,
+"last": 2003,
+"career": {
+"gp": 185,
+"receptions": 565,
+"receiving_yards": 7422,
+"receiving_tds": 55
+},
+"best": {
+"year": 2000,
+"text": "101 catches, 1,317 yards, 9 TD"
+},
+"src": "https://www.pro-football-reference.com/players/M/McCaEd00.htm"
+},
+{
+"id": "00-0005562",
+"name": "Antonio Freeman",
+"pos": "WR",
+"first": 1995,
+"last": 2003,
+"career": {
+"gp": 132,
+"receptions": 477,
+"receiving_yards": 7251,
+"receiving_tds": 61
+},
+"best": {
+"year": 1998,
+"text": "84 catches, 1,424 yards, 14 TD"
+},
+"src": "https://www.pro-football-reference.com/players/F/FreeAn00.htm"
+},
+{
+"id": "00-0014722",
+"name": "Shannon Sharpe",
+"pos": "TE",
+"first": 1990,
+"last": 2003,
+"career": {
+"gp": 204,
+"receptions": 815,
+"receiving_yards": 10060,
+"receiving_tds": 62
+},
+"best": {
+"year": 1996,
+"text": "80 catches, 1,062 yards, 10 TD"
+},
+"src": "https://en.wikipedia.org/wiki/Shannon_Sharpe"
+},
+{
+"id": "00-0006101",
+"name": "Tony Gonzalez",
+"pos": "TE",
+"first": 1997,
+"last": 2013,
+"career": {
+"gp": 270,
+"receptions": 1325,
+"receiving_yards": 15127,
+"receiving_tds": 111
+},
+"best": {
+"year": 2004,
+"text": "102 catches, 1,258 yards, 7 TD"
+},
+"src": "https://www.pro-football-reference.com/players/G/GonzTo00.htm"
+},
+{
+"id": "00-0017109",
+"name": "Wesley Walls",
+"pos": "TE",
+"first": 1989,
+"last": 2003,
+"career": {
+"gp": 196,
+"receptions": 450,
+"receiving_yards": 5291,
+"receiving_tds": 54
+},
+"best": {
+"year": 1999,
+"text": "63 catches, 822 yards, 12 TD"
+},
+"src": "https://www.pro-football-reference.com/players/W/WallWe00.htm"
+},
+{
+"id": "00-0003142",
+"name": "Ben Coates",
+"pos": "TE",
+"first": 1991,
+"last": 2000,
+"career": {
+"gp": 158,
+"receptions": 499,
+"receiving_yards": 5555,
+"receiving_tds": 50
+},
+"best": {
+"year": 1994,
+"text": "96 catches, 1,174 yards, 7 TD"
+},
+"src": "https://www.pro-football-reference.com/players/C/CoatBe00.htm"
+},
+{
+"id": "00-0012208",
+"name": "Jay Novacek",
+"pos": "TE",
+"first": 1985,
+"last": 1995,
+"career": {
+"gp": 158,
+"receptions": 422,
+"receiving_yards": 4630,
+"receiving_tds": 30
+},
+"best": {
+"year": 1992,
+"text": "68 catches, 630 yards, 6 TD"
+},
+"src": "https://en.wikipedia.org/wiki/Jay_Novacek"
+},
+{
+"id": "00-0017567",
+"name": "Reggie White",
+"pos": "EDGE",
+"first": 1985,
+"last": 2000,
+"career": {
+"gp": 232,
+"def_sacks": 198.0,
+"tackles": 1048,
+"def_interceptions": 3,
+"def_fumbles_forced": 33
+},
+"best": {
+"year": 1987,
+"text": "21 sacks in 12 games, 76 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/W/WhitRe00.htm"
+},
+{
+"id": "00-0015111",
+"name": "Bruce Smith",
+"pos": "EDGE",
+"first": 1985,
+"last": 2003,
+"career": {
+"gp": 279,
+"def_sacks": 200.0,
+"tackles": 1075,
+"def_interceptions": 2,
+"def_fumbles_forced": 45
+},
+"best": {
+"year": 1990,
+"text": "19 sacks, 101 tackles, 4 forced fumbles"
+},
+"src": "https://www.pro-football-reference.com/players/S/SmitBr00.htm"
+},
+{
+"id": "00-0015795",
+"name": "Michael Strahan",
+"pos": "EDGE",
+"first": 1993,
+"last": 2007,
+"career": {
+"gp": 216,
+"def_sacks": 141.5,
+"tackles": 854,
+"def_interceptions": 4,
+"def_fumbles_forced": 24
+},
+"best": {
+"year": 2001,
+"text": "22.5 sacks, 73 tackles, 6 forced fumbles"
+},
+"src": "https://en.wikipedia.org/wiki/Michael_Strahan"
+},
+{
+"id": "00-0006373",
+"name": "Kevin Greene",
+"pos": "EDGE",
+"first": 1985,
+"last": 1999,
+"career": {
+"gp": 228,
+"def_sacks": 160.0,
+"tackles": 734,
+"def_interceptions": 5,
+"def_fumbles_forced": 27
+},
+"best": {
+"year": 1996,
+"text": "14.5 sacks, 51 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/G/GreeKe00.htm"
+},
+{
+"id": "00-0016248",
+"name": "Derrick Thomas",
+"pos": "EDGE",
+"first": 1989,
+"last": 1999,
+"career": {
+"gp": 169,
+"def_sacks": 126.5,
+"tackles": 599,
+"def_interceptions": 1,
+"def_fumbles_forced": 44
+},
+"best": {
+"year": 1990,
+"text": "20 sacks, 63 tackles, 6 forced fumbles"
+},
+"src": "https://www.pro-football-reference.com/players/T/ThomDe01.htm"
+},
+{
+"id": "00-0004396",
+"name": "Chris Doleman",
+"pos": "EDGE",
+"first": 1985,
+"last": 1999,
+"career": {
+"gp": 232,
+"def_sacks": 150.5,
+"tackles": 975,
+"def_interceptions": 8,
+"def_fumbles_forced": 48
+},
+"best": {
+"year": 1989,
+"text": "21 sacks, 94 tackles, 5 forced fumbles"
+},
+"src": "https://www.pro-football-reference.com/players/D/DoleCh00.htm"
+},
+{
+"id": "00-0016112",
+"name": "Jason Taylor",
+"pos": "EDGE",
+"first": 1997,
+"last": 2011,
+"career": {
+"gp": 233,
+"def_sacks": 139.5,
+"tackles": 788,
+"def_interceptions": 8,
+"def_fumbles_forced": 48
+},
+"best": {
+"year": 2002,
+"text": "18.5 sacks, 70 tackles, 7 forced fumbles"
+},
+"src": "https://www.pro-football-reference.com/players/T/TaylJa03.htm"
+},
+{
+"id": "00-0006633",
+"name": "Charles Haley",
+"pos": "EDGE",
+"first": 1986,
+"last": 1999,
+"career": {
+"gp": 169,
+"def_sacks": 100.5,
+"tackles": 503,
+"def_interceptions": 2,
+"def_fumbles_forced": 25
+},
+"best": {
+"year": 1990,
+"text": "16 sacks, 58 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/H/HaleCh00.htm"
+},
+{
+"id": "00-0015267",
+"name": "Neil Smith",
+"pos": "EDGE",
+"first": 1988,
+"last": 2000,
+"career": {
+"gp": 191,
+"def_sacks": 104.5,
+"tackles": 582,
+"def_interceptions": 4,
+"def_fumbles_forced": 34
+},
+"best": {
+"year": 1993,
+"text": "15 sacks, 55 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/S/SmitNe00.htm"
+},
+{
+"id": "00-0012274",
+"name": "Leslie O'Neal",
+"pos": "EDGE",
+"first": 1986,
+"last": 1999,
+"career": {
+"gp": 196,
+"def_sacks": 132.5,
+"tackles": 767,
+"def_interceptions": 3,
+"def_fumbles_forced": 21
+},
+"best": {
+"year": 1992,
+"text": "17 sacks, 78 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/O/ONeaLe00.htm"
+},
+{
+"id": "00-0013644",
+"name": "Simeon Rice",
+"pos": "EDGE",
+"first": 1996,
+"last": 2007,
+"career": {
+"gp": 174,
+"def_sacks": 122.0,
+"tackles": 471,
+"def_interceptions": 5
+},
+"best": {
+"year": 2002,
+"text": "15.5 sacks, 50 tackles, 6 forced fumbles"
+},
+"src": "https://en.wikipedia.org/wiki/Simeon_Rice"
+},
+{
+"id": "00-0004205",
+"name": "Richard Dent",
+"pos": "EDGE",
+"first": 1983,
+"last": 1997,
+"career": {
+"gp": 203,
+"def_sacks": 137.5,
+"tackles": 677,
+"def_interceptions": 8,
+"def_fumbles_forced": 37
+},
+"best": {
+"year": 1985,
+"text": "17 sacks, 7 forced fumbles, 2 INT"
+},
+"src": "https://www.pro-football-reference.com/players/D/DentRi00.htm"
+},
+{
+"id": "00-0008179",
+"name": "Rickey Jackson",
+"pos": "EDGE",
+"first": 1981,
+"last": 1995,
+"career": {
+"gp": 227,
+"def_sacks": 128,
+"tackles": 1173,
+"def_interceptions": 8,
+"def_fumbles_forced": 44
+},
+"best": {
+"year": 1992,
+"text": "13.5 sacks, 66 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/J/JackRi01.htm"
+},
+{
+"id": "00-0010872",
+"name": "Willie McGinest",
+"pos": "EDGE",
+"first": 1994,
+"last": 2008,
+"career": {
+"gp": 212,
+"def_sacks": 86.0,
+"def_interceptions": 5,
+"def_fumbles_forced": 16
+},
+"best": {
+"year": 1995,
+"text": "11 sacks, 88 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/M/McGiWi00.htm"
+},
+{
+"id": "00-0009997",
+"name": "Greg Lloyd",
+"pos": "EDGE",
+"first": 1988,
+"last": 1998,
+"career": {
+"gp": 147,
+"def_sacks": 54.5,
+"tackles": 707,
+"def_interceptions": 11,
+"def_fumbles_forced": 38
+},
+"best": {
+"year": 1994,
+"text": "10 sacks, 87 tackles, 6 forced fumbles"
+},
+"src": "https://www.pro-football-reference.com/players/L/LloyGr00.htm"
+},
+{
+"id": "00-0014358",
+"name": "Warren Sapp",
+"pos": "DL",
+"first": 1995,
+"last": 2007,
+"career": {
+"gp": 198,
+"def_sacks": 96.5,
+"tackles": 573,
+"def_interceptions": 4,
+"def_fumbles_forced": 19
+},
+"best": {
+"year": 2000,
+"text": "16.5 sacks, 52 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/Warren_Sapp"
+},
+{
+"id": "00-0013405",
+"name": "John Randle",
+"pos": "DL",
+"first": 1990,
+"last": 2003,
+"career": {
+"gp": 219,
+"def_sacks": 137.5,
+"tackles": 471,
+"def_interceptions": 1,
+"def_fumbles_forced": 29
+},
+"best": {
+"year": 1997,
+"text": "15.5 sacks, 58 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/John_Randle"
+},
+{
+"id": "00-0009148",
+"name": "Cortez Kennedy",
+"pos": "DL",
+"first": 1990,
+"last": 2000,
+"career": {
+"gp": 167,
+"def_sacks": 58.0,
+"tackles": 668,
+"def_interceptions": 3,
+"def_fumbles_forced": 13
+},
+"best": {
+"year": 1992,
+"text": "14 sacks, 92 tackles, 4 forced fumbles"
+},
+"src": "https://www.pro-football-reference.com/players/K/KennCo00.htm"
+},
+{
+"id": "00-0018405",
+"name": "Bryant Young",
+"pos": "DL",
+"first": 1994,
+"last": 2007,
+"career": {
+"gp": 208,
+"def_sacks": 89.5,
+"tackles": 627,
+"def_interceptions": 0,
+"def_fumbles_forced": 11
+},
+"best": {
+"year": 1996,
+"text": "11.5 sacks, 76 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/Y/YounBr00.htm"
+},
+{
+"id": "00-0006051",
+"name": "La'Roi Glover",
+"pos": "DL",
+"first": 1996,
+"last": 2008,
+"career": {
+"gp": 193,
+"def_sacks": 83.5,
+"tackles": 557,
+"def_interceptions": 2,
+"def_fumbles_forced": 16
+},
+"best": {
+"year": 2000,
+"text": "17 sacks, 66 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/La%27Roi_Glover"
+},
+{
+"id": "00-0015847",
+"name": "Dana Stubblefield",
+"pos": "DL",
+"first": 1993,
+"last": 2003,
+"career": {
+"gp": 154,
+"def_sacks": 53.5,
+"tackles": 434,
+"def_interceptions": 2,
+"def_fumbles_forced": 11
+},
+"best": {
+"year": 1997,
+"text": "15 sacks, 61 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/S/StubDa00.htm"
+},
+{
+"id": "00-0017277",
+"name": "Ted Washington",
+"pos": "DL",
+"first": 1991,
+"last": 2007,
+"career": {
+"gp": 236,
+"def_sacks": 34.5,
+"tackles": 609,
+"def_interceptions": 2,
+"def_fumbles_forced": 8
+},
+"best": {
+"year": 1996,
+"text": "92 tackles, 3.5 sacks"
+},
+"src": "https://www.pro-football-reference.com/players/W/WashTe01.htm"
+},
+{
+"id": "00-0014619",
+"name": "Junior Seau",
+"pos": "LB",
+"first": 1990,
+"last": 2009,
+"career": {
+"gp": 268,
+"def_sacks": 56.5,
+"tackles": 1846,
+"def_interceptions": 18,
+"def_fumbles_forced": 12
+},
+"best": {
+"year": 1994,
+"text": "154 tackles, 5.5 sacks"
+},
+"src": "https://en.wikipedia.org/wiki/Junior_Seau"
+},
+{
+"id": "00-0009889",
+"name": "Ray Lewis",
+"pos": "LB",
+"first": 1996,
+"last": 2012,
+"career": {
+"gp": 228,
+"def_sacks": 41.5,
+"tackles": 2059,
+"def_interceptions": 31,
+"def_fumbles_forced": 19
+},
+"best": {
+"year": 2003,
+"text": "163 tackles, 6 INT, 1.5 sacks"
+},
+"src": "https://en.wikipedia.org/wiki/Ray_Lewis"
+},
+{
+"id": "00-0001833",
+"name": "Derrick Brooks",
+"pos": "LB",
+"first": 1995,
+"last": 2008,
+"career": {
+"gp": 224,
+"def_sacks": 13.5,
+"tackles": 1713,
+"def_interceptions": 25,
+"def_fumbles_forced": 24
+},
+"best": {
+"year": 2002,
+"text": "118 tackles, 5 INT"
+},
+"src": "https://en.wikipedia.org/wiki/Derrick_Brooks"
+},
+{
+"id": "00-0016344",
+"name": "Zach Thomas",
+"pos": "LB",
+"first": 1996,
+"last": 2008,
+"career": {
+"gp": 184,
+"def_sacks": 20.5,
+"tackles": 1734,
+"def_interceptions": 17,
+"def_fumbles_forced": 16
+},
+"best": {
+"year": 2006,
+"text": "165 tackles, 3 sacks"
+},
+"src": "https://en.wikipedia.org/wiki/Zach_Thomas"
+},
+{
+"id": "00-0002123",
+"name": "Tedy Bruschi",
+"pos": "LB",
+"first": 1996,
+"last": 2008,
+"career": {
+"gp": 189,
+"def_sacks": 30.5,
+"tackles": 1074,
+"def_interceptions": 12,
+"def_fumbles_forced": 18
+},
+"best": {
+"year": 2004,
+"text": "124 tackles, 3.5 sacks, 3 INT"
+},
+"src": "https://en.wikipedia.org/wiki/Tedy_Bruschi"
+},
+{
+"id": "00-0012102",
+"name": "Hardy Nickerson",
+"pos": "LB",
+"first": 1987,
+"last": 2002,
+"career": {
+"gp": 225,
+"def_sacks": 21.0,
+"tackles": 1586,
+"def_interceptions": 12,
+"def_fumbles_forced": 19
+},
+"best": {
+"year": 1993,
+"text": "214 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/N/NickHa00.htm"
+},
+{
+"id": "00-0009298",
+"name": "Levon Kirkland",
+"pos": "LB",
+"first": 1992,
+"last": 2002,
+"career": {
+"gp": 176,
+"def_sacks": 19.5,
+"tackles": 982,
+"def_interceptions": 11,
+"def_fumbles_forced": 16
+},
+"best": {
+"year": 1997,
+"text": "125 tackles, 5 sacks, 2 INT"
+},
+"src": "https://en.wikipedia.org/wiki/Levon_Kirkland"
+},
+{
+"id": "00-0012196",
+"name": "Ken Norton",
+"pos": "LB",
+"first": 1988,
+"last": 2000,
+"career": {
+"gp": 191,
+"def_sacks": 12.5,
+"tackles": 1128,
+"def_interceptions": 5,
+"def_fumbles_forced": 11
+},
+"best": {
+"year": 1995,
+"text": "96 tackles, 3 INT"
+},
+"src": "https://www.pro-football-reference.com/players/N/NortKe00.htm"
+},
+{
+"id": "00-0000426",
+"name": "Jessie Armstead",
+"pos": "LB",
+"first": 1993,
+"last": 2003,
+"career": {
+"gp": 176,
+"def_sacks": 40.0,
+"tackles": 971,
+"def_interceptions": 12,
+"def_fumbles_forced": 16
+},
+"best": {
+"year": 1997,
+"text": "132 tackles, 3.5 sacks, 2 INT"
+},
+"src": "https://www.pro-football-reference.com/players/A/ArmsJe00.htm"
+},
+{
+"id": "00-0015469",
+"name": "Chris Spielman",
+"pos": "LB",
+"first": 1988,
+"last": 1997,
+"career": {
+"gp": 148,
+"def_sacks": 10.5,
+"tackles": 1181,
+"def_interceptions": 6,
+"def_fumbles_forced": 15
+},
+"best": {
+"year": 1994,
+"text": "195 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/S/SpieCh00.htm"
+},
+{
+"id": "00-0011335",
+"name": "Sam Mills",
+"pos": "LB",
+"first": 1986,
+"last": 1997,
+"career": {
+"gp": 181,
+"def_sacks": 20.5,
+"tackles": 1142,
+"def_interceptions": 11,
+"def_fumbles_forced": 24
+},
+"best": {
+"year": 1996,
+"text": "122 tackles, 5.5 sacks"
+},
+"src": "https://www.pro-football-reference.com/players/M/MillSa00.htm"
+},
+{
+"id": "00-0014004",
+"name": "Bill Romanowski",
+"pos": "LB",
+"first": 1988,
+"last": 2003,
+"career": {
+"gp": 243,
+"def_sacks": 39.5,
+"tackles": 1118,
+"def_interceptions": 18,
+"def_fumbles_forced": 16
+},
+"best": {
+"year": 1996,
+"text": "77 tackles, 3 sacks, 3 INT"
+},
+"src": "https://www.pro-football-reference.com/players/R/RomaBi00.htm"
+},
+{
+"id": "00-0005322",
+"name": "London Fletcher",
+"pos": "LB",
+"first": 1998,
+"last": 2013,
+"career": {
+"gp": 256,
+"def_sacks": 39.0,
+"tackles": 2032,
+"def_interceptions": 23,
+"def_fumbles_forced": 20
+},
+"best": {
+"year": 2011,
+"text": "166 tackles, 2 INT"
+},
+"src": "https://en.wikipedia.org/wiki/London_Fletcher"
+},
+{
+"id": "00-0014324",
+"name": "Deion Sanders",
+"pos": "CB",
+"first": 1989,
+"last": 2005,
+"career": {
+"gp": 188,
+"def_interceptions": 53,
+"tackles": 512,
+"def_fumbles_forced": 10,
+"def_sacks": 1.0
+},
+"best": {
+"year": 1994,
+"text": "6 INT for 303 yards, 3 returned for TD"
+},
+"src": "https://www.pro-football-reference.com/players/S/SandDe00.htm"
+},
+{
+"id": "00-0018229",
+"name": "Rod Woodson",
+"pos": "CB",
+"first": 1987,
+"last": 2003,
+"career": {
+"gp": 238,
+"def_interceptions": 71,
+"tackles": 1158,
+"def_fumbles_forced": 18,
+"def_sacks": 13.5
+},
+"best": {
+"year": 1993,
+"text": "8 INT, 95 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/W/WoodRo01.htm"
+},
+{
+"id": "00-0006316",
+"name": "Darrell Green",
+"pos": "CB",
+"first": 1983,
+"last": 2002,
+"career": {
+"gp": 295,
+"def_interceptions": 54,
+"tackles": 1162,
+"def_fumbles_forced": 9,
+"def_sacks": 1.0
+},
+"best": {
+"year": 1991,
+"text": "5 INT, 79 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/G/GreeDa00.htm"
+},
+{
+"id": "00-0017710",
+"name": "Aeneas Williams",
+"pos": "CB",
+"first": 1991,
+"last": 2004,
+"career": {
+"gp": 211,
+"def_interceptions": 55,
+"tackles": 793,
+"def_fumbles_forced": 11,
+"def_sacks": 3.0
+},
+"best": {
+"year": 1994,
+"text": "9 INT"
+},
+"src": "https://www.pro-football-reference.com/players/W/WillAe00.htm"
+},
+{
+"id": "00-0018227",
+"name": "Charles Woodson",
+"pos": "CB",
+"first": 1998,
+"last": 2015,
+"career": {
+"gp": 254,
+"def_interceptions": 65,
+"tackles": 1205,
+"def_fumbles_forced": 33,
+"def_sacks": 20.0
+},
+"best": {
+"year": 2009,
+"text": "9 INT, 3 returned for TD, 74 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/Charles_Woodson"
+},
+{
+"id": "00-0009687",
+"name": "Ty Law",
+"pos": "CB",
+"first": 1995,
+"last": 2009,
+"career": {
+"gp": 203,
+"def_interceptions": 53,
+"tackles": 839,
+"def_fumbles_forced": 7,
+"def_sacks": 5.0
+},
+"best": {
+"year": 1998,
+"text": "9 INT, 70 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/Ty_Law"
+},
+{
+"id": "00-0010264",
+"name": "Sam Madison",
+"pos": "CB",
+"first": 1997,
+"last": 2008,
+"career": {
+"gp": 173,
+"def_interceptions": 38,
+"tackles": 467,
+"def_fumbles_forced": 11,
+"def_sacks": 2.0
+},
+"best": {
+"year": 1999,
+"text": "7 INT for 164 yards"
+},
+"src": "https://en.wikipedia.org/wiki/Sam_Madison"
+},
+{
+"id": "00-0016924",
+"name": "Troy Vincent",
+"pos": "CB",
+"first": 1992,
+"last": 2006,
+"career": {
+"gp": 207,
+"def_interceptions": 47,
+"tackles": 794,
+"def_fumbles_forced": 12,
+"def_sacks": 5.5
+},
+"best": {
+"year": 1999,
+"text": "7 INT, 79 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/Troy_Vincent"
+},
+{
+"id": "00-0000204",
+"name": "Eric Allen",
+"pos": "CB",
+"first": 1988,
+"last": 2001,
+"career": {
+"gp": 217,
+"def_interceptions": 54,
+"tackles": 787,
+"def_fumbles_forced": 7,
+"def_sacks": 3.0
+},
+"best": {
+"year": 1993,
+"text": "6 INT, 4 returned for TD"
+},
+"src": "https://www.pro-football-reference.com/players/A/AlleEr00.htm"
+},
+{
+"id": "00-0015915",
+"name": "Patrick Surtain",
+"pos": "CB",
+"first": 1998,
+"last": 2008,
+"career": {
+"gp": 163,
+"def_interceptions": 37,
+"tackles": 538,
+"def_fumbles_forced": 7,
+"def_sacks": 7.5
+},
+"best": {
+"year": 2003,
+"text": "7 INT, 53 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/Patrick_Surtain"
+},
+{
+"id": "00-0000741",
+"name": "Ronde Barber",
+"pos": "CB",
+"first": 1997,
+"last": 2012,
+"career": {
+"gp": 241,
+"def_interceptions": 47,
+"tackles": 1251,
+"def_fumbles_forced": 15,
+"def_sacks": 28.0
+},
+"best": {
+"year": 2001,
+"text": "10 INT, 72 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/Ronde_Barber"
+},
+{
+"id": "00-0004073",
+"name": "Brian Dawkins",
+"pos": "S",
+"first": 1996,
+"last": 2011,
+"career": {
+"gp": 224,
+"def_interceptions": 37,
+"tackles": 1147,
+"def_fumbles_forced": 36,
+"def_sacks": 26.0
+},
+"best": {
+"year": 2006,
+"text": "98 tackles, 4 INT, 5 forced fumbles"
+},
+"src": "https://en.wikipedia.org/wiki/Brian_Dawkins"
+},
+{
+"id": "00-0010188",
+"name": "John Lynch",
+"pos": "S",
+"first": 1993,
+"last": 2007,
+"career": {
+"gp": 224,
+"def_interceptions": 26,
+"tackles": 1051,
+"def_fumbles_forced": 15,
+"def_sacks": 13.0
+},
+"best": {
+"year": 1999,
+"text": "117 tackles, 2 INT"
+},
+"src": "https://en.wikipedia.org/wiki/John_Lynch_(American_football)"
+},
+{
+"id": "00-0000500",
+"name": "Steve Atwater",
+"pos": "S",
+"first": 1989,
+"last": 1999,
+"career": {
+"gp": 167,
+"def_interceptions": 24,
+"tackles": 1078,
+"def_fumbles_forced": 12,
+"def_sacks": 5.0
+},
+"best": {
+"year": 1991,
+"text": "150 tackles, 5 INT"
+},
+"src": "https://www.pro-football-reference.com/players/A/AtwaSt00.htm"
+},
+{
+"id": "00-0014724",
+"name": "Darren Sharper",
+"pos": "S",
+"first": 1997,
+"last": 2010,
+"career": {
+"gp": 205,
+"def_interceptions": 63,
+"tackles": 943,
+"def_fumbles_forced": 8,
+"def_sacks": 7.5
+},
+"best": {
+"year": 2009,
+"text": "9 INT for 376 yards, 3 returned for TD"
+},
+"src": "https://en.wikipedia.org/wiki/Darren_Sharper"
+},
+{
+"id": "00-0002424",
+"name": "LeRoy Butler",
+"pos": "S",
+"first": 1990,
+"last": 2001,
+"career": {
+"gp": 181,
+"def_interceptions": 38,
+"tackles": 989,
+"def_fumbles_forced": 13,
+"def_sacks": 20.5
+},
+"best": {
+"year": 1996,
+"text": "5 INT, 87 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/LeRoy_Butler"
+},
+{
+"id": "00-0009561",
+"name": "Carnell Lake",
+"pos": "S",
+"first": 1989,
+"last": 2001,
+"career": {
+"gp": 185,
+"def_interceptions": 16,
+"tackles": 757,
+"def_fumbles_forced": 16,
+"def_sacks": 25.0
+},
+"best": {
+"year": 1997,
+"text": "6 sacks, 3 INT, 60 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/L/LakeCa00.htm"
+},
+{
+"id": "00-0018228",
+"name": "Darren Woodson",
+"pos": "S",
+"first": 1992,
+"last": 2003,
+"career": {
+"gp": 178,
+"def_interceptions": 23,
+"def_fumbles_forced": 17,
+"def_sacks": 11.0
+},
+"best": {
+"year": 1994,
+"text": "5 INT, 77 tackles"
+},
+"src": "https://www.pro-football-reference.com/players/W/WoodDa01.htm"
+},
+{
+"id": "00-0007030",
+"name": "Rodney Harrison",
+"pos": "S",
+"first": 1994,
+"last": 2008,
+"career": {
+"gp": 186,
+"def_interceptions": 34,
+"tackles": 1206,
+"def_fumbles_forced": 15,
+"def_sacks": 30.5
+},
+"best": {
+"year": 2000,
+"text": "6 INT, 127 tackles, 6 sacks"
+},
+"src": "https://en.wikipedia.org/wiki/Rodney_Harrison"
+},
+{
+"id": "00-0011326",
+"name": "Lawyer Milloy",
+"pos": "S",
+"first": 1996,
+"last": 2010,
+"career": {
+"gp": 234,
+"def_interceptions": 25,
+"tackles": 1431,
+"def_fumbles_forced": 11,
+"def_sacks": 21.0
+},
+"best": {
+"year": 1998,
+"text": "6 INT, 120 tackles"
+},
+"src": "https://en.wikipedia.org/wiki/Lawyer_Milloy"
+},
+{
+"id": "00-0016919",
+"name": "Adam Vinatieri",
+"pos": "K",
+"first": 1996,
+"last": 2019,
+"career": {
+"gp": 365,
+"fg_made": 599,
+"fg_att": 715,
+"pat_made": 874,
+"pat_att": 898,
+"fg_long": 57
+},
+"best": {
+"year": 2004,
+"text": "31 of 33 field goals, 141 points"
+},
+"src": "https://www.pro-football-reference.com/players/V/vinatada01.htm"
+},
+{
+"id": "00-0000282",
+"name": "Morten Andersen",
+"pos": "K",
+"first": 1982,
+"last": 2007,
+"career": {
+"gp": 382,
+"fg_made": 565,
+"fg_att": 709,
+"fg_long": 60,
+"pat_made": 849,
+"pat_att": 859
+},
+"best": {
+"year": 1995,
+"text": "31 of 37 field goals, long of 59, 122 points"
+},
+"src": "https://www.pro-football-reference.com/players/A/andermor01.htm"
+},
+{
+"id": "00-0000313",
+"name": "Gary Anderson",
+"pos": "K",
+"first": 1982,
+"last": 2004,
+"career": {
+"gp": 353,
+"fg_made": 538,
+"fg_att": 672,
+"fg_long": 55,
+"pat_made": 820,
+"pat_att": 827
+},
+"best": {
+"year": 1998,
+"text": "35 of 35 field goals, 164 points"
+},
+"src": "https://www.pro-football-reference.com/players/A/andergar02.htm"
+},
+{
+"id": "00-0006800",
+"name": "Jason Hanson",
+"pos": "K",
+"first": 1992,
+"last": 2012,
+"career": {
+"gp": 327,
+"fg_made": 495,
+"fg_att": 601,
+"fg_long": 56,
+"pat_made": 665,
+"pat_att": 673
+},
+"best": {
+"year": 1995,
+"text": "28 of 34 field goals, long of 56, 132 points"
+},
+"src": "https://www.pro-football-reference.com/players/H/hansojas01.htm"
+},
+{
+"id": "00-0004811",
+"name": "Jason Elam",
+"pos": "K",
+"first": 1993,
+"last": 2009,
+"career": {
+"gp": 263,
+"fg_made": 436,
+"fg_att": 540,
+"pat_made": 675,
+"pat_att": 679,
+"fg_long": 63
+},
+"best": {
+"year": 1998,
+"text": "23 of 27 field goals, long of 63, 127 points"
+},
+"src": "https://www.pro-football-reference.com/players/E/elamxjas01.htm"
+},
+{
+"id": "00-0002655",
+"name": "John Carney",
+"pos": "K",
+"first": 1988,
+"last": 2010,
+"career": {
+"gp": 302,
+"fg_made": 478,
+"fg_att": 580,
+"fg_long": 54,
+"pat_made": 628,
+"pat_att": 638
+},
+"best": {
+"year": 1994,
+"text": "34 of 38 field goals, 135 points"
+},
+"src": "https://en.wikipedia.org/wiki/John_Carney_(American_football)"
+},
+{
+"id": "00-0015784",
+"name": "Matt Stover",
+"pos": "K",
+"first": 1991,
+"last": 2009,
+"career": {
+"gp": 297,
+"fg_made": 471,
+"fg_att": 563,
+"fg_long": 55,
+"pat_made": 591,
+"pat_att": 594
+},
+"best": {
+"year": 2000,
+"text": "35 of 39 field goals, 135 points"
+},
+"src": "https://en.wikipedia.org/wiki/Matt_Stover"
+},
+{
+"id": "00-0000108",
+"name": "David Akers",
+"pos": "K",
+"first": 1998,
+"last": 2013,
+"career": {
+"gp": 237,
+"fg_made": 386,
+"fg_att": 477,
+"fg_long": 63,
+"pat_made": 563,
+"pat_att": 570
+},
+"best": {
+"year": 2011,
+"text": "44 of 52 field goals, 166 points"
+},
+"src": "https://en.wikipedia.org/wiki/David_Akers"
+},
+{
+"id": "00-0010072",
+"name": "Ryan Longwell",
+"pos": "K",
+"first": 1997,
+"last": 2011,
+"career": {
+"gp": 240,
+"fg_made": 361,
+"fg_att": 434,
+"fg_long": 55,
+"pat_made": 604,
+"pat_att": 613
+},
+"best": {
+"year": 2009,
+"text": "26 of 28 field goals, 132 points"
+},
+"src": "https://en.wikipedia.org/wiki/Ryan_Longwell"
+},
+{
+"id": "00-0009028",
+"name": "John Kasay",
+"pos": "K",
+"first": 1991,
+"last": 2011,
+"career": {
+"gp": 301,
+"fg_made": 461,
+"fg_att": 563,
+"fg_long": 56,
+"pat_made": 587,
+"pat_att": 598
+},
+"best": {
+"year": 1996,
+"text": "37 of 45 field goals, 145 points"
+},
+"src": "https://en.wikipedia.org/wiki/John_Kasay"
+}
+]
