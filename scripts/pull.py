@@ -223,6 +223,10 @@ def main():
         import colts; colts.main(False)
     except Exception as e:   # the Colts game-day file is optional too
         print("colts skipped:", e)
+    try:
+        import games; games.main()
+    except Exception as e:   # so is the week's game list
+        print("games skipped:", e)
 
 if __name__ == "__main__":
     main()
