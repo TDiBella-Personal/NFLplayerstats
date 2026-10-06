@@ -3,6 +3,7 @@
 //
 // GET  /favs            -> ["00-0036223", ...]
 // PUT  /favs            <- same array
+// GET  /theme           -> {team:"IND"}   PUT /theme <- same ("" = no team)
 // GET  /story/:id       -> {bullets:[...], hometown:"..."} or 404
 // POST /story/:id       <- {name, team, pos, college, drafted}  researches, saves, returns the story
 // POST /ask             <- {q}  answers a rules/terms question, saves it, returns {q, title, cat, short, deep}
@@ -35,6 +36,17 @@ export default {
           if (!Array.isArray(body) || body.length > 200) return json({ error: "bad list" }, 400);
           await env.OG.put("favs", JSON.stringify(body.map(String)));
           return json(body);
+        }
+      }
+
+      if (url.pathname === "/theme") {
+        if (req.method === "GET") return json((await env.OG.get("theme", "json")) || { team: "IND" });
+        if (req.method === "PUT") {
+          const body = await req.json();
+          const team = String(body.team || "");
+          if (!/^[A-Z]{0,3}$/.test(team)) return json({ error: "bad team" }, 400);
+          await env.OG.put("theme", JSON.stringify({ team }));
+          return json({ team });
         }
       }
 

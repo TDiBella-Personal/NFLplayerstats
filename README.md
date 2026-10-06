@@ -57,3 +57,7 @@ Open the app URL in Safari > Share > **Add to Home Screen**. Do it on both phone
 - `LAYOUT` in `index.html`: which stats show per position.
 - `DEFAULT` favorites: there are none. Star players from their cards.
 - Side-by-side compare, career totals: not built yet.
+
+## Awards, retired stars, theme
+- `scripts/awards_src.txt` is the hand-checked list of award winners and Hall of Fame classes. After each season, add the new winners and run `python3 scripts/build_awards.py`. It writes `data/awards.json` (badges on player cards) and `data/stars.json` (retired players that show in search without pressing "Search all retired players"). A winner that can't be matched to exactly one player gets no badge.
+- Team theme: tap the logo next to "Our Guys". The choice is saved on the device and, once the worker in `worker/worker.js` is deployed with the `/theme` endpoint, shared across devices.

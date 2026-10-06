@@ -303,11 +303,46 @@ body.home .dock input{font-size:19px;padding:18px 10px}
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);background:#fff;color:#11151B;font-size:14.5px;font-weight:500;padding:10px 16px;border-radius:22px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;max-width:88vw;text-align:center;z-index:9}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){#card,.toast,.more i{transition:none}.spin{animation-duration:2.4s}}
+
+/* team theme */
+body{background:radial-gradient(130% 520px at 50% -80px,var(--wash,transparent),transparent 72%) no-repeat,var(--base)}
+#wm{position:fixed;right:-70px;top:40px;width:340px;height:340px;background:center/contain no-repeat;opacity:.07;pointer-events:none;z-index:0;display:none}
+body.home #wm{display:block}
+#top,#home{position:relative;z-index:1}
+body.home .dock{position:relative;z-index:1}
+#top h1{display:flex;align-items:center;gap:10px}
+#thbtn{width:44px;height:44px;border-radius:12px;background:var(--panel2);border:1px solid var(--th,var(--line));display:flex;align-items:center;justify-content:center;flex:none}
+#thbtn img{width:34px;height:34px;object-fit:contain}
+#thbtn i{width:18px;height:18px;border-radius:50%;border:2px solid var(--muted);display:block}
+body.home .dock .in{border-color:var(--th,#4A5A70)}
+body.home .dock .in:focus-within{box-shadow:0 0 0 3px var(--thsoft,transparent)}
+.listhead h2{border-left:3px solid var(--th,transparent);padding-left:8px}
+#allg{color:var(--th,var(--text))}
+#side button.on{box-shadow:inset 3px 0 0 var(--th,transparent)}
+.thg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 6px}
+.thb{background:var(--panel);border-radius:12px;padding:10px 4px 8px;text-align:center;border:2px solid transparent;font-size:12.5px;font-weight:600}
+.thb img{width:42px;height:42px;object-fit:contain;display:block;margin:0 auto 4px}
+.thb.on{border-color:var(--ac,#fff);background:var(--panel2)}
+.thb.none{grid-column:1/-1;padding:13px}
+.thd{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px}
+/* awards */
+.aw{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px 0}
+.awd{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:5px 9px;font-size:12.5px;line-height:1.3}
+.awd b{display:block;font-weight:700;font-size:13px}
+.awd small{color:var(--muted);font-size:11.5px}
+.awd.hof{border-color:#C9A227;background:#2A2412}.awd.hof b{color:#F2D36B}
+/* headshot tiles */
+.tile .tn{position:relative;height:68px;background:linear-gradient(180deg,var(--c1),color-mix(in srgb,var(--c1) 70%,#000));overflow:hidden}
+.tile .tn .hs{position:absolute;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.tile .tn .tg img{position:absolute;left:3px;top:3px;width:20px;height:20px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
+.tile .tn .tj{position:absolute;right:4px;top:2px;font-size:14px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.tile .tn.nh .tj{position:static;font-size:30px;color:#fff;text-shadow:none}
 </style>
 </head>
 <body class="home">
 <nav id="side" aria-label="Sections"></nav>
-<header id="top" class="wrap"><h1>Our Guys</h1><p id="upd">Loading</p></header>
+<div id="wm" aria-hidden="true"></div>
+<header id="top" class="wrap"><h1><button id="thbtn" aria-label="Change team theme"><i></i></button>Our Guys</h1><p id="upd">Loading</p></header>
 
 <div class="dock"><div class="dk">
   <button id="homebtn" aria-label="Home"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></button>
@@ -420,7 +455,7 @@ function val(k,s){
 }
 function num(v){if(typeof v==="string")v=v.replace(/,/g,"");if(typeof v==="string"&&v.indexOf("/")>0){var p=v.split("/");return +p[1]?p[0]/p[1]:0}return +v||0}
 
-var P=[],S={},META={},REF=[],REFMAP={},byIdMap={},favs=[],stories={},asks=[],askCache={},ANN=[],RET=null,retLoading=null,retShown="",CAR=null,carLoading=null,careerOpen=false;
+var P=[],S={},META={},REF=[],REFMAP={},byIdMap={},favs=[],stories={},asks=[],askCache={},ANN=[],RET=null,STARS=null,AW={},THEME="IND",retLoading=null,retShown="",CAR=null,carLoading=null,careerOpen=false;
 var drawerOpen=false,deepOpen=false,browseCat="rule",expandGroup={},current=null,stack=[];
 var $=function(s){return document.querySelector(s)};
 function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
@@ -449,7 +484,10 @@ function rowHTML(p,showStar){
     (h?'<span class="hl"><strong>'+val(h[0],s)+'</strong><small>'+h[1]+'</small></span>':'<span class="hl"></span>')+'</button></li>';
 }
 function tileHTML(p){
-  return '<li><button class="tile" style="'+tv(p.team)+'" data-id="'+p.id+'" aria-label="'+esc(p.name)+', '+p.pos+'"><span class="tn">'+(p.num||initials(p.name))+'</span><span class="tl">'+esc(p.name.split(" ").slice(1).join(" ")||p.name)+'</span><span class="tp">'+p.pos+(p.ret?' &middot; retired':'')+'</span></button></li>';
+  var num=p.num||initials(p.name);
+  return '<li><button class="tile" style="'+tv(p.team)+'" data-id="'+p.id+'" aria-label="'+esc(p.name)+', '+p.pos+'"><span class="tn'+(p.headshot?'':' nh')+'">'+
+    (p.headshot?'<img class="hs" src="'+esc(p.headshot)+'" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'nh\');this.remove()">':'')+
+    '<span class="tg">'+logo(p.team)+'</span><span class="tj">'+num+'</span></span><span class="tl">'+esc(p.name.split(" ").slice(1).join(" ")||p.name)+'</span><span class="tp">'+p.pos+(p.ret?' &middot; retired':'')+'</span></button></li>';
 }
 function refHTML(e){
   return '<li><button class="ref" style="'+cc(e.cat)+'" data-ref="'+e.id+'"><span class="rt"><span class="rn">'+esc(e.name)+'</span><span class="tag">'+(CATS[e.cat]||CATS.other).one+'</span></span><span class="rs">'+esc(e.short)+'</span></button></li>';
@@ -496,7 +534,9 @@ function annRowHTML(a){
   return '<li><button class="ref" style="'+cc("ann")+'" data-ann="'+a.id+'"><span class="rt"><span class="rn">'+esc(a.name)+'</span><span class="tag">'+(a.quotes.length?a.quotes.length+(a.quotes.length>1?" lines":" line"):esc(a.role==="Color analyst"?"":a.role))+'</span></span><span class="rs">'+esc(bits.join(", "))+'</span></button></li>';
 }
 function retBlock(q,scope){
-  if(RET&&retShown===q){var rp=searchPlayers(q,RET).slice(0,30);
+  var full=RET&&retShown===q,src=full?RET:STARS;
+  if(src){var rp=searchPlayers(q,src).slice(0,full?30:8);
+    if(!full)return (rp.length?'<div class="grp" style="margin-top:20px"><span>Retired</span><span>'+rp.length+'</span></div><ul class="rows">'+rp.map(function(p){return rowHTML(p,true)}).join("")+'</ul>':'')+'<button class="retbtn" data-ret="'+esc(q)+'">Search all retired players</button>';
     return '<div class="grp" style="margin-top:20px"><span>Retired players</span><span>'+rp.length+'</span></div><ul class="rows">'+(rp.length?rp.map(function(p){return rowHTML(p,true)}).join(""):'<li class="empty">No retired player by that name since 1999.</li>')+'</ul>';}
   return '<button class="retbtn" data-ret="'+esc(q)+'">Search retired players</button>';
 }
@@ -620,6 +660,7 @@ function render(){
     if(current.ret)renderRetired(current);else renderPlayer(current);if(WORKER&&!stories[v.id])fetchStory(v.id)}
   else if(v.t==="ann")renderAnnList();
   else if(v.t==="hub")renderHub(v);
+  else if(v.t==="theme")renderTheme();
   else if(v.t==="game")renderGame(v);
   else if(v.t==="annp")renderAnn(v.id);
   else if(v.t==="ref")renderRef(REFMAP[v.id]);
@@ -642,6 +683,14 @@ function storyHTML(p){
   if(!st.bullets||!st.bullets.length)return '<p class="thin">Not much out there on him yet. Nothing solid enough to repeat.</p>'+deep;
   return '<ul>'+st.bullets.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ul>'+deep;
 }
+
+var AWN={MVP:"MVP",SBMVP:"Super Bowl MVP",OPOY:"Offensive Player of the Year",DPOY:"Defensive Player of the Year",OROY:"Offensive Rookie of the Year",DROY:"Defensive Rookie of the Year",CPOY:"Comeback Player of the Year",WPMOY:"Walter Payton Man of the Year",HEISMAN:"Heisman Trophy"};
+function awardsHTML(p){
+  var a=AW[p.id];if(!a)return "";
+  var h=a.h?'<span class="awd hof"><b>Hall of Fame</b><small>Class of '+a.h+'</small></span>':'';
+  (a.a||[]).forEach(function(x){h+='<span class="awd"><b>'+(x[1].length>1?x[1].length+'&times; ':'')+AWN[x[0]]+'</b><small>'+x[1].join(", ")+'</small></span>'});
+  return '<div class="aw">'+h+'</div>';
+}
 function renderPlayer(p){
   var t=team(p.team),fav=favs.indexOf(p.id)>=0,s=S[p.id]||{},kind=DRAWER[p.pos],lay=LAYOUT[p.pos],st=stories[p.id];
   var h='<div class="wrap" style="'+tv(p.team)+'">'+
@@ -650,6 +699,7 @@ function renderPlayer(p){
    '<button class="fav" data-act="fav" aria-pressed="'+fav+'" aria-label="'+(fav?'Remove from favorites':'Add to favorites')+'">'+(fav?'&#9733; Favorite':'&#9734; Favorite')+'</button></span></div>'+
    '<div class="id"><div class="face" aria-hidden="true">'+faceHTML(p)+'</div><div><h2>'+esc(p.name)+'</h2>'+
    '<div class="sub"><span class="badge">'+p.team+'</span><span>'+t.n+'</span><span>'+p.pos+'</span>'+(p.num?'<span>#'+p.num+'</span>':'')+'</div></div></div></header>';
+  h+=awardsHTML(p);
 
   h+='<section class="sec"><h3>This season <span>'+(s.gp?s.gp+' games, through Week '+META.week:'through Week '+META.week)+'</span></h3>';
   if(lay&&s.gp)h+=statsHTML(lay,s);
@@ -858,6 +908,32 @@ function renderCompare(v){
 }
 
 // ================= retired players + career =================
+
+// ================= team theme =================
+var DIVS=[["AFC East",["BUF","MIA","NE","NYJ"]],["AFC North",["BAL","CIN","CLE","PIT"]],["AFC South",["HOU","IND","JAX","TEN"]],["AFC West",["DEN","KC","LV","LAC"]],
+          ["NFC East",["DAL","NYG","PHI","WAS"]],["NFC North",["CHI","DET","GB","MIN"]],["NFC South",["ATL","CAR","NO","TB"]],["NFC West",["ARI","LA","SF","SEA"]]];
+function lum(hex){var n=parseInt(hex.slice(1),16),r=(n>>16)/255,g=((n>>8)&255)/255,b=(n&255)/255;return .2126*r+.7152*g+.0722*b}
+function rgba(hex,a){var n=parseInt(hex.slice(1),16);return "rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")"}
+function applyTheme(){
+  var st=document.documentElement.style,t=TEAMS[THEME]&&THEME!=="FA"?TEAMS[THEME]:null,btn=$("#thbtn");
+  if(!t){["--th","--thsoft","--wash"].forEach(function(k){st.removeProperty(k)});$("#wm").style.backgroundImage="";btn.innerHTML="<i></i>";return}
+  var n=parseInt(t.c1.slice(1),16),ch=[n>>16,(n>>8)&255,n&255],dark=lum(t.c1)<.06||Math.max.apply(0,ch)-Math.min.apply(0,ch)<16;                    // near-black primaries (Raiders, Saints, Bears...) wash with the accent instead
+  st.setProperty("--th",t.ac);st.setProperty("--thsoft",rgba(t.ac,.22));
+  st.setProperty("--wash",dark?rgba(t.ac,.16):rgba(t.c1,.62));
+  var src="https://a.espncdn.com/i/teamlogos/nfl/500/"+(LOGO_MAP[THEME]||THEME.toLowerCase())+".png";
+  $("#wm").style.backgroundImage="url("+src+")";
+  btn.innerHTML='<img src="'+src+'" alt="" onerror="this.outerHTML=\'<i></i>\'">';
+}
+function setTheme(k){
+  THEME=k;save("og_theme",k);applyTheme();
+  if(WORKER)api("/theme",{method:"PUT",body:JSON.stringify({team:k})}).catch(function(){});
+}
+function renderTheme(){
+  var h='<div class="wrap"><header class="phdr"><div class="bar">'+BACK+'</div><h2>Team theme</h2></header><section class="sec"><p class="thru" style="margin-top:0">Colors the app for your team. Player and game screens keep their own team colors.</p>'+
+    '<div class="thg"><button class="thb none'+(THEME?'':' on')+'" data-theme="">No team</button></div>';
+  DIVS.forEach(function(d){h+='<div class="thd">'+d[0]+'</div><div class="thg">'+d[1].map(function(k){return '<button class="thb'+(THEME===k?' on':'')+'" style="'+tv(k)+'" data-theme="'+k+'">'+logo(k)+esc(team(k).n)+'</button>'}).join("")+'</div>'});
+  $("#card").innerHTML=h+'</section></div>';
+}
 // ================= today's games =================
 var COLTS=null,GAMES=null,GALL=false;
 function dayKey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
@@ -926,12 +1002,12 @@ function renderGame(v){
 var HEADSHOT="https://static.www.nfl.com/image/";
 function loadRetired(){
   if(!retLoading)retLoading=getJSON("data/retired.json").then(function(r){
-    RET=r.map(function(x){var p={id:x.id,name:x.n,pos:x.p,team:x.t,num:x.j||"",headshot:x.h?HEADSHOT+x.h:"",college:x.c||"",age:"",drafted:x.d||"",past:x.pt||[[x.t,""]],ret:true,first:x.f,last:x.l,car:x.s||null,best:x.b||null,x:x.x||0};
-      p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+p.college);byIdMap[p.id]=byIdMap[p.id]||p;return p});
-    return RET});
+    RET=r.map(mapRet);return RET});
   retLoading.catch(function(){retLoading=null});
   return retLoading;
 }
+function mapRet(x){var p={id:x.id,name:x.n,pos:x.p,team:x.t,num:x.j||"",headshot:x.h?HEADSHOT+x.h:"",college:x.c||"",age:"",drafted:x.d||"",past:x.pt||[[x.t,""]],ret:true,first:x.f,last:x.l,car:x.s||null,best:x.b||null,x:x.x||0};
+      p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+p.college);if(byIdMap[p.id]&&byIdMap[p.id].ret)return byIdMap[p.id];byIdMap[p.id]=byIdMap[p.id]||p;return p}
 function loadCareer(){
   if(!carLoading)carLoading=getJSON("data/career.json").then(function(c){CAR=c;return c});
   carLoading.catch(function(){carLoading=null});
@@ -956,6 +1032,7 @@ function renderRetired(p){
    '<button class="fav" data-act="fav" aria-pressed="'+fav+'" aria-label="'+(fav?'Remove from favorites':'Add to favorites')+'">'+(fav?'&#9733; Favorite':'&#9734; Favorite')+'</button></span></div>'+
    '<div class="id"><div class="face" aria-hidden="true">'+faceHTML(p)+'</div><div><h2>'+esc(p.name)+'</h2>'+
    '<div class="sub"><span class="badge">'+p.team+'</span><span>'+p.pos+'</span><span>Retired</span><span>'+yrs(p)+'</span></div></div></div></header>';
+  h+=awardsHTML(p);
   h+='<section class="sec"><h3>Career <span>'+(c.gp&&p.pos!=="OL"?c.gp.toLocaleString()+' games, ':'')+'regular season</span></h3>';
   if(rows&&rows.length)h+=bigStats(rows,c);
   else h+='<p class="nostat">'+(p.pos==="OL"||p.pos==="LS"?'Nobody keeps stats on '+(p.pos==="OL"?'linemen':'long snappers')+'.':'No stats on file for him.')+'</p>';
@@ -1035,6 +1112,8 @@ function retSearch(b,after){
   loadRetired().then(function(){retShown=q;after()},function(){b.textContent="Could not load retired players. Tap to retry.";b.disabled=false});
 }
 $("#side").addEventListener("click",function(e){var b=e.target.closest("[data-nav]");if(b)navTo(b.dataset.nav)});
+$("#thbtn").addEventListener("click",function(){show({t:"theme"})});
+$("#card").addEventListener("click",function(e){var b=e.target.closest("[data-theme]");if(b){setTheme(b.dataset.theme);renderTheme()}});
 $("#grid").addEventListener("click",function(e){var b=e.target.closest("[data-nav]");if(b)navTo(b.dataset.nav)});
 $("#today").addEventListener("click",function(e){if(e.target.closest("#allg")){GALL=true;renderToday();return}var b=e.target.closest("[data-game]");if(b)show({t:"game",id:b.dataset.game})});
 $("#homebtn").addEventListener("click",goHome);
@@ -1089,6 +1168,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 
 // ================= boot =================
 renderNav();
+THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
 var bust="?v="+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
@@ -1096,6 +1176,7 @@ getJSON("data/reference.json").then(function(r){
   REF=r;REF.forEach(function(e){REFMAP[e.id]=e;e._n=norm(e.name);e._a=(e.aka||[]).map(norm);e._s=norm(e.short)});
   if($("#q").value.trim())renderList();
 }).catch(function(){});
+getJSON("data/awards.json").then(function(a){AW=a;if(current)render()}).catch(function(){});
 getJSON("data/colts.json").then(function(c){COLTS=c}).catch(function(){});
 getJSON("data/games.json").then(function(x){GAMES=x;renderToday()}).catch(function(){});
 getJSON("data/announcers.json").then(function(a){ANN=a;ANN.forEach(function(x){x._n=norm(x.name);x._t=norm(x.quotes.map(function(q){return q.q}).concat(x.terms.map(function(t){return t.term})).join(" "))})}).catch(function(){});
@@ -1106,10 +1187,12 @@ Promise.all([getJSON("data/players.json"),getJSON("data/stats.json"),getJSON("da
   P.forEach(function(p){byIdMap[p.id]=p;p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+(p.college||""))});
   var d=new Date(META.updated);
   $("#upd").textContent=META.season+" season, through Week "+META.week+". Updated "+d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
-  renderList();favsNeedRetired();renderToday();
+  renderList();renderToday();
+  getJSON("data/stars.json").then(function(r){STARS=r.map(mapRet);if($("#q").value.trim()||!stack.length)renderList();favsNeedRetired()}).catch(function(){favsNeedRetired()});
   if(careerOpen)loadCareer();
   if(WORKER){
     api("/favs").then(function(list){favs=list;save("og_favs",favs);if(!stack.length)renderList();favsNeedRetired()}).catch(function(){$("#lc").textContent="Shared list unreachable"});
+    api("/theme").then(function(t){if(t&&typeof t.team==="string"&&t.team!==THEME){THEME=t.team;save("og_theme",THEME);applyTheme()}}).catch(function(){});
     api("/asks").then(function(list){asks=list;save("og_asks",asks)}).catch(function(){});
   }
 })
