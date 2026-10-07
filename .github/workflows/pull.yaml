@@ -2,8 +2,12 @@ name: Nightly stats pull
 on:
   schedule:
     - cron: "0 9 * * *"    # 5am ET (9:00 UTC), daily: everything
-    - cron: "20 * * * *"   # hourly: Colts game-day file only, and only on a Colts game day before kickoff
+    - cron: "20 * * * *"   # hourly: Colts game-day file before a Colts kickoff; scores and box scores once games have kicked off
   workflow_dispatch:
+    inputs:
+      boxtest_week:
+        description: "Test only: write box scores for this week number to data/_boxtest.json"
+        required: false
 permissions:
   contents: write
 jobs:
@@ -19,7 +23,12 @@ jobs:
         run: python scripts/pull.py
       - name: Colts game-day refresh
         if: github.event.schedule == '20 * * * *'
-        run: python scripts/colts.py --hourly
+        run: |
+          python scripts/colts.py --hourly || true
+          python scripts/games.py --hourly
+      - name: Box score test
+        if: github.event.inputs.boxtest_week != ''
+        run: python scripts/games.py --week ${{ github.event.inputs.boxtest_week }}
       - name: Commit data
         run: |
           git config user.name "our-guys-bot"

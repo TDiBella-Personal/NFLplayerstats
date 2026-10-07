@@ -126,6 +126,11 @@ def main():
     last_week = max((int(g["week"]) for g in played.values()), default=0)
     print("season", season, "through week", last_week)
 
+    try:
+        import teams
+        teams.build(games, fetch(REL + f"stats_team/stats_team_week_{season}.csv"))
+    except Exception as ex: print("teams: skipped,", ex)
+
     weekly = [w for w in fetch(REL + f"stats_player/stats_player_week_{season}.csv") if w["season_type"] == "REG"]
     adv = fetch(REL + f"pfr_advstats/advstats_week_def_{season}.csv", required=False)
     players = fetch(REL + "players/players.csv")
