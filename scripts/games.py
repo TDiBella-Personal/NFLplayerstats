@@ -88,7 +88,7 @@ def box(summary, home_id):
     fmts = {"pass": ("passing", ("YDS", lambda st: f"{g(st,'C/ATT')}, {g(st,'YDS')} yds, {g(st,'TD')} TD, {g(st,'INT')} INT")),
             "rush": ("rushing", ("YDS", lambda st: f"{g(st,'CAR')} carries, {g(st,'YDS')} yds, {g(st,'TD')} TD")),
             "rec": ("receiving", ("YDS", lambda st: f"{g(st,'REC')} catches, {g(st,'YDS')} yds, {g(st,'TD')} TD")),
-            "tkl": ("defensive", ("TOT", lambda st: f"{g(st,'TOT')} tackles" + (f", {g(st,'SACKS')} sacks" if g(st,'SACKS') not in ('0', '0.0', 0) else "")))}
+            "tkl": ("defensive", ("TOT", lambda st: f"{g(st,'TOT')} tackles" + (f", {g(st,'SACKS')} sack{'' if g(st,'SACKS') in ('1','1.0') else 's'}" if g(st,'SACKS') not in ('0', '0.0', 0) else "")))}
     for t in b.get("players") or []:
         key = "home" if str((t.get("team") or {}).get("id")) == home_id else "away"
         for k, (name, fmt) in fmts.items():
@@ -169,5 +169,5 @@ def main(hourly=False, week=None, out_path=OUT):
 if __name__ == "__main__":
     import sys
     a = sys.argv[1:]
-    if "--week" in a: main(week=int(a[a.index("--week") + 1]), out_path=os.path.join(os.path.dirname(OUT), "_boxtest.json"))
+    if "--week" in a: main(week=int(a[a.index("--week") + 1]), out_path="/tmp/boxtest.json")
     else: main(hourly="--hourly" in a)

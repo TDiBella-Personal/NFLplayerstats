@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       boxtest_week:
-        description: "Test only: write box scores for this week number to data/_boxtest.json"
+        description: "Test only: build box scores for this week number (written to /tmp, not published)"
         required: false
 permissions:
   contents: write

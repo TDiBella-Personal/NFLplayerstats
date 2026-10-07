@@ -8,6 +8,7 @@
 // POST /story/:id       <- {name, team, pos, college, drafted}  researches, saves, returns the story
 // POST /ask             <- {q}  answers a rules/terms question, saves it, returns {q, title, cat, short, deep}
 // GET  /ask/:key        -> saved answer or 404
+// GET  /game/:id        -> {bullets:[...], at} or 404   POST /game/:id <- {away, home, when, refresh}
 // GET  /asks            -> recent questions [{q, key, title, short, at}]
 
 const DEFAULT_MODEL = "claude-sonnet-5-5";
@@ -65,6 +66,24 @@ export default {
           const story = await research(p, env);
           await env.OG.put(key, JSON.stringify(story));
           return json(story);
+        }
+      }
+
+      const gm = url.pathname.match(/^\/game\/(\d{1,12})$/);
+      if (gm) {
+        const key = "game:" + gm[1];
+        const existing = await env.OG.get(key, "json");
+        if (req.method === "GET") return existing ? json(existing) : json({ error: "no storylines yet" }, 404);
+        if (req.method === "POST") {
+          const body = await req.json();
+          const today = new Date().toISOString().slice(0, 10);
+          // saved storylines are reused; a refresh is allowed once the saved set is from an earlier day
+          if (existing && !(body.refresh && String(existing.at || "").slice(0, 10) !== today)) return json(existing);
+          if (!(await underCap(env, "story", Number(env.DAILY_STORY_CAP || 40)))) return existing ? json(existing) : json({ error: "daily limit reached, try tomorrow" }, 429);
+          const out = await storylines(body, env);
+          if (!out.bullets.length) return json(existing || out);   // don't save an empty answer
+          await env.OG.put(key, JSON.stringify(out), { expirationTtl: 60 * 60 * 24 * 21 });
+          return json(out);
         }
       }
 
@@ -159,6 +178,27 @@ Respond with ONLY a JSON object, no markdown fences, no preamble:
   return {
     hometown: clean(out.hometown).slice(0, 80),
     bullets: (Array.isArray(out.bullets) ? out.bullets : []).slice(0, 4).map(s => clean(s).slice(0, 220)),
+    at: new Date().toISOString(),
+  };
+}
+
+async function storylines(b, env) {
+  const tidy = s => String(s || "").replace(/[^A-Za-z0-9 .,'-]/g, "").slice(0, 60);
+  const prompt = `NFL game: ${tidy(b.away)} at ${tidy(b.home)}, ${tidy(b.when)}.
+
+Use web search to find the main storylines going into this game, for two fans who will watch it: key injuries and who is expected back, streaks, the matchup everyone is talking about, players or coaches facing a former team, anything unusual about the setting.
+
+Rules:
+- Only include facts you actually found in a current source. Never guess. If the game has already been played, say what happened instead.
+- No betting lines, odds, spreads, or picks.
+- 3 to 5 bullets, each ONE plain sentence, no more than 30 words, no source names or URLs in the text. No em dashes.
+- If you cannot find anything solid, return an empty bullets array.
+
+Respond with ONLY a JSON object, no markdown fences, no preamble:
+{"bullets":["...","..."]}`;
+  const out = await callClaude(prompt, env, 5);
+  return {
+    bullets: (Array.isArray(out.bullets) ? out.bullets : []).slice(0, 5).map(s => clean(s).slice(0, 260)).filter(Boolean),
     at: new Date().toISOString(),
   };
 }

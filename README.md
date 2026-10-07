@@ -61,3 +61,9 @@ Open the app URL in Safari > Share > **Add to Home Screen**. Do it on both phone
 ## Awards, retired stars, theme
 - `scripts/awards_src.txt` is the hand-checked list of award winners and Hall of Fame classes. After each season, add the new winners and run `python3 scripts/build_awards.py`. It writes `data/awards.json` (badges on player cards) and `data/stars.json` (retired players that show in search without pressing "Search all retired players"). A winner that can't be matched to exactly one player gets no badge.
 - Team theme: tap the logo next to "Our Guys". The choice is saved on the device and, once the worker in `worker/worker.js` is deployed with the `/theme` endpoint, shared across devices.
+
+## Week schedule, box scores, teams
+- `data/games.json` (from `scripts/games.py`) is the current NFL week: kickoff, TV, injuries for upcoming games, and a box score once a game is final. The week rolls over once every game is final and the last kickoff was 6+ hours ago, so Tuesday morning shows the new week.
+- Scores refresh about hourly: the `20 * * * *` job runs `scripts/games.py --hourly`, which only does anything while a game has kicked off and has no box score yet. Finals only, no in-progress scores.
+- `data/teams.json` (from `scripts/teams.py`, nightly) holds team season totals. The app turns them into per-game numbers and league ranks for team pages and matchup screens.
+- Game storylines come from the worker (`/game/:id`), saved per game and refreshable once a day.

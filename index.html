@@ -292,9 +292,6 @@ body.home .dock input{font-size:19px;padding:18px 10px}
 .gm .wh small{display:block;color:var(--muted);font-size:12px}
 .gm.colts .wh small,.gm.colts .mt em{color:#C9D6EA}
 .gh{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px}
-.gh div{background:var(--c1);border-radius:12px;padding:14px 12px;position:relative;overflow:hidden;min-height:108px;display:flex;flex-direction:column;justify-content:flex-end}
-.gh div::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.45))}
-.gh div>*{position:relative}
 .gh img{width:44px;height:44px;object-fit:contain;margin-bottom:6px}
 .gh b{font-family:var(--display);font-weight:800;font-size:24px;line-height:1}
 .gh span{font-size:13px;opacity:.9;margin-top:3px}
@@ -337,6 +334,45 @@ body.home .dock .in:focus-within{box-shadow:0 0 0 3px var(--thsoft,transparent)}
 .tile .tn .tg img{position:absolute;left:3px;top:3px;width:20px;height:20px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 .tile .tn .tj{position:absolute;right:4px;top:2px;font-size:14px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.85)}
 .tile .tn.nh .tj{position:static;font-size:30px;color:#fff;text-shadow:none}
+
+/* week list, matchups, box scores, team pages */
+.dayh{font-size:12.5px;color:var(--muted);margin:12px 2px 6px;display:flex;gap:8px;align-items:baseline}
+.dayh b{color:var(--th,var(--text));font-weight:600}
+.gm .wh b{font-weight:700}
+.gh>*{background:var(--c1);border-radius:12px;padding:14px 12px;position:relative;overflow:hidden;min-height:108px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left}
+.gh>*::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.45))}
+.gh>*>*{position:relative}
+.gh .sc{position:absolute;right:12px;top:8px;font-family:var(--display);font-weight:800;font-size:36px;line-height:1}
+.sbs{display:grid;grid-template-columns:1fr auto 1fr;gap:1px;background:var(--line);border-radius:12px;overflow:hidden}
+.sbs>*{background:var(--panel);padding:9px 10px;min-width:0;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sbs>.l{text-align:right;align-items:flex-end}.sbs>.r{text-align:left;align-items:flex-start}
+.sbs>.m{font-size:11.5px;color:var(--muted);text-align:center;align-items:center;padding:9px 6px;min-width:58px;background:var(--panel2)}
+.sbs b{font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbs small{color:var(--muted);font-size:12.5px;line-height:1.3}
+.sbs em{font-style:normal;font-size:11.5px;font-weight:600;color:#F2B84B}.sbs em.bad{color:#FF8A73}
+.sbs .hd{font-family:var(--display);font-weight:800;font-size:17px;background:var(--c1);color:#fff}
+.sbs .win b{color:#7DDC9A}
+.cap{font-size:13px;color:var(--muted);margin:16px 0 8px}
+.notes{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.notes li{background:var(--panel);border-radius:12px;padding:11px 14px;font-size:15px;line-height:1.45;border-left:3px solid var(--line)}
+.linesc{width:100%;border-collapse:collapse;background:var(--panel);border-radius:12px;overflow:hidden;font-size:15px}
+.linesc th{font-weight:400;font-size:12px;color:var(--muted);padding:8px 6px}
+.linesc td{padding:9px 6px;text-align:center;border-top:1px solid var(--line)}
+.linesc td:first-child,.linesc th:first-child{text-align:left;padding-left:14px;font-weight:600}
+.linesc td:last-child{font-weight:700;padding-right:12px}
+.plays{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.plays li{background:var(--panel);border-radius:10px;padding:9px 12px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-left:3px solid var(--c1)}
+.plays small{display:block;color:var(--muted);font-size:12px}
+.plays span{font-size:14.5px;line-height:1.35}
+.plays b{font-family:var(--display);font-size:19px;white-space:nowrap}
+.thdr{padding:calc(10px + env(safe-area-inset-top,0px)) 16px 18px;background:linear-gradient(180deg,var(--c1),color-mix(in srgb,var(--c1) 35%,var(--base)));position:relative;overflow:hidden}
+.thdr .bar button{background:rgba(0,0,0,.3)}
+.thdr .tl{display:flex;align-items:center;gap:14px;margin-top:20px}
+.thdr img{width:72px;height:72px;object-fit:contain}
+.thdr h2{font-family:var(--display);font-weight:800;font-size:38px;line-height:1;margin:0}
+.thdr p{margin:4px 0 0;font-size:15px;opacity:.92}
+button.badge{cursor:pointer}
+.stats.two dt i{font-style:normal;color:var(--ac);font-weight:600}
 </style>
 </head>
 <body class="home">
@@ -548,9 +584,10 @@ function renderList(){
     var pl=searchPlayers(q),rf=searchRef(q);
     var rules=rf.filter(function(x){return x[1].cat==="penalty"||x[1].cat==="rule"}),terms=rf.filter(function(x){return x[1].cat!=="penalty"&&x[1].cat!=="rule"});
     var bestP=pl.length?(pl[0]._s>=1000?800:300):0,bestR=rules.length?rules[0][0]:0,bestT=terms.length?terms[0][0]:0;
-    var an=searchAnn(q);
+    var an=searchAnn(q),tm=searchTeams(q);
     var groups=[
       [bestP,group("p","Players",pl.slice(0,40),5,function(p){return rowHTML(p,true)})],
+      [tm.length?950:0,group("m","Teams",tm,3,teamRowHTML)],
       [an.length?650:0,group("a","Announcers",an,4,annRowHTML)],
       [bestR,group("r","Rules &amp; penalties",rules.map(function(x){return x[1]}),5,refHTML)],
       [bestT,group("t","Terms",terms.map(function(x){return x[1]}),5,refHTML)]
@@ -558,7 +595,7 @@ function renderList(){
     $("#lh").textContent="Results";$("#lc").textContent="";
     var past=asks.filter(function(a){return norm(a.q).indexOf(norm(q))>=0||norm(a.title).indexOf(norm(q))>=0}).slice(0,3);
     var askHTML=WORKER&&q.length>=3?'<button class="askrow'+(rf.length?'':' big')+'" data-ask="'+esc(q)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask about “'+esc(q)+'”</b><small>'+(rf.length?'Not what you meant? Get a researched answer.':'Not in the rulebook. Get a researched answer.')+'</small></span></button>':'';
-    var total=pl.length+rf.length+an.length;
+    var total=pl.length+rf.length+an.length+tm.length;
     box.innerHTML=(groups.map(function(x){return x[1]}).join("")||(total?'':'<ul class="rows"><li class="empty"><strong>Nothing by that name.</strong>Try a last name, a team, a position, or what the announcer said.</li></ul>'))+
       retBlock(q)+
       (past.length?'<div class="grp" style="margin-top:20px"><span>Asked before</span></div><ul class="list">'+past.map(askRowHTML).join("")+'</ul>':'')+askHTML;
@@ -662,6 +699,7 @@ function render(){
   else if(v.t==="hub")renderHub(v);
   else if(v.t==="theme")renderTheme();
   else if(v.t==="game")renderGame(v);
+  else if(v.t==="team")renderTeam(v);
   else if(v.t==="annp")renderAnn(v.id);
   else if(v.t==="ref")renderRef(REFMAP[v.id]);
   else if(v.t==="browse")renderBrowse();
@@ -698,7 +736,7 @@ function renderPlayer(p){
    '<div class="bar">'+BACK+'<span class="r"><button data-act="cmp">Compare</button>'+
    '<button class="fav" data-act="fav" aria-pressed="'+fav+'" aria-label="'+(fav?'Remove from favorites':'Add to favorites')+'">'+(fav?'&#9733; Favorite':'&#9734; Favorite')+'</button></span></div>'+
    '<div class="id"><div class="face" aria-hidden="true">'+faceHTML(p)+'</div><div><h2>'+esc(p.name)+'</h2>'+
-   '<div class="sub"><span class="badge">'+p.team+'</span><span>'+t.n+'</span><span>'+p.pos+'</span>'+(p.num?'<span>#'+p.num+'</span>':'')+'</div></div></div></header>';
+   '<div class="sub"><button class="badge" data-team="'+p.team+'" aria-label="'+esc(t.n)+' team page">'+p.team+'</button><span>'+t.n+'</span><span>'+p.pos+'</span>'+(p.num?'<span>#'+p.num+'</span>':'')+'</div></div></div></header>';
   h+=awardsHTML(p);
 
   h+='<section class="sec"><h3>This season <span>'+(s.gp?s.gp+' games, through Week '+META.week:'through Week '+META.week)+'</span></h3>';
@@ -938,23 +976,41 @@ function renderTheme(){
 var COLTS=null,GAMES=null,GALL=false;
 function dayKey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
 function isColts(g){return g.home.abbr==="IND"||g.away.abbr==="IND"}
-function todaysGames(){
-  if(!GAMES||!GAMES.games)return [];
-  var now=new Date(),all=/[?&]allgames/.test(location.search);
-  return GAMES.games.filter(function(g){var k=new Date(g.kickoff);
-    if(!all&&dayKey(k)!==dayKey(now))return false;
-    if(isColts(g)&&now-k>6*3600e3&&!all)return false;   // the Colts game drops off six hours after kickoff
-    return true;
-  }).sort(function(a,b){return isColts(b)-isColts(a)||new Date(a.kickoff)-new Date(b.kickoff)});
+var TS=null,TRANK={},GST={};
+var CITY={ARI:"Arizona",ATL:"Atlanta",BAL:"Baltimore",BUF:"Buffalo",CAR:"Carolina",CHI:"Chicago",CIN:"Cincinnati",CLE:"Cleveland",DAL:"Dallas",DEN:"Denver",DET:"Detroit",GB:"Green Bay",HOU:"Houston",IND:"Indianapolis",JAX:"Jacksonville",KC:"Kansas City",LV:"Las Vegas",LAC:"Los Angeles",LA:"Los Angeles",MIA:"Miami",MIN:"Minnesota",NE:"New England",NO:"New Orleans",NYG:"New York",NYJ:"New York",PHI:"Philadelphia",PIT:"Pittsburgh",SF:"San Francisco",SEA:"Seattle",TB:"Tampa Bay",TEN:"Tennessee",WAS:"Washington"};
+function ord(n){var s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])}
+// per-game team numbers and league ranks. [key, label, higher is better]
+var TM=[["ppg","Points per game",1],["papg","Points allowed",0],["py","Pass yards per game",1],["ry","Rush yards per game",1],["pya","Pass yards allowed",0],["rya","Rush yards allowed",0],["take","Takeaways",1],["give","Giveaways",0],["sk","Sacks",1],["ska","Sacks allowed",0]];
+function setTeams(t){
+  TS={};Object.keys(t).forEach(function(k){var x=t[k],gp=x.g||x.sg||1,sg=x.sg||gp;if(!TEAMS[k])return;
+    TS[k]={g:gp,w:x.w||0,l:x.l||0,t:x.t||0,ppg:(x.pf||0)/gp,papg:(x.pa||0)/gp,py:(x.py||0)/sg,ry:(x.ry||0)/sg,pya:(x.pya||0)/sg,rya:(x.rya||0)/sg,take:x.take||0,give:x.give||0,sk:x.sk||0,ska:x.ska||0}});
+  TM.forEach(function(m){var ks=Object.keys(TS).sort(function(a,b){return m[2]?TS[b][m[0]]-TS[a][m[0]]:TS[a][m[0]]-TS[b][m[0]]});TRANK[m[0]]={};
+    ks.forEach(function(k,i){TRANK[m[0]][k]=i&&TS[ks[i-1]][m[0]]===TS[k][m[0]]?TRANK[m[0]][ks[i-1]]:i+1})});
+}
+function tnum(k,m){var v=TS[k][m];return m==="take"||m==="give"||m==="sk"||m==="ska"?String(Math.round(v*10)/10):v.toFixed(1)}
+function trec(k,gm){if(TS&&TS[k])return TS[k].w+"-"+TS[k].l+(TS[k].t?"-"+TS[k].t:"");if(gm)return (gm.home.abbr===k?gm.home:gm.away).rec||"";return ""}
+function teamGame(k){return GAMES&&GAMES.games?GAMES.games.filter(function(x){return x.home.abbr===k||x.away.abbr===k})[0]:null}
+function isFinal(g){return g.state==="post"&&g.home.score!==""}
+function gameRow(g){
+  var k=new Date(g.kickoff),fin=isFinal(g),aw=fin&&+g.away.score>+g.home.score,hw=fin&&+g.home.score>+g.away.score;
+  return '<li><button class="gm'+(isColts(g)?' colts':'')+'" data-game="'+g.id+'"><span class="mt">'+logo(g.away.abbr)+esc(team(g.away.abbr).n)+' <em>at</em> '+logo(g.home.abbr)+esc(team(g.home.abbr).n)+'</span>'+
+    '<span class="wh">'+(fin?(aw?'<b>':'')+esc(g.away.score)+(aw?'</b>':'')+'-'+(hw?'<b>':'')+esc(g.home.score)+(hw?'</b>':'')+'<small>Final</small>':
+      (g.state==="in"||g.state==="post"?'Underway':k.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}))+'<small>'+esc(g.tv||"")+'</small>')+'</span></button></li>';
 }
 function renderToday(){
-  var gs=todaysGames(),box=$("#today");
+  var box=$("#today"),gs=GAMES&&GAMES.games?GAMES.games.slice().sort(function(a,b){return new Date(a.kickoff)-new Date(b.kickoff)}):[];
   if(!gs.length){box.innerHTML="";return}
-  var n=gs.length,more=n>5&&!GALL;if(more)gs=gs.slice(0,4);
-  box.innerHTML='<div class="listhead" style="margin-top:14px"><h2>Today’s games</h2><span>'+n+'</span></div><ul class="gms">'+gs.map(function(g){
-    var k=new Date(g.kickoff),fin=g.state==="post"&&g.home.score!=="";
-    return '<li><button class="gm'+(isColts(g)?' colts':'')+'" data-game="'+g.id+'"><span class="mt">'+logo(g.away.abbr)+esc(team(g.away.abbr).n)+' <em>at</em> '+logo(g.home.abbr)+esc(team(g.home.abbr).n)+'</span>'+
-      '<span class="wh">'+(fin?'Final '+esc(g.away.score)+'-'+esc(g.home.score):k.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}))+'<small>'+esc(g.tv||"")+'</small></span></button></li>'}).join("")+'</ul>'+(more?'<button class="ghost" id="allg" style="width:100%;margin-top:6px">Show all '+n+' games</button>':'');
+  var today=dayKey(new Date()),t0=new Date();t0.setHours(0,0,0,0);
+  var days=[],by={};gs.forEach(function(g){var d=dayKey(new Date(g.kickoff));if(!by[d]){by[d]=[];days.push(d)}by[d].push(g)});
+  days.forEach(function(d){by[d].sort(function(a,b){return isColts(b)-isColts(a)||new Date(a.kickoff)-new Date(b.kickoff)})});
+  var n=gs.length,more=n>6&&!GALL,show=days,pin=null;
+  if(more){var f=days.filter(function(d){return new Date(by[d][0].kickoff)>=t0})[0]||days[days.length-1];show=[f];
+    pin=gs.filter(isColts)[0];if(pin&&dayKey(new Date(pin.kickoff))===f)pin=null}
+  function dh(d){var k=new Date(by[d][0].kickoff);return '<div class="dayh">'+(d===today?'<b>Today</b>':'')+'<span>'+k.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})+'</span></div>'}
+  box.innerHTML='<div class="listhead" style="margin-top:14px"><h2>This week</h2><span>'+(GAMES.week?'Week '+GAMES.week+', ':'')+n+' games</span></div>'+
+    (pin?dh(dayKey(new Date(pin.kickoff)))+'<ul class="gms">'+gameRow(pin)+'</ul>':'')+
+    show.map(function(d){return dh(d)+'<ul class="gms">'+by[d].map(gameRow).join("")+'</ul>'}).join("")+
+    (more?'<button class="ghost" id="allg" style="width:100%;margin-top:8px;padding:6px">Show all '+n+' games</button>':'');
 }
 function keyPlayers(abbr){
   var pl=P.filter(function(p){return p.team===abbr&&S[p.id]});
@@ -962,43 +1018,140 @@ function keyPlayers(abbr){
   var def=pl.filter(function(p){return "EDGE DL LB CB S".split(" ").indexOf(p.pos)>=0}).sort(function(a,b){function sc(p){var s=S[p.id];return g(s,"tackles")+g(s,"def_sacks")*4+g(s,"def_pass_defended")*2+g(s,"def_interceptions")*5}return sc(b)-sc(a)}).slice(0,5);
   return top(["QB"],"attempts",1).concat(top(["RB"],"carries",2),top(["WR"],"receiving_yards",3),top(["TE"],"receiving_yards",1),def,top(["K"],"fg_att",1));
 }
-function injList(list){return list&&list.length?'<ul class="list">'+list.map(function(i){var bad=/out|reserve|doubtful/i.test(i.status);
-  return '<li class="term"><b>'+esc(i.name)+' <span style="display:inline;color:var(--muted);font-weight:400">'+esc(i.pos)+'</span></b><span><em style="font-style:normal;font-weight:600;color:'+(bad?'#FF8A73':'#F2B84B')+'">'+esc(i.status)+'</em>'+(i.detail?', '+esc(i.detail.toLowerCase()):'')+'</span></li>'}).join("")+'</ul>':'<p class="thin">Nobody on the report.</p>'}
+// most productive player at each spot this season. Not the official depth chart.
+function starters(abbr){
+  var pl=P.filter(function(p){return p.team===abbr&&S[p.id]});
+  function top(pos,fn,n){return pl.filter(function(p){return pos.indexOf(p.pos)>=0&&fn(S[p.id])>0}).sort(function(a,b){return fn(S[b.id])-fn(S[a.id])}).slice(0,n)}
+  function f(k){return function(s){return g(s,k)}}
+  function nn(v){return Number(v).toLocaleString()}
+  var wr=top(["WR"],f("receiving_yards"),3),D=["EDGE","DL","LB","CB","S"];
+  return [
+    ["QB",top(["QB"],f("attempts"),1)[0],function(s){return nn(g(s,"passing_yards"))+" yds, "+g(s,"passing_tds")+" TD"}],
+    ["RB",top(["RB"],f("carries"),1)[0],function(s){return nn(g(s,"rushing_yards"))+" rush yds"}],
+    ["WR1",wr[0],function(s){return nn(g(s,"receiving_yards"))+" yds"}],["WR2",wr[1],function(s){return nn(g(s,"receiving_yards"))+" yds"}],["WR3",wr[2],function(s){return nn(g(s,"receiving_yards"))+" yds"}],
+    ["TE",top(["TE"],f("receiving_yards"),1)[0],function(s){return nn(g(s,"receiving_yards"))+" yds"}],
+    ["Pass rush",top(D,f("def_sacks"),1)[0],function(s){return g(s,"def_sacks")+(g(s,"def_sacks")===1?" sack":" sacks")}],
+    ["Tackler",top(D,f("tackles"),1)[0],function(s){return g(s,"tackles")+" tackles"}],
+    ["Coverage",top(["CB","S"],function(s){return g(s,"def_pass_defended")+g(s,"def_interceptions")*2},1)[0],function(s){return g(s,"def_pass_defended")+" PD, "+g(s,"def_interceptions")+" INT"}],
+    ["K",top(["K"],f("fg_att"),1)[0],function(s){return g(s,"fg_made")+"/"+g(s,"fg_att")+" FG"}]
+  ];
+}
+function shortName(n){var p=n.split(" ");return p.length>1?p[0][0]+". "+p.slice(1).join(" "):n}
+function injMap(list){var m={};(list||[]).forEach(function(i){m[norm(i.name)]=i});return m}
+function gameInj(gm){
+  var inj=gm.inj||{home:[],away:[]};
+  if(isColts(gm)&&COLTS&&COLTS.game&&COLTS.game.id===gm.id&&COLTS.injuries){var ci=COLTS.injuries,h=gm.home.abbr==="IND";inj={home:(h?ci.ind:ci.opp)||[],away:(h?ci.opp:ci.ind)||[]}}
+  return inj;
+}
+function ghHTML(gm){
+  var fin=isFinal(gm);
+  return '<div class="gh">'+[gm.away,gm.home].map(function(t,i){return '<button data-team="'+t.abbr+'" style="'+tv(t.abbr)+'" aria-label="'+esc(team(t.abbr).n)+' team page">'+(fin?'<span class="sc">'+esc(t.score)+'</span>':'')+logo(t.abbr)+'<b>'+esc(team(t.abbr).n)+'</b><span>'+(i?'Home':'Away')+(trec(t.abbr,gm)?', '+esc(trec(t.abbr,gm)):'')+'</span></button>'}).join("")+'</div>';
+}
+function sbsHead(gm){return '<div class="l hd" style="'+tv(gm.away.abbr)+'">'+esc(team(gm.away.abbr).n)+'</div><div class="m"></div><div class="r hd" style="'+tv(gm.home.abbr)+'">'+esc(team(gm.home.abbr).n)+'</div>'}
+function gameNotes(gm,inj){
+  var A=gm.away.abbr,H=gm.home.abbr,an=team(A).n,hn=team(H).n,out=[];
+  [[A,inj.away],[H,inj.home]].forEach(function(x){var bad=(x[1]||[]).filter(function(i){return /out|reserve|doubtful/i.test(i.status)}).slice(0,3),q=(x[1]||[]).filter(function(i){return /questionable/i.test(i.status)}).slice(0,3);
+    if(bad.length||q.length)out.push('<b>'+esc(team(x[0]).n)+' injuries:</b> '+[bad.length?esc(bad.map(function(i){return i.name+" ("+i.pos+", "+i.status.toLowerCase()+")"}).join(", ")):"",q.length?"questionable: "+esc(q.map(function(i){return i.name+" ("+i.pos+")"}).join(", ")):""].filter(Boolean).join("; ")+'.')});
+  if(TS&&TS[A]&&TS[H]){
+    var R=TRANK,pairs=[[A,H,"py","pya","passing game","pass defense"],[A,H,"ry","rya","run game","run defense"],[H,A,"py","pya","passing game","pass defense"],[H,A,"ry","rya","run game","run defense"]];
+    var best=null,worst=null;pairs.forEach(function(p){var gap=R[p[3]][p[1]]-R[p[2]][p[0]];p.gap=gap;if(!best||gap>best.gap)best=p;if(!worst||gap<worst.gap)worst=p});
+    if(best&&best.gap>=8)out.push('<b>Edge:</b> the '+esc(team(best[0]).n)+' '+best[4]+' ('+ord(R[best[2]][best[0]])+', '+tnum(best[0],best[2])+' yards a game) against the '+esc(team(best[1]).n)+' '+best[5]+' ('+ord(R[best[3]][best[1]])+').');
+    if(worst&&worst.gap<=-8&&worst!==best)out.push('<b>Tough matchup:</b> the '+esc(team(worst[0]).n)+' '+worst[4]+' ('+ord(R[worst[2]][worst[0]])+') runs into the '+esc(team(worst[1]).n)+' '+worst[5]+' ('+ord(R[worst[3]][worst[1]])+', '+tnum(worst[1],worst[3])+' yards allowed a game).');
+    out.push('<b>Scoring:</b> '+esc(an)+' score '+tnum(A,"ppg")+' a game ('+ord(R.ppg[A])+') and allow '+tnum(A,"papg")+' ('+ord(R.papg[A])+'). '+esc(hn)+' score '+tnum(H,"ppg")+' ('+ord(R.ppg[H])+') and allow '+tnum(H,"papg")+' ('+ord(R.papg[H])+').');
+    var da=TS[A].take-TS[A].give,dh=TS[H].take-TS[H].give;function sg(v){return (v>0?"+":"")+v}
+    if(Math.abs(da-dh)>=3)out.push('<b>Turnovers:</b> '+esc(an)+' are '+sg(da)+' on the season, '+esc(hn)+' are '+sg(dh)+'.');
+  }
+  return out.slice(0,5);
+}
+function storyHTML(gm){
+  var st=GST[gm.id],today=new Date().toDateString();
+  if(st&&st.bullets&&st.bullets.length)return '<ul class="notes">'+st.bullets.map(function(b){return '<li>'+esc(b)+'</li>'}).join("")+'</ul><p class="note">Researched '+new Date(st.at).toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"})+'.'+
+    (new Date(st.at).toDateString()!==today?' <button data-act="gstory" data-refresh="1" style="color:var(--ac);text-decoration:underline">Refresh</button>':'')+'</p>';
+  if(!WORKER)return '';
+  return '<button class="btn" data-act="gstory" style="margin-top:0">Get the storylines</button><p class="note">Looks up what is being written about this game. Takes about 20 seconds, then it is saved for both of you.</p>';
+}
+function getGameStory(v,refresh){
+  var gm=teamGame2(v.id),box=$("#gstory");if(!gm||!box)return;
+  box.innerHTML='<div class="working"><span class="spin"></span><span>Reading up on this game</span></div>';
+  api("/game/"+gm.id,{method:"POST",body:JSON.stringify({away:CITY[gm.away.abbr]+" "+team(gm.away.abbr).n,home:CITY[gm.home.abbr]+" "+team(gm.home.abbr).n,when:new Date(gm.kickoff).toDateString(),refresh:!!refresh})})
+   .then(function(st){if(st&&st.bullets&&st.bullets.length){GST[gm.id]=st;save("og_gstory",GST)}
+     if(cur()===v){if(st&&st.bullets&&st.bullets.length)box.innerHTML=storyHTML(gm);else box.innerHTML='<p class="thin">Nothing solid turned up yet. Try again closer to kickoff.</p>'}})
+   .catch(function(e){if(cur()===v)box.innerHTML='<p class="thin">Could not get the storylines'+(/not found|404/i.test(e.message)?'. The backend needs its update first.':': '+esc(e.message))+'</p>'});
+}
+function teamGame2(id){return GAMES&&GAMES.games.filter(function(x){return x.id===id})[0]}
 function renderGame(v){
-  var gm=GAMES&&GAMES.games.filter(function(x){return x.id===v.id})[0];if(!gm){back();return}
-  var k=new Date(gm.kickoff),inj=gm.inj||{},news=[],upd=GAMES.updated,colts=isColts(gm)&&COLTS&&COLTS.game&&COLTS.game.id===gm.id;
-  if(colts){var ci=COLTS.injuries||{},indHome=gm.home.abbr==="IND";inj={home:indHome?ci.ind:ci.opp,away:indHome?ci.opp:ci.ind};news=COLTS.headlines||[];upd=COLTS.updated}
-  v.full=v.full||{};
-  var h='<div class="wrap" style="--ac:#6FA8FF"><header class="phdr"><div class="bar">'+BACK+'</div><h2 style="font-size:32px">'+esc(team(gm.away.abbr).n)+' at '+esc(team(gm.home.abbr).n)+'</h2></header>';
-  h+='<div class="gh">'+[gm.away,gm.home].map(function(t,i){return '<div style="'+tv(t.abbr)+'">'+logo(t.abbr)+'<b>'+esc(team(t.abbr).n)+'</b><span>'+(i?'Home':'Away')+(t.rec?', '+esc(t.rec):'')+'</span></div>'}).join("")+'</div>';
-  var facts='<div><dt>Kickoff</dt><dd>'+k.toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"})+'</dd></div><div><dt>TV</dt><dd>'+esc(gm.tv||"Not listed")+'</dd></div>'+
-    '<div class="w"><dt>Where</dt><dd>'+esc([gm.venue,gm.city].filter(Boolean).join(", "))+'</dd></div>';
-  if(gm.state==="post"&&gm.home.score!=="")facts+='<div class="w"><dt>Final</dt><dd>'+esc(team(gm.away.abbr).n)+' '+esc(gm.away.score)+', '+esc(team(gm.home.abbr).n)+' '+esc(gm.home.score)+'</dd></div>';
-  h+='<section class="sec"><dl class="facts">'+facts+'</dl></section>';
-  var ORDER=["QB","RB","WR","TE","OL","EDGE","DL","LB","CB","S","K","P","LS"];
-  [gm.away,gm.home].forEach(function(t){
-    var nm=esc(team(t.abbr).n);
-    if(v.full[t.abbr]){
-      h+='<section class="sec"><h3>'+nm+' roster</h3>';
-      ORDER.forEach(function(pos){var grp=P.filter(function(p){return p.team===t.abbr&&p.pos===pos}).sort(function(a,b){return g(S[b.id],"gp")-g(S[a.id],"gp")||a.name.localeCompare(b.name)});
-        if(grp.length)h+='<p class="posl">'+pos+'</p><ul class="tiles">'+grp.map(tileHTML).join("")+'</ul>'});
-      h+='<button class="more" data-act="roster" data-team="'+t.abbr+'"><span>Just the key players</span></button></section>';
-    }else{
-      var kp=keyPlayers(t.abbr);
-      h+='<section class="sec"><h3>'+nm+' key players</h3>'+(kp.length?'<ul class="tiles">'+kp.map(tileHTML).join("")+'</ul>':'<p class="thin">No stats for them yet.</p>')+
-         '<button class="more" data-act="roster" data-team="'+t.abbr+'"><span>Full roster</span></button></section>';
+  var gm=teamGame2(v.id);if(!gm){back();return}
+  var A=gm.away.abbr,H=gm.home.abbr,k=new Date(gm.kickoff),inj=gameInj(gm),fin=isFinal(gm),colts=isColts(gm)&&COLTS&&COLTS.game&&COLTS.game.id===gm.id,news=colts?(COLTS.headlines||[]):[];
+  var h='<div class="wrap" style="--ac:#6FA8FF"><header class="phdr"><div class="bar">'+BACK+'</div><h2 style="font-size:32px">'+esc(team(A).n)+' at '+esc(team(H).n)+'</h2></header>'+ghHTML(gm);
+  if(fin)h+=boxHTML(gm);
+  else{
+    h+='<section class="sec"><dl class="facts"><div><dt>Kickoff</dt><dd>'+k.toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"})+'</dd></div><div><dt>TV</dt><dd>'+esc(gm.tv||"Not listed")+'</dd></div>'+
+      '<div class="w"><dt>Where</dt><dd>'+esc([gm.venue,gm.city].filter(Boolean).join(", "))+'</dd></div></dl></section>';
+    var notes=gameNotes(gm,inj);
+    if(notes.length)h+='<section class="sec"><h3>Notes'+(TS&&TS[A]&&TS[A].g<6?' <span>Small sample this early</span>':'')+'</h3><ul class="notes">'+notes.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></section>';
+    if(WORKER||GST[gm.id])h+='<section class="sec"><h3>Storylines</h3><div id="gstory">'+storyHTML(gm)+'</div></section>';
+    // starters side by side
+    var sa=starters(A),sh=starters(H),ia=injMap(inj.away),ih=injMap(inj.home);
+    function cell(row,cls,im){var p=row[1];if(!p)return '<div class="'+cls+'"><small>None yet</small></div>';var i=im[norm(p.name)];
+      return '<button class="'+cls+'" data-id="'+p.id+'"><b>'+esc(shortName(p.name))+'</b><small>'+row[2](S[p.id])+'</small>'+(i?'<em'+(/out|reserve|doubtful/i.test(i.status)?' class="bad"':'')+'>'+esc(i.status)+'</em>':'')+'</button>'}
+    h+='<section class="sec"><h3>Who to watch <span>Season leaders at each spot</span></h3><div class="sbs">'+sbsHead(gm)+sa.map(function(r,i){return cell(r,"l",ia)+'<div class="m">'+r[0]+'</div>'+cell(sh[i],"r",ih)}).join("")+'</div></section>';
+    if(TS&&TS[A]&&TS[H]){
+      function urow(lab,o,ok,d,dk,ls,rs){var ro=TRANK[ok][o],rd=TRANK[dk][d];
+        return '<div class="l'+(ro<rd?' win':'')+'"><b>'+tnum(o,ok)+'</b><small>'+(ls||"")+ord(ro)+'</small></div><div class="m">'+lab+'</div><div class="r'+(rd<ro?' win':'')+'"><b>'+tnum(d,dk)+'</b><small>'+(rs||"allowed, ")+ord(rd)+'</small></div>'}
+      function unit(o,d){return '<p class="cap">When the '+esc(team(o).n)+' have the ball: their offense on the left, the '+esc(team(d).n)+' defense on the right.</p><div class="sbs">'+
+        '<div class="l hd" style="'+tv(o)+'">'+esc(team(o).n)+' offense</div><div class="m"></div><div class="r hd" style="'+tv(d)+'">'+esc(team(d).n)+' defense</div>'+
+        urow("Points",o,"ppg",d,"papg")+urow("Pass yds",o,"py",d,"pya")+urow("Rush yds",o,"ry",d,"rya")+urow("Sacks",o,"ska",d,"sk","taken, ","made, ")+urow("Turnovers",o,"give",d,"take","given up, ","forced, ")+'</div>'}
+      h+='<section class="sec"><h3>Unit matchups <span>Per game, with league rank</span></h3>'+unit(A,H)+unit(H,A)+'<p class="note">Green marks the side with the better league rank. Sacks and turnovers are season totals.</p></section>';
     }
-  });
-  if(gm.inj||colts){
-    h+='<section class="sec"><h3>'+esc(team(gm.away.abbr).n)+' injury report</h3>'+injList(inj.away)+'</section>';
-    h+='<section class="sec"><h3>'+esc(team(gm.home.abbr).n)+' injury report</h3>'+injList(inj.home)+'</section>';
+    if(gm.inj||colts){
+      h+='<section class="sec"><h3>'+esc(team(A).n)+' injury report</h3>'+injList(inj.away)+'</section>';
+      h+='<section class="sec"><h3>'+esc(team(H).n)+' injury report</h3>'+injList(inj.home)+'</section>';
+    }
   }
   if(news.length)h+='<section class="sec"><h3>Colts headlines</h3><ul class="list">'+news.map(function(a){var d=a.d?new Date(a.d).toLocaleDateString(undefined,{month:"short",day:"numeric"}):"";
     return '<li><a class="ref" style="'+cc("rule")+';text-decoration:none" href="'+esc(a.u)+'" target="_blank" rel="noopener"><span class="rn" style="display:block;font-size:15.5px;line-height:1.35">'+esc(a.t)+'</span><span class="rs">'+d+'</span></a></li>'}).join("")+'</ul></section>';
-  h+='<section class="sec"><p class="note">Updated '+new Date(upd).toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"})+'. '+(colts?'Refreshes about hourly until kickoff.':'Refreshes each morning.')+' No live scores.</p></section></div>';
+  h+='<section class="sec"><p class="note">Tap a team for its page. Updated '+new Date(GAMES.updated).toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"})+'. Final scores show up within about an hour of the game ending. No live scores.</p></section></div>';
   $("#card").innerHTML=h;
+  if(!fin&&WORKER&&!GST[gm.id])api("/game/"+gm.id).then(function(st){if(st&&st.bullets&&st.bullets.length){GST[gm.id]=st;save("og_gstory",GST);if(cur()===v&&$("#gstory"))$("#gstory").innerHTML=storyHTML(gm)}}).catch(function(){});
 }
-
+function boxHTML(gm){
+  var b=gm.box,A=gm.away.abbr,H=gm.home.abbr,h='';
+  if(!b)return '<section class="sec"><p class="thin">Final: '+esc(team(A).n)+' '+esc(gm.away.score)+', '+esc(team(H).n)+' '+esc(gm.home.score)+'. The box score shows up within about an hour.</p></section>';
+  var la=(b.line||{}).away||[],lh=(b.line||{}).home||[],nq=Math.max(la.length,lh.length,4),th='';
+  for(var i=0;i<nq;i++)th+='<th>'+(i<4?i+1:(nq>5?'OT'+(i-3):'OT'))+'</th>';
+  function lr(k,l,sc){var r='';for(var i=0;i<nq;i++)r+='<td>'+(l[i]==null?'':l[i])+'</td>';return '<tr><td>'+esc(team(k).n)+'</td>'+r+'<td>'+esc(sc)+'</td></tr>'}
+  h+='<section class="sec"><h3>Final</h3><table class="linesc"><tr><th></th>'+th+'<th>T</th></tr>'+lr(A,la,gm.away.score)+lr(H,lh,gm.home.score)+'</table></section>';
+  var ta=(b.team||{}).away||{},tb=(b.team||{}).home||{},rows=[["totalYards","Total yds"],["netPassingYards","Pass yds"],["rushingYards","Rush yds"],["firstDowns","1st downs"],["thirdDownEff","3rd down"],["turnovers","Turnovers"],["possessionTime","Possession"]];
+  var tr=rows.filter(function(r){return ta[r[0]]!=null||tb[r[0]]!=null}).map(function(r){return '<div class="l"><b>'+esc(ta[r[0]]||"")+'</b></div><div class="m">'+r[1]+'</div><div class="r"><b>'+esc(tb[r[0]]||"")+'</b></div>'}).join("");
+  if(tr)h+='<section class="sec"><h3>Team totals</h3><div class="sbs">'+sbsHead(gm)+tr+'</div></section>';
+  var L=b.lead||{},kinds=[["pass","Passing"],["rush","Rushing"],["rec","Receiving"],["tkl","Tackles"]];
+  function lc(x,abbr,cls){if(!x)return '<div class="'+cls+'"></div>';var p=P.filter(function(p){return p.team===abbr&&norm(p.name)===norm(x.n)})[0]||P.filter(function(p){return norm(p.name)===norm(x.n)})[0];
+    var inner='<b>'+esc(shortName(x.n))+'</b><small>'+esc(x.l.replace(/^1 carries/,"1 carry").replace(/^1 catches/,"1 catch").replace(/^1 tackles/,"1 tackle"))+'</small>';
+    return p?'<button class="'+cls+'" data-id="'+p.id+'">'+inner+'</button>':'<div class="'+cls+'">'+inner+'</div>'}
+  var lt=kinds.filter(function(k){return (L.away||{})[k[0]]||(L.home||{})[k[0]]}).map(function(k){return lc((L.away||{})[k[0]],A,"l")+'<div class="m">'+k[1]+'</div>'+lc((L.home||{})[k[0]],H,"r")}).join("");
+  if(lt)h+='<section class="sec"><h3>Leaders</h3><div class="sbs">'+sbsHead(gm)+lt+'</div></section>';
+  if(b.plays&&b.plays.length)h+='<section class="sec"><h3>Scoring <span>'+A+'-'+H+'</span></h3><ul class="plays">'+b.plays.map(function(p){
+    return '<li style="'+tv(p.t)+'"><span><small>'+(p.q>4?'OT':'Q'+p.q)+' '+esc(p.c)+' &middot; '+esc(team(p.t).n)+'</small>'+esc(p.x.trim())+'</span><b>'+p.a+'-'+p.h+'</b></li>'}).join("")+'</ul></section>';
+  return h;
+}
+function renderTeam(v){
+  var k=v.k,t=TEAMS[k];if(!t||k==="FA"){back();return}
+  var gm=teamGame(k),rec=trec(k,gm),ORDER=["QB","RB","WR","TE","OL","EDGE","DL","LB","CB","S","K","P","LS"];
+  var h='<div class="wrap" style="'+tv(k)+'"><header class="thdr"><div class="bar">'+BACK+'</div><div class="tl">'+logo(k)+'<div><h2>'+esc(t.n)+'</h2><p>'+esc(CITY[k]||"")+(rec?' &middot; '+esc(rec):'')+'</p></div></div></header>';
+  if(GAMES&&GAMES.games)h+='<section class="sec"><h3>This week</h3>'+(gm?'<ul class="gms">'+gameRow(gm).replace('class="gm colts"','class="gm"')+'</ul>':'<p class="thin">No game this week.</p>')+'</section>';
+  if(TS&&TS[k])h+='<section class="sec"><h3>Team numbers <span>'+TS[k].g+' games</span></h3><dl class="stats two">'+TM.map(function(m){return '<div><dd>'+tnum(k,m[0])+'</dd><dt>'+m[1]+' &middot; <i>'+ord(TRANK[m[0]][k])+'</i></dt></div>'}).join("")+'</dl></section>';
+  var kp=keyPlayers(k);
+  if(kp.length)h+='<section class="sec"><h3>Key players</h3><ul class="tiles">'+kp.map(tileHTML).join("")+'</ul></section>';
+  if(gm&&!isFinal(gm)){var inj=gameInj(gm),mine=gm.home.abbr===k?inj.home:inj.away;if(gm.inj||mine&&mine.length)h+='<section class="sec"><h3>Injury report</h3>'+injList(mine)+'</section>'}
+  h+='<section class="sec"><h3>Roster</h3>';
+  ORDER.forEach(function(pos){var grp=P.filter(function(p){return p.team===k&&p.pos===pos}).sort(function(a,b){return g(S[b.id],"gp")-g(S[a.id],"gp")||a.name.localeCompare(b.name)});
+    if(grp.length)h+='<p class="posl">'+pos+'</p><ul class="tiles">'+grp.map(tileHTML).join("")+'</ul>'});
+  $("#card").innerHTML=h+'</section></div>';
+}
+function teamRowHTML(k){return '<li><button class="gm" data-team="'+k+'"><span class="mt">'+logo(k)+esc((CITY[k]||"")+" "+team(k).n)+'</span><span class="wh">'+esc(trec(k,teamGame(k)))+'<small>Team page</small></span></button></li>'}
+function searchTeams(q){var t=norm(q);if(t.length<3)return [];return Object.keys(CITY).filter(function(k){return norm(CITY[k]+" "+TEAMS[k].n).split(" ").some(function(w){return w.indexOf(t)===0})||norm(CITY[k]+" "+TEAMS[k].n).indexOf(t)===0||k.toLowerCase()===t})}
+function injList(list){return list&&list.length?'<ul class="list">'+list.map(function(i){var bad=/out|reserve|doubtful/i.test(i.status);
+  return '<li class="term"><b>'+esc(i.name)+' <span style="display:inline;color:var(--muted);font-weight:400">'+esc(i.pos)+'</span></b><span><em style="font-style:normal;font-weight:600;color:'+(bad?'#FF8A73':'#F2B84B')+'">'+esc(i.status)+'</em>'+(i.detail?', '+esc(i.detail.toLowerCase()):'')+'</span></li>'}).join("")+'</ul>':'<p class="thin">Nobody on the report.</p>'}
 var HEADSHOT="https://static.www.nfl.com/image/";
 function loadRetired(){
   if(!retLoading)retLoading=getJSON("data/retired.json").then(function(r){
@@ -1115,7 +1268,12 @@ $("#side").addEventListener("click",function(e){var b=e.target.closest("[data-na
 $("#thbtn").addEventListener("click",function(){show({t:"theme"})});
 $("#card").addEventListener("click",function(e){var b=e.target.closest("[data-theme]");if(b){setTheme(b.dataset.theme);renderTheme()}});
 $("#grid").addEventListener("click",function(e){var b=e.target.closest("[data-nav]");if(b)navTo(b.dataset.nav)});
-$("#today").addEventListener("click",function(e){if(e.target.closest("#allg")){GALL=true;renderToday();return}var b=e.target.closest("[data-game]");if(b)show({t:"game",id:b.dataset.game})});
+$("#today").addEventListener("click",function(e){if(e.target.closest("#allg")){GALL=true;renderToday()}});
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-game]");if(b){show({t:"game",id:b.dataset.game});return}
+  b=e.target.closest("[data-team]");if(b&&!b.dataset.act&&!b.hasAttribute("data-theme")){show({t:"team",k:b.dataset.team});return}
+  b=e.target.closest('[data-act="gstory"]');if(b)getGameStory(cur(),b.dataset.refresh);
+});
 $("#homebtn").addEventListener("click",goHome);
 $("#q").addEventListener("focus",function(){if(stack.length){closeCard();renderList()}});
 $("#q").addEventListener("input",function(){expandGroup={};if(stack.length)closeCard();renderList()});
@@ -1178,7 +1336,9 @@ getJSON("data/reference.json").then(function(r){
 }).catch(function(){});
 getJSON("data/awards.json").then(function(a){AW=a;if(current)render()}).catch(function(){});
 getJSON("data/colts.json").then(function(c){COLTS=c}).catch(function(){});
-getJSON("data/games.json").then(function(x){GAMES=x;renderToday()}).catch(function(){});
+GST=load("og_gstory",{});
+getJSON("data/games.json").then(function(x){GAMES=x;renderToday();var v=stack.length&&cur();if(v&&(v.t==="game"||v.t==="team"))render()}).catch(function(){});
+getJSON("data/teams.json").then(function(x){setTeams(x);var v=stack.length&&cur();if(v&&(v.t==="game"||v.t==="team"))render()}).catch(function(){});
 getJSON("data/announcers.json").then(function(a){ANN=a;ANN.forEach(function(x){x._n=norm(x.name);x._t=norm(x.quotes.map(function(q){return q.q}).concat(x.terms.map(function(t){return t.term})).join(" "))})}).catch(function(){});
 function favsNeedRetired(){if(favs.some(function(id){return !byIdMap[id]})&&!RET)loadRetired().then(function(){if(!stack.length)renderList()},function(){})}
 Promise.all([getJSON("data/players.json"),getJSON("data/stats.json"),getJSON("data/meta.json")])
