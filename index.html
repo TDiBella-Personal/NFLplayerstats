@@ -497,6 +497,7 @@ var $=function(s){return document.querySelector(s)};
 function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function tv(t){var x=team(t);return "--c1:"+x.c1+";--c2:"+x.c2+";--ac:"+x.ac}
+function htwt(p){var h=p.ht?Math.floor(p.ht/12)+"′"+(p.ht%12)+"″":"",w=p.wt?p.wt+" lb":"";return [h,w].filter(Boolean).join(", ")}
 function initials(n){return n.split(" ").map(function(w){return w[0]}).join("").slice(0,3)}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function wiki(p){return "https://en.wikipedia.org/wiki/Special:Search?search="+encodeURIComponent(p.name+" American football")}
@@ -760,7 +761,7 @@ function renderPlayer(p){
        (line.length?'<div class="line">'+line.map(function(x){return '<span><strong>'+x.v+'</strong>'+(SHORT[x.k]||x.k)+'</span>'}).join("")+'</div>':'<div class="line"><span>Played, nothing on the stat sheet.</span></div>')+'</div></section>';
   }
 
-  h+='<section class="sec"><h3>Bio</h3><dl class="bio"><dt>Age</dt><dd>'+(p.age||"")+'</dd><dt>College</dt><dd>'+esc(p.college||"")+'</dd><dt>Drafted</dt><dd>'+esc(p.drafted)+'</dd>'+
+  h+='<section class="sec"><h3>Bio</h3><dl class="bio"><dt>Age</dt><dd>'+(p.age||"")+'</dd>'+(htwt(p)?'<dt>Size</dt><dd>'+htwt(p)+'</dd>':'')+'<dt>College</dt><dd>'+esc(p.college||"")+'</dd><dt>Drafted</dt><dd>'+esc(p.drafted)+'</dd>'+
      (st&&st.hometown?'<dt>Hometown</dt><dd>'+esc(st.hometown)+'</dd>':'')+'</dl></section>';
 
   h+='<section class="sec"><h3>Teams</h3><ol class="path">'+p.past.map(function(x,i){var pt=team(x[0]);
@@ -941,6 +942,7 @@ function renderCompare(v){
   else h+='<section class="sec"><h3>Last game</h3>'+boxes(lastLine)+'</section>';
   function dr(p){return esc(p.drafted).replace(", round"," rd").replace(", pick"," pk")}
   h+='<section class="sec"><h3>Bio</h3>'+(anyRet?row("Played",PL.map(yrs),"",1):row("Age",PL.map(function(p){return p.age||""}),"",1))+
+     row("Height",PL.map(function(p){return p.ht?Math.floor(p.ht/12)+"′"+(p.ht%12)+"″":""}),"",1)+row("Weight",PL.map(function(p){return p.wt?p.wt+" lb":""}),"",1)+
      row("College",PL.map(function(p){return esc(p.college||"")}),"",1)+row("Drafted",PL.map(dr),"",1)+row("Teams",PL.map(function(p){return p.past.length}),"",1)+'</section></div>';
   $("#card").innerHTML=h;
 }
@@ -1063,7 +1065,7 @@ function gameNotes(gm,inj){
   }
   return out.slice(0,5);
 }
-function storyHTML(gm){
+function gstoryHTML(gm){
   var st=GST[gm.id],today=new Date().toDateString();
   if(st&&st.bullets&&st.bullets.length)return '<ul class="notes">'+st.bullets.map(function(b){return '<li>'+esc(b)+'</li>'}).join("")+'</ul><p class="note">Researched '+new Date(st.at).toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"})+'.'+
     (new Date(st.at).toDateString()!==today?' <button data-act="gstory" data-refresh="1" style="color:var(--ac);text-decoration:underline">Refresh</button>':'')+'</p>';
@@ -1075,7 +1077,7 @@ function getGameStory(v,refresh){
   box.innerHTML='<div class="working"><span class="spin"></span><span>Reading up on this game</span></div>';
   api("/game/"+gm.id,{method:"POST",body:JSON.stringify({away:CITY[gm.away.abbr]+" "+team(gm.away.abbr).n,home:CITY[gm.home.abbr]+" "+team(gm.home.abbr).n,when:new Date(gm.kickoff).toDateString(),refresh:!!refresh})})
    .then(function(st){if(st&&st.bullets&&st.bullets.length){GST[gm.id]=st;save("og_gstory",GST)}
-     if(cur()===v){if(st&&st.bullets&&st.bullets.length)box.innerHTML=storyHTML(gm);else box.innerHTML='<p class="thin">Nothing solid turned up yet. Try again closer to kickoff.</p>'}})
+     if(cur()===v){if(st&&st.bullets&&st.bullets.length)box.innerHTML=gstoryHTML(gm);else box.innerHTML='<p class="thin">Nothing solid turned up yet. Try again closer to kickoff.</p>'}})
    .catch(function(e){if(cur()===v)box.innerHTML='<p class="thin">Could not get the storylines'+(/not found|404/i.test(e.message)?'. The backend needs its update first.':': '+esc(e.message))+'</p>'});
 }
 function teamGame2(id){return GAMES&&GAMES.games.filter(function(x){return x.id===id})[0]}
@@ -1089,7 +1091,7 @@ function renderGame(v){
       '<div class="w"><dt>Where</dt><dd>'+esc([gm.venue,gm.city].filter(Boolean).join(", "))+'</dd></div></dl></section>';
     var notes=gameNotes(gm,inj);
     if(notes.length)h+='<section class="sec"><h3>Notes'+(TS&&TS[A]&&TS[A].g<6?' <span>Small sample this early</span>':'')+'</h3><ul class="notes">'+notes.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></section>';
-    if(WORKER||GST[gm.id])h+='<section class="sec"><h3>Storylines</h3><div id="gstory">'+storyHTML(gm)+'</div></section>';
+    if(WORKER||GST[gm.id])h+='<section class="sec"><h3>Storylines</h3><div id="gstory">'+gstoryHTML(gm)+'</div></section>';
     // starters side by side
     var sa=starters(A),sh=starters(H),ia=injMap(inj.away),ih=injMap(inj.home);
     function cell(row,cls,im){var p=row[1];if(!p)return '<div class="'+cls+'"><small>None yet</small></div>';var i=im[norm(p.name)];
@@ -1112,7 +1114,7 @@ function renderGame(v){
     return '<li><a class="ref" style="'+cc("rule")+';text-decoration:none" href="'+esc(a.u)+'" target="_blank" rel="noopener"><span class="rn" style="display:block;font-size:15.5px;line-height:1.35">'+esc(a.t)+'</span><span class="rs">'+d+'</span></a></li>'}).join("")+'</ul></section>';
   h+='<section class="sec"><p class="note">Tap a team for its page. Updated '+new Date(GAMES.updated).toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"})+'. Final scores show up within about an hour of the game ending. No live scores.</p></section></div>';
   $("#card").innerHTML=h;
-  if(!fin&&WORKER&&!GST[gm.id])api("/game/"+gm.id).then(function(st){if(st&&st.bullets&&st.bullets.length){GST[gm.id]=st;save("og_gstory",GST);if(cur()===v&&$("#gstory"))$("#gstory").innerHTML=storyHTML(gm)}}).catch(function(){});
+  if(!fin&&WORKER&&!GST[gm.id])api("/game/"+gm.id).then(function(st){if(st&&st.bullets&&st.bullets.length){GST[gm.id]=st;save("og_gstory",GST);if(cur()===v&&$("#gstory"))$("#gstory").innerHTML=gstoryHTML(gm)}}).catch(function(){});
 }
 function boxHTML(gm){
   var b=gm.box,A=gm.away.abbr,H=gm.home.abbr,h='';
@@ -1159,7 +1161,7 @@ function loadRetired(){
   retLoading.catch(function(){retLoading=null});
   return retLoading;
 }
-function mapRet(x){var p={id:x.id,name:x.n,pos:x.p,team:x.t,num:x.j||"",headshot:x.h?HEADSHOT+x.h:"",college:x.c||"",age:"",drafted:x.d||"",past:x.pt||[[x.t,""]],ret:true,first:x.f,last:x.l,car:x.s||null,best:x.b||null,x:x.x||0};
+function mapRet(x){var p={id:x.id,name:x.n,pos:x.p,team:x.t,num:x.j||"",headshot:x.h?HEADSHOT+x.h:"",ht:x.ht||0,wt:x.wt||0,college:x.c||"",age:"",drafted:x.d||"",past:x.pt||[[x.t,""]],ret:true,first:x.f,last:x.l,car:x.s||null,best:x.b||null,x:x.x||0};
       p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+p.college);if(byIdMap[p.id]&&byIdMap[p.id].ret)return byIdMap[p.id];byIdMap[p.id]=byIdMap[p.id]||p;return p}
 function loadCareer(){
   if(!carLoading)carLoading=getJSON("data/career.json").then(function(c){CAR=c;return c});
@@ -1195,7 +1197,7 @@ function renderRetired(p){
   }
   h+='</section>';
   if(p.best)h+='<section class="sec"><h3>Best season</h3><div class="bestbox"><b>'+p.best[0]+'</b><span>'+esc(p.best[1])+'</span></div></section>';
-  h+='<section class="sec"><h3>Bio</h3><dl class="bio"><dt>Played</dt><dd>'+yrs(p)+'</dd><dt>College</dt><dd>'+esc(p.college||"")+'</dd><dt>Drafted</dt><dd>'+esc(p.drafted)+'</dd>'+
+  h+='<section class="sec"><h3>Bio</h3><dl class="bio"><dt>Played</dt><dd>'+yrs(p)+'</dd>'+(htwt(p)?'<dt>Size</dt><dd>'+htwt(p)+'</dd>':'')+'<dt>College</dt><dd>'+esc(p.college||"")+'</dd><dt>Drafted</dt><dd>'+esc(p.drafted)+'</dd>'+
      (st&&st.hometown?'<dt>Hometown</dt><dd>'+esc(st.hometown)+'</dd>':'')+'</dl></section>';
   h+='<section class="sec"><h3>Teams</h3><ol class="path">'+p.past.map(function(x){var pt=team(x[0]);
      return '<li>'+(logo(x[0])||'<span class="badge" style="--c1:'+pt.c1+';--c2:'+pt.c2+'">'+x[0]+'</span>')+(TEAMS[x[0]]?pt.n:x[0])+' <small>'+x[1]+'</small></li>'}).join("")+'</ol></section>';

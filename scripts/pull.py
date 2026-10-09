@@ -37,6 +37,16 @@ def pos_of(p):
     if pos in ("LB", "OLB", "ILB", "MLB"): return "LB"
     return pos
 
+def hw(p):
+    """Height in inches and weight in pounds, when listed."""
+    out = {}
+    for k, src in (("ht", "height"), ("wt", "weight")):
+        try:
+            v = int(float(p.get(src) or 0))
+            if v: out[k] = v
+        except ValueError: pass
+    return out
+
 def season_now():
     today = dt.date.today()
     return today.year if today.month >= 8 else today.year - 1
@@ -158,7 +168,7 @@ def main():
         out_players.append({
             "id": p["gsis_id"], "name": p["display_name"], "pos": pos_of(p), "team": p["latest_team"],
             "num": p["jersey_number"], "headshot": p["headshot"], "college": p["college_name"],
-            "age": age, "drafted": drafted,
+            "age": age, "drafted": drafted, **hw(p),
             "past": runs(hist.get(p["gsis_id"], {})) or [[p["latest_team"], str(season)]],
         })
 

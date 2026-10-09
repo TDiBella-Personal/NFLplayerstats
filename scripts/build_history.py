@@ -7,7 +7,7 @@ totals for stars whose careers began before 1999).
 import csv, io, json, os, sys, urllib.request, datetime as dt
 from collections import defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from pull import fetch, pos_of, runs, REL, OUT, season_now, CAREER_KEYS, add_season, finish_career, best_season, norm_team
+from pull import hw, fetch, pos_of, runs, REL, OUT, season_now, CAREER_KEYS, add_season, finish_career, best_season, norm_team
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 HEAD_PREFIX = "https://static.www.nfl.com/image/"
@@ -45,6 +45,7 @@ def main():
         if p["jersey_number"]: rec["j"] = p["jersey_number"]
         if p["headshot"].startswith(HEAD_PREFIX): rec["h"] = p["headshot"][len(HEAD_PREFIX):]
         if p["college_name"]: rec["c"] = p["college_name"]
+        rec.update(hw(p))
         if p["draft_year"]: rec["d"] = f"{p['draft_year']}, round {p['draft_round']}, pick {p['draft_pick']}"
         elif rookie: rec["d"] = f"Undrafted, {rookie}"
         pt = runs(teams.get(pid, {}))
