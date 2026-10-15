@@ -14,9 +14,9 @@ def wikitext(title):
     return (d.get("parse") or {}).get("wikitext", {}).get("*", ""), (d.get("parse") or {}).get("title", "")
 
 def infobox(text):
-    i = text.find("{{Infobox NFL")
-    if i < 0: i = text.find("{{Infobox American football")
-    if i < 0: return None
+    m = re.search(r"\{\{\s*infobox[ _](nfl|american[ _]football|gridiron[ _]football)", text, re.I)
+    if not m: return None
+    i = m.start()
     depth, j = 0, i
     while j < len(text):
         if text.startswith("{{", j): depth += 1; j += 2; continue
@@ -28,7 +28,7 @@ def infobox(text):
     body = text[i:j]
     fields, cur = {}, None
     for line in body.split("\n"):
-        m = re.match(r"\s*\|\s*([a-z_0-9]+)\s*=\s*(.*)$", line)
+        m = re.match(r"\s*\|\s*([A-Za-z_0-9]+)\s*=\s*(.*)$", line)
         if m: cur = m.group(1); fields[cur] = m.group(2).strip()
         elif cur: fields[cur] += "\n" + line.strip()
     return fields
