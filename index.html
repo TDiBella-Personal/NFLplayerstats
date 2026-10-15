@@ -1518,9 +1518,14 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="signals-1";   // bump on each release so phones fetch fresh data files
+var BUILD="signals-2";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+// if a newer release is out, reload once so nobody sits on a cached copy
+fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(v){
+  var k="og_reloaded_"+v.build;
+  if(v.build&&v.build!==BUILD){try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}location.reload()}
+}).catch(function(){});
 getJSON("data/reference.json").then(function(r){
   REF=r;REF.forEach(function(e){REFMAP[e.id]=e;e._n=norm(e.name);e._a=(e.aka||[]).map(norm);e._s=norm(e.short)});
   if($("#q").value.trim())renderList();
