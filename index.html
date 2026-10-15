@@ -50,6 +50,8 @@ body.home .dock input{font-size:19px;padding:18px 10px}
 .grid b{font-weight:600;font-size:15.5px;display:block}
 .grid small{color:var(--muted);font-size:12.5px;display:block;line-height:1.25}
 #side{display:none}
+.grid{display:none}
+
 .listhead{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 10px}
 .listhead h2{font-size:15px;font-weight:600;margin:0}
 .listhead span{font-size:13px;color:var(--muted)}
@@ -272,7 +274,7 @@ body.home .dock input{font-size:19px;padding:18px 10px}
   #side button i{width:9px;height:9px;border-radius:2px;background:var(--cc);flex:none;transform:skewX(-10deg)}
   #side button[aria-current="true"]{background:var(--panel2);font-weight:600}
   #side hr{border:0;border-top:1px solid var(--line);margin:8px 6px;width:auto}
-  .grid{display:none}
+  #side svg,#side .lb{display:none}
   #card,.dock{left:248px}
   #homebtn{display:none}
   .toast{left:calc(50% + 124px)}
@@ -373,6 +375,19 @@ body.home .dock .in:focus-within{box-shadow:0 0 0 3px var(--thsoft,transparent)}
 .thdr p{margin:4px 0 0;font-size:15px;opacity:.92}
 button.badge{cursor:pointer}
 .stats.two dt i{font-style:normal;color:var(--ac);font-weight:600}
+/* slim left bar on phones and iPad portrait */
+@media (max-width:899px){
+  body{padding-left:64px}
+  #side{display:flex;flex-direction:column;gap:4px;position:fixed;left:0;top:0;bottom:0;width:64px;background:#0D1116;border-right:1px solid var(--line);padding:calc(12px + env(safe-area-inset-top,0px)) 5px 12px;z-index:7;overflow-y:auto}
+  #side h1,#side hr,#side button.sub,#side button i,#side .tx{display:none}
+  #side button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px 8px;border-radius:12px;font-size:10.5px;line-height:1.1;color:var(--muted);text-align:center}
+  #side button svg{width:24px;height:24px;color:var(--cc)}
+  #side button[aria-current="true"]{background:var(--panel2);color:var(--text)}
+  #card,.dock{left:64px}
+  body.home .dock{left:0}
+  #homebtn{display:none}
+  .toast{left:calc(50% + 32px)}
+}
 </style>
 </head>
 <body class="home">
@@ -442,7 +457,7 @@ var CAT_ORDER=["rule","penalty","play","offense","defense","position","lingo"];
 var HUBS={
  rules:{n:"Rules",c:"#6FA8FF",d:"Rules and penalties",subs:["rule","penalty"]},
  football:{n:"Football",c:"#7FD49B",d:"Plays, offense, defense, positions",subs:["play","offense","defense","position"]},
- booth:{n:"Announcers",c:"#E7A6D8",d:"Lingo and famous lines",subs:["lingo","announcers"]},
+ booth:{n:"Announcers",short:"Booth",c:"#E7A6D8",d:"Lingo and famous lines",subs:["lingo","announcers"]},
  compare:{n:"Compare",c:"#F2B84B",d:"Up to four players"}
 };
 var HUB_ORDER=["rules","football","booth","compare"];
@@ -597,8 +612,10 @@ function renderList(){
     var past=asks.filter(function(a){return norm(a.q).indexOf(norm(q))>=0||norm(a.title).indexOf(norm(q))>=0}).slice(0,3);
     var askHTML=WORKER&&q.length>=3?'<button class="askrow'+(rf.length?'':' big')+'" data-ask="'+esc(q)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask about “'+esc(q)+'”</b><small>'+(rf.length?'Not what you meant? Get a researched answer.':'Not in the rulebook. Get a researched answer.')+'</small></span></button>':'';
     var total=pl.length+rf.length+an.length+tm.length;
-    box.innerHTML=(groups.map(function(x){return x[1]}).join("")||(total?'':'<ul class="rows"><li class="empty"><strong>Nothing by that name.</strong>Try a last name, a team, a position, or what the announcer said.</li></ul>'))+
-      retBlock(q)+
+    // a retired star whose last name matches beats active players who only match on team or college
+    var sp=STARS?searchPlayers(q,STARS):[],retFirst=sp.length&&sp[0]._s>=1000&&!(pl.length&&pl[0]._s>=1000);
+    box.innerHTML=(retFirst?retBlock(q):"")+(groups.map(function(x){return x[1]}).join("")||(total?'':'<ul class="rows"><li class="empty"><strong>Nothing by that name.</strong>Try a last name, a team, a position, or what the announcer said.</li></ul>'))+
+      (retFirst?"":retBlock(q))+
       (past.length?'<div class="grp" style="margin-top:20px"><span>Asked before</span></div><ul class="list">'+past.map(askRowHTML).join("")+'</ul>':'')+askHTML;
   }else{
     expandGroup={};
@@ -663,16 +680,20 @@ function back(){
 function goHome(){closeCard();$("#q").value="";renderList();window.scrollTo(0,0)}
 function navTo(k){
   if(k==="home"){goHome();return}
-  stack.length=0;deepOpen=false;$("#q").value="";renderList();
+  // jump from wherever you are; Back returns to the screen you left
+  var v=stack.length&&cur();if(v&&((v.t==="hub"&&v.k===k)||(k==="compare"&&(v.t==="compare"||v.t==="pick")))){$("#card").scrollTop=0;return}
+  deepOpen=false;$("#q").value="";renderList();
   if(k==="compare")openCompareHome();
   else if(HUBS[k])show({t:"hub",k:k});
   else openSub(k);
 }
 function openSub(k){if(CATS[k]){browseCat=k;show({t:"browse"})}else if(k==="announcers")show({t:"ann"})}
+var NAVIC={"home": "<path d=\u0022M3 11l9-7 9 7\u0022/><path d=\u0022M5 10v10h14V10\u0022/>", "rules": "<path d=\u0022M5 21V4\u0022/><path d=\u0022M5 4h12l-2 4 2 4H5\u0022/>", "football": "<ellipse cx=\u002212\u0022 cy=\u002212\u0022 rx=\u00229\u0022 ry=\u00225.5\u0022 transform=\u0022rotate(-35 12 12)\u0022/><path d=\u0022M9.5 14.5l5-5\u0022/><path d=\u0022M10.5 11.5l2 2M12 10l2 2\u0022/>", "booth": "<rect x=\u00229\u0022 y=\u00223\u0022 width=\u00226\u0022 height=\u002211\u0022 rx=\u00223\u0022/><path d=\u0022M5 11a7 7 0 0 0 14 0\u0022/><path d=\u0022M12 18v3\u0022/>", "compare": "<path d=\u0022M6 20V10\u0022/><path d=\u0022M12 20V4\u0022/><path d=\u0022M18 20v-7\u0022/>"};
+function navIc(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+NAVIC[k]+'</svg>'}
 function renderNav(active){
   var hub=hubOf(active);
-  $("#side").innerHTML='<h1>Our Guys</h1><button data-nav="home" style="--cc:#F3F5F8" aria-current="'+(!hub)+'"><i aria-hidden="true"></i>Home</button><hr>'+HUB_ORDER.map(function(h){var H=HUBS[h];
-    return '<button data-nav="'+h+'" style="--cc:'+H.c+'" aria-current="'+(active===h)+'"><i aria-hidden="true"></i>'+H.n+'</button>'+
+  $("#side").innerHTML='<h1>Our Guys</h1><button data-nav="home" style="--cc:#F3F5F8" aria-current="'+(!stack.length)+'"><i aria-hidden="true"></i>'+navIc("home")+'Home</button><hr>'+HUB_ORDER.map(function(h){var H=HUBS[h];
+    return '<button data-nav="'+h+'" style="--cc:'+H.c+'" aria-current="'+(!!stack.length&&hub===h)+'"><i aria-hidden="true"></i>'+navIc(h)+(H.short||H.n)+'</button>'+
       (hub===h&&H.subs?H.subs.map(function(k){return '<button class="sub" data-nav="'+k+'" style="--cc:'+subColor(k)+'" aria-current="'+(active===k)+'">'+SUBS[k][0]+'</button>'}).join(""):'')}).join("");
   if(!$("#grid").innerHTML)$("#grid").innerHTML=HUB_ORDER.map(function(h){var H=HUBS[h];return '<button data-nav="'+h+'" style="--cc:'+H.c+'"><b>'+H.n+'</b><small>'+H.d+'</small></button>'}).join("");
 }
@@ -726,7 +747,7 @@ function storyHTML(p){
 var AWN={MVP:"MVP",SBMVP:"Super Bowl MVP",OPOY:"Offensive Player of the Year",DPOY:"Defensive Player of the Year",OROY:"Offensive Rookie of the Year",DROY:"Defensive Rookie of the Year",CPOY:"Comeback Player of the Year",WPMOY:"Walter Payton Man of the Year",HEISMAN:"Heisman Trophy"};
 function awardsHTML(p){
   var a=AW[p.id];if(!a)return "";
-  var h=a.h?'<span class="awd hof"><b>Hall of Fame</b><small>Class of '+a.h+'</small></span>':'';
+  var h=a.h?'<span class="awd hof"><b>Hall of Fame</b><small>'+(a.h>1900?'Class of '+a.h:'Pro Football Hall of Fame')+'</small></span>':'';
   (a.a||[]).forEach(function(x){h+='<span class="awd"><b>'+(x[1].length>1?x[1].length+'&times; ':'')+AWN[x[0]]+'</b><small>'+x[1].join(", ")+'</small></span>'});
   return '<div class="aw">'+h+'</div>';
 }
@@ -1161,8 +1182,8 @@ function loadRetired(){
   retLoading.catch(function(){retLoading=null});
   return retLoading;
 }
-function mapRet(x){var p={id:x.id,name:x.n,pos:x.p,team:x.t,num:x.j||"",headshot:x.h?HEADSHOT+x.h:"",ht:x.ht||0,wt:x.wt||0,college:x.c||"",age:"",drafted:x.d||"",past:x.pt||[[x.t,""]],ret:true,first:x.f,last:x.l,car:x.s||null,best:x.b||null,x:x.x||0};
-      p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+p.college);if(byIdMap[p.id]&&byIdMap[p.id].ret)return byIdMap[p.id];byIdMap[p.id]=byIdMap[p.id]||p;return p}
+function mapRet(x){var p={id:x.id,name:x.n,pos:x.p,team:x.t,num:x.j||"",headshot:x.h?HEADSHOT+x.h:"",ht:x.ht||0,wt:x.wt||0,w:x.w||0,src:x.src||"",college:x.c||"",age:"",drafted:x.d||"",past:x.pt||[[x.t,""]],ret:true,first:x.f,last:x.l,car:x.s||null,best:x.b||null,x:x.x||0};
+      p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+p.college+" "+(x.k||""));if(byIdMap[p.id]&&byIdMap[p.id].ret)return byIdMap[p.id];byIdMap[p.id]=byIdMap[p.id]||p;return p}
 function loadCareer(){
   if(!carLoading)carLoading=getJSON("data/career.json").then(function(c){CAR=c;return c});
   carLoading.catch(function(){carLoading=null});
@@ -1193,6 +1214,7 @@ function renderRetired(p){
   else h+='<p class="nostat">'+(p.pos==="OL"||p.pos==="LS"?'Nobody keeps stats on '+(p.pos==="OL"?'linemen':'long snappers')+'.':'No stats on file for him.')+'</p>';
   if(rows&&rows.length){
     if(p.x===1)h+='<p class="note">Stats since 1999 only. His earlier seasons are not in the data.</p>';
+    else if(p.x===2&&p.w)h+='<p class="note">Career totals from <a href="'+esc(p.src||"")+'" target="_blank" rel="noopener">his Wikipedia page</a>.'+(c.def_sacks!=null&&p.first<1982?' Sacks before 1982 are unofficial.':'')+(c.tackles!=null?' Tackles before 2001 are unofficial.':'')+'</p>';
     else if(p.x===2)h+='<p class="note">Full career, checked against two sources.'+(c.tackles!=null?' Tackles before 2001 are unofficial.':'')+'</p>';
   }
   h+='</section>';
@@ -1330,7 +1352,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="f36b0cc+1";   // bump on each release so phones fetch fresh data files
+var BUILD="legends-1";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 getJSON("data/reference.json").then(function(r){

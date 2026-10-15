@@ -46,6 +46,9 @@ def main():
         if award == "HOF": out[c[0]["id"]]["h"] = yr
         else: out[c[0]["id"]]["a"][award].append(yr)
 
+    # Hall of Famers known from their Wikipedia infobox, class year not on file
+    for r in json.load(open(os.path.join(DATA, "retired.json"))):
+        if r.get("hof") and "h" not in out.get(r["id"], {}): out[r["id"]]["h"] = 1
     order = ["MVP", "SBMVP", "OPOY", "DPOY", "OROY", "DROY", "CPOY", "WPMOY", "HEISMAN"]
     res = {}
     for pid, v in out.items():

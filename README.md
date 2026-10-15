@@ -67,3 +67,9 @@ Open the app URL in Safari > Share > **Add to Home Screen**. Do it on both phone
 - Scores refresh about hourly: the `20 * * * *` job runs `scripts/games.py --hourly`, which only does anything while a game has kicked off and has no box score yet. Finals only, no in-progress scores.
 - `data/teams.json` (from `scripts/teams.py`, nightly) holds team season totals. The app turns them into per-game numbers and league ranks for team pages and matchup screens.
 - Game storylines come from the worker (`/game/:id`), saved per game and refreshable once a day.
+
+## Pre-1999 legends
+- `scripts/legends_wishlist.txt` lists stars whose careers ended before the stats data starts. The workflow input `wiki_legends` runs `scripts/fetch_legends_wiki.py` on GitHub (which can reach Wikipedia) and saves their infoboxes to `data/_legends_raw.json`. Then `python3 scripts/add_old_legends.py` adds them to `data/retired.json` (career totals exactly as the infobox lists them, nothing estimated) and `python3 scripts/build_awards.py` refreshes badges and the stars list.
+
+## Navigation
+- A left bar is always on screen: slim icons on phones and iPad portrait, the full menu with sub-sections on wider screens. Jumping from it keeps your place, so Back returns to the screen you left.
