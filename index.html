@@ -423,6 +423,16 @@ button.badge{cursor:pointer}
 .sigcard small{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}
 .sigcard b{display:block;font-weight:500;font-size:15px;line-height:1.4}
 .sigcard em{display:block;font-style:normal;font-size:13px;color:var(--ac);margin-top:6px}
+
+/* collapsible home sections */
+.coll{display:flex;align-items:center;gap:8px;font:inherit;font-size:15px;font-weight:600;color:var(--text);padding:0}
+.coll::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translateY(-2px);transition:transform .15s}
+.coll[aria-expanded="false"]::after{transform:rotate(-45deg)}
+.newsl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.newsl a{display:block;background:var(--panel);border-radius:12px;padding:12px 14px;text-decoration:none;border-left:3px solid var(--th,var(--line))}
+.newsl b{display:block;font-size:16px;line-height:1.35}
+.newsl span{display:block;color:var(--muted);font-size:14.5px;line-height:1.45;margin-top:3px}
+.newsl small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
 </style>
 </head>
 <body class="home">
@@ -444,6 +454,7 @@ button.badge{cursor:pointer}
   <div class="grid" id="grid"></div>
   <div class="listhead"><h2 id="lh">Favorites</h2><span id="lc"></span></div>
   <div id="results"><ul class="rows" id="rows"><li class="empty">Loading players</li></ul></div>
+  <div id="news"></div>
 </main>
 
 <section id="card" aria-hidden="true"></section>
@@ -630,7 +641,7 @@ function retBlock(q,scope){
 function renderList(){
   var q=$("#q").value.trim(),box=$("#results");
   $("#clr").classList.toggle("on",!!q);
-  $("#grid").style.display=q?"none":"";$("#today").style.display=q?"none":"";
+  $("#grid").style.display=q?"none":"";$("#today").style.display=q?"none":"";$("#news").style.display=q?"none":"";
   if(q){
     var pl=searchPlayers(q),rf=searchRef(q);
     var rules=rf.filter(function(x){return x[1].cat==="penalty"||x[1].cat==="rule"}),terms=rf.filter(function(x){return x[1].cat!=="penalty"&&x[1].cat!=="rule"});
@@ -655,7 +666,8 @@ function renderList(){
   }else{
     expandGroup={};
     var list=favs.map(function(id){return byIdMap[id]}).filter(Boolean);
-    $("#lh").textContent="Favorites";$("#lc").textContent=list.length?list.length+(WORKER?", shared":", this phone only"):"";
+    $("#lh").innerHTML=collBtn("favs","Favorites");$("#lc").textContent=list.length?list.length+(WORKER?", shared":", this phone only"):"";
+    if(COLL.favs){box.innerHTML="";return}
     if(list.length>1)$("#lc").innerHTML=esc($("#lc").textContent)+'<span class="fsort" role="group" aria-label="Sort favorites"><button data-fsort="pos" aria-pressed="'+(FSORT!=="az")+'">Position</button><button data-fsort="az" aria-pressed="'+(FSORT==="az")+'">A-Z</button></span>';
     box.innerHTML=list.length?favsHTML(list):
       '<ul class="rows"><li class="empty"><strong>No favorites yet.</strong>Search for a player above and tap the star on his card.</li></ul>';
@@ -671,6 +683,15 @@ function favsHTML(list){
   return h;
 }
 document.addEventListener("click",function(e){var b=e.target.closest("[data-fsort]");if(b){FSORT=b.dataset.fsort;save("og_favsort",FSORT);renderList()}});
+var NEWS=load("og_news",null);
+function renderNews(){
+  var box=$("#news");if(!box)return;if(!NEWS||!WORKER){box.innerHTML="";return}
+  var it=NEWS.items||[],when=NEWS.at?new Date(NEWS.at).toLocaleString(undefined,{weekday:"short",hour:"numeric",minute:"2-digit"}):"";
+  var h='<div class="listhead"><h2>'+collBtn("news","League news")+'</h2><span>'+(when?'As of '+when:'Checking')+'</span></div>';
+  if(!COLL.news)h+=it.length?'<ul class="newsl">'+it.map(function(n){return '<li><a href="'+esc(n.u)+'" target="_blank" rel="noopener"><b>'+esc(n.h)+'</b>'+(n.s?'<span>'+esc(n.s)+'</span>':'')+(n.src?'<small>'+esc(n.src)+' &#8250;</small>':'')+'</a></li>'}).join("")+'</ul>':
+    '<p class="thin">'+(NEWS.at?'Nothing big in the last couple of days.':'Looking for news. Check back in a minute.')+'</p>';
+  box.innerHTML=h;
+}
 function askRowHTML(a){return '<li><button class="ref" style="'+cc("other")+'" data-askkey="'+esc(a.key)+'"><span class="rt"><span class="rn">'+esc(a.q)+'</span><span class="tag">Asked</span></span><span class="rs">'+esc(a.short||"")+'</span></button></li>'}
 
 // ================= diagrams =================
@@ -1185,6 +1206,10 @@ function gameRow(g){
     '<span class="wh">'+(fin?(aw?'<b>':'')+esc(g.away.score)+(aw?'</b>':'')+'-'+(hw?'<b>':'')+esc(g.home.score)+(hw?'</b>':'')+'<small>Final</small>':
       (g.state==="in"||g.state==="post"?'Underway':k.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}))+'<small>'+esc(g.tv||"")+'</small>')+'</span></button></li>';
 }
+var COLL=load("og_coll",{});
+function collBtn(k,label){return '<button class="coll" data-coll="'+k+'" aria-expanded="'+!COLL[k]+'">'+label+'</button>'}
+document.addEventListener("click",function(e){var b=e.target.closest("[data-coll]");if(!b)return;COLL[b.dataset.coll]=!COLL[b.dataset.coll];save("og_coll",COLL);
+  if(b.dataset.coll==="week")renderToday();else if(b.dataset.coll==="favs")renderList();else renderNews()});
 function renderToday(){
   var box=$("#today"),gs=GAMES&&GAMES.games?GAMES.games.slice().sort(function(a,b){return new Date(a.kickoff)-new Date(b.kickoff)}):[];
   if(!gs.length){box.innerHTML="";return}
@@ -1195,7 +1220,8 @@ function renderToday(){
   if(more){var f=days.filter(function(d){return new Date(by[d][0].kickoff)>=t0})[0]||days[days.length-1];show=[f];
     pin=gs.filter(isColts)[0];if(pin&&dayKey(new Date(pin.kickoff))===f)pin=null}
   function dh(d){var k=new Date(by[d][0].kickoff);return '<div class="dayh">'+(d===today?'<b>Today</b>':'')+'<span>'+k.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})+'</span></div>'}
-  box.innerHTML='<div class="listhead" style="margin-top:14px"><h2>This week</h2><span>'+(GAMES.week?'Week '+GAMES.week+', ':'')+n+' games</span></div>'+
+  if(COLL.week){box.innerHTML='<div class="listhead" style="margin-top:14px"><h2>'+collBtn("week","This week")+'</h2><span>'+(GAMES.week?'Week '+GAMES.week+', ':'')+n+' games</span></div>';return}
+  box.innerHTML='<div class="listhead" style="margin-top:14px"><h2>'+collBtn("week","This week")+'</h2><span>'+(GAMES.week?'Week '+GAMES.week+', ':'')+n+' games</span></div>'+
     (pin?dh(dayKey(new Date(pin.kickoff)))+'<ul class="gms">'+gameRow(pin)+'</ul>':'')+
     show.map(function(d){return dh(d)+'<ul class="gms">'+by[d].map(gameRow).join("")+'</ul>'}).join("")+
     (more?'<button class="ghost" id="allg" style="width:100%;margin-top:8px;padding:6px">Show all '+n+' games</button>':'');
@@ -1518,7 +1544,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="signals-2";   // bump on each release so phones fetch fresh data files
+var BUILD="news-1";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 // if a newer release is out, reload once so nobody sits on a cached copy
@@ -1543,12 +1569,13 @@ Promise.all([getJSON("data/players.json"),getJSON("data/stats.json"),getJSON("da
   P.forEach(function(p){byIdMap[p.id]=p;p._k=norm(p.name+" "+p.pos+" "+team(p.team).n+" "+p.team+" "+(p.college||""))});
   var d=new Date(META.updated);
   $("#upd").textContent=META.season+" season, through Week "+META.week+". Updated "+d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
-  renderList();renderToday();
+  renderList();renderToday();renderNews();
   getJSON("data/stars.json").then(function(r){STARS=r.map(mapRet);if($("#q").value.trim()||!stack.length)renderList();favsNeedRetired()}).catch(function(){favsNeedRetired()});
   if(careerOpen)loadCareer();
   if(WORKER){
     api("/favs").then(function(list){favs=list;save("og_favs",favs);if(!stack.length)renderList();favsNeedRetired()}).catch(function(){$("#lc").textContent="Shared list unreachable"});
     api("/theme").then(function(t){if(t&&typeof t.team==="string"&&t.team!==THEME){THEME=t.team;save("og_theme",THEME);applyTheme()}}).catch(function(){});
+    api("/news").then(function(n){if(n&&Array.isArray(n.items)&&(n.at||!NEWS)){NEWS=n;save("og_news",NEWS)}renderNews()}).catch(function(){renderNews()});
     api("/asks").then(function(list){asks=list;save("og_asks",asks)}).catch(function(){});
   }
 })

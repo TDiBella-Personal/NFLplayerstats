@@ -9,12 +9,13 @@
 // POST /ask             <- {q}  answers a rules/terms question, saves it, returns {q, title, cat, short, deep}
 // GET  /ask/:key        -> saved answer or 404
 // GET  /game/:id        -> {bullets:[...], at} or 404   POST /game/:id <- {away, home, when, refresh}
+// GET  /news            -> {items:[{h,s,u,src}], at}  (0-3 significant stories, refreshed in the background every 6h)
 // GET  /asks            -> recent questions [{q, key, title, short, at}]
 
 const DEFAULT_MODEL = "claude-sonnet-5-5";
 
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     const url = new URL(req.url);
     const origin = req.headers.get("Origin") || "";
     const allowed = (env.PAGES_ORIGIN || "").split(",").map(s => s.trim().replace(/\/$/, "")).filter(Boolean);
@@ -85,6 +86,18 @@ export default {
           await env.OG.put(key, JSON.stringify(out), { expirationTtl: 60 * 60 * 24 * 21 });
           return json(out);
         }
+      }
+
+      if (url.pathname === "/news" && req.method === "GET") {
+        // serve what's saved; if it's over 6 hours old, refresh in the background for the next visit
+        const saved = await env.OG.get("news", "json");
+        const stale = !saved || Date.now() - Date.parse(saved.at) > 6 * 3600e3;
+        if (stale && !(await env.OG.get("news:busy")) && (await underCap(env, "news", 8))) {
+          await env.OG.put("news:busy", "1", { expirationTtl: 300 });
+          const job = news(env).then(n => env.OG.put("news", JSON.stringify(n))).catch(() => {}).finally(() => env.OG.delete("news:busy"));
+          if (ctx && ctx.waitUntil) ctx.waitUntil(job); else await job;
+        }
+        return json(saved || { items: [], at: null, pending: true });
       }
 
       if (url.pathname === "/asks" && req.method === "GET") {
@@ -201,6 +214,27 @@ Respond with ONLY a JSON object, no markdown fences, no preamble:
     bullets: (Array.isArray(out.bullets) ? out.bullets : []).slice(0, 5).map(s => clean(s).slice(0, 260)).filter(Boolean),
     at: new Date().toISOString(),
   };
+}
+
+async function news(env) {
+  const today = new Date().toISOString().slice(0, 10);
+  const prompt = `Today is ${today}. Use web search to find the most significant NFL news from roughly the last 48 hours.
+
+Significant means it matters to a fan who follows the whole league: a major trade or signing, a season-ending or long-term injury to a notable player, a head coach or GM fired or hired, a suspension, a record broken, a league rule or policy decision, or a major story about the league itself.
+Not significant: rumors and speculation, fantasy advice, betting, minor injuries, routine roster moves, ordinary game recaps.
+
+Rules:
+- Return 0 to 3 items, ranked by significance. Return fewer, or none, if nothing clears the bar. Do not pad.
+- Only facts you found in a current source. Headline in your own words, max 12 words. Summary ONE sentence, max 30 words, your own words. No em dashes.
+- For each item give the URL of one source article and the outlet's name.
+
+Respond with ONLY a JSON object, no markdown fences, no preamble:
+{"items":[{"h":"headline","s":"summary","u":"https://...","src":"Outlet"}]}`;
+  const out = await callClaude(prompt, env, 6);
+  const items = (Array.isArray(out.items) ? out.items : []).slice(0, 3)
+    .filter(i => i && clean(i.h) && /^https:\/\//.test(String(i.u || "")))
+    .map(i => ({ h: clean(i.h).slice(0, 120), s: clean(i.s).slice(0, 260), u: String(i.u).slice(0, 500), src: clean(i.src).slice(0, 40) }));
+  return { items, at: new Date().toISOString() };
 }
 
 async function answer(q, env) {
