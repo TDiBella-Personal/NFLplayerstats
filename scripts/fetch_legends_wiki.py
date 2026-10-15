@@ -9,8 +9,12 @@ API = "https://en.wikipedia.org/w/api.php?action=parse&prop=wikitext&format=json
 
 def wikitext(title):
     req = urllib.request.Request(API + urllib.parse.quote(title), headers={"User-Agent": "our-guys/1.0 (personal fan app; github.com/TDiBella-Personal/NFLplayerstats)"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        d = json.loads(r.read().decode("utf-8"))
+    for attempt in range(4):
+        with urllib.request.urlopen(req, timeout=60) as r:
+            d = json.loads(r.read().decode("utf-8"))
+        if "parse" in d or (d.get("error") or {}).get("code") == "missingtitle": break
+        print("   retrying:", (d.get("error") or {}).get("code"))
+        time.sleep(5 * (attempt + 1))
     return (d.get("parse") or {}).get("wikitext", {}).get("*", ""), (d.get("parse") or {}).get("title", "")
 
 def infobox(text):
@@ -34,11 +38,15 @@ def infobox(text):
     return fields
 
 def main():
+    path = os.path.join(HERE, "..", "data", "_legends_raw.json")
+    try: done = {r["name"]: r for r in json.load(open(path)) if r.get("ok")}
+    except Exception: done = {}
     out = []
     for line in open(os.path.join(HERE, "legends_wishlist.txt")):
         line = line.strip()
         if not line or line.startswith("#"): continue
         name, _, title = line.partition("|")
+        if name in done: out.append(done[name]); continue
         tries = [title] if title else [name, name + " (American football)"]
         rec = {"name": name, "ok": False}
         for t in tries:
@@ -49,10 +57,10 @@ def main():
                     rec.update({"ok": True, "title": real, "box": box}); break
             except Exception as ex:
                 rec["err"] = str(ex)
-            time.sleep(0.5)
+            time.sleep(2)
         out.append(rec)
         print(("ok  " if rec["ok"] else "MISS"), name, rec.get("title", ""))
-    json.dump(out, open(os.path.join(HERE, "..", "data", "_legends_raw.json"), "w"), indent=0, ensure_ascii=False)
+    json.dump(out, open(path, "w"), indent=0, ensure_ascii=False)
 
 if __name__ == "__main__":
     main()
