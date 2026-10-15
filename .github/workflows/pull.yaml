@@ -8,6 +8,9 @@ on:
       boxtest_week:
         description: "Test only: build box scores for this week number (written to /tmp, not published)"
         required: false
+      wiki_legends:
+        description: "One-off: fetch Wikipedia infoboxes for scripts/legends_wishlist.txt"
+        required: false
 permissions:
   contents: write
 jobs:
@@ -19,7 +22,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Full pull
-        if: github.event.schedule != '20 * * * *'
+        if: github.event.schedule != '20 * * * *' && github.event.inputs.wiki_legends == ''
         run: python scripts/pull.py
       - name: Colts game-day refresh
         if: github.event.schedule == '20 * * * *'
@@ -29,6 +32,9 @@ jobs:
       - name: Box score test
         if: github.event.inputs.boxtest_week != ''
         run: python scripts/games.py --week ${{ github.event.inputs.boxtest_week }}
+      - name: Fetch legend infoboxes
+        if: github.event.inputs.wiki_legends != ''
+        run: python scripts/fetch_legends_wiki.py
       - name: Commit data
         run: |
           git config user.name "our-guys-bot"
