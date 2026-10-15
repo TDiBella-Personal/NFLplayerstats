@@ -388,6 +388,23 @@ button.badge{cursor:pointer}
   #homebtn{display:none}
   .toast{left:calc(50% + 32px)}
 }
+
+/* compare: one header column per player at every width, so headers sit over their numbers */
+.cmph.n3{grid-template-columns:repeat(3,1fr)}.cmph.n4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:899px){
+  .cmph.n3,.cmph.n4{gap:6px}
+  .cmph.n3 .side,.cmph.n4 .side{padding:34px 8px 10px;min-height:120px}
+  .cmph.n3 .nm,.cmph.n4 .nm{font-size:16px}
+  .cmph.n4 .nm{font-size:14px}
+  .cmph.n3 .face,.cmph.n4 .face{width:36px;height:36px;font-size:13px;margin-bottom:6px}
+  .cmph.n3 .num,.cmph.n4 .num{font-size:58px;top:-6px}
+  .cmph.n3 .sbtns,.cmph.n4 .sbtns{left:5px;right:5px;top:6px}.cmph.n3 .sbtns button,.cmph.n4 .sbtns button{font-size:11px;padding:3px 7px;min-height:24px}
+  .cmph.n3 .side small,.cmph.n4 .side small{font-size:11.5px}
+}
+/* favorites sort toggle */
+.fsort{display:inline-flex;background:var(--panel);border-radius:9px;padding:2px;margin-left:10px;vertical-align:middle}
+.fsort button{font-size:12px;padding:4px 9px;border-radius:7px;color:var(--muted)}
+.fsort button[aria-pressed="true"]{background:var(--panel2);color:var(--text);font-weight:600}
 </style>
 </head>
 <body class="home">
@@ -621,10 +638,21 @@ function renderList(){
     expandGroup={};
     var list=favs.map(function(id){return byIdMap[id]}).filter(Boolean);
     $("#lh").textContent="Favorites";$("#lc").textContent=list.length?list.length+(WORKER?", shared":", this phone only"):"";
-    box.innerHTML=list.length?'<ul class="tiles">'+list.map(tileHTML).join("")+'</ul>':
+    if(list.length>1)$("#lc").innerHTML=esc($("#lc").textContent)+'<span class="fsort" role="group" aria-label="Sort favorites"><button data-fsort="pos" aria-pressed="'+(FSORT!=="az")+'">Position</button><button data-fsort="az" aria-pressed="'+(FSORT==="az")+'">A-Z</button></span>';
+    box.innerHTML=list.length?favsHTML(list):
       '<ul class="rows"><li class="empty"><strong>No favorites yet.</strong>Search for a player above and tap the star on his card.</li></ul>';
   }
 }
+var FSORT=load("og_favsort","pos"),FPOS=["QB","RB","WR","TE","OL","EDGE","DL","LB","CB","S","DB","K","P","LS"],FPN={QB:"Quarterbacks",RB:"Running backs",WR:"Receivers",TE:"Tight ends",OL:"Offensive line",EDGE:"Edge rushers",DL:"Defensive line",LB:"Linebackers",CB:"Cornerbacks",S:"Safeties",DB:"Defensive backs",K:"Kickers",P:"Punters",LS:"Long snappers"};
+function lastName(p){var w=p.name.replace(/ (Jr\.?|Sr\.?|II|III|IV)$/,"").split(" ");return w.slice(1).join(" ")||p.name}
+function favsHTML(list){
+  var az=list.slice().sort(function(a,b){return lastName(a).localeCompare(lastName(b))||a.name.localeCompare(b.name)});
+  if(FSORT==="az"||list.length<2)return '<ul class="tiles">'+az.map(tileHTML).join("")+'</ul>';
+  var h="";FPOS.concat(["?"]).forEach(function(pos){var g=az.filter(function(p){return pos==="?"?FPOS.indexOf(p.pos)<0:p.pos===pos});
+    if(g.length)h+='<p class="posl">'+(FPN[pos]||"Other")+'</p><ul class="tiles">'+g.map(tileHTML).join("")+'</ul>'});
+  return h;
+}
+document.addEventListener("click",function(e){var b=e.target.closest("[data-fsort]");if(b){FSORT=b.dataset.fsort;save("og_favsort",FSORT);renderList()}});
 function askRowHTML(a){return '<li><button class="ref" style="'+cc("other")+'" data-askkey="'+esc(a.key)+'"><span class="rt"><span class="rn">'+esc(a.q)+'</span><span class="tag">Asked</span></span><span class="rs">'+esc(a.short||"")+'</span></button></li>'}
 
 // ================= diagrams =================
@@ -927,10 +955,10 @@ function renderCompare(v){
   function last(p){return esc(p.name.split(" ").slice(1).join(" ")||p.name)}
   // one stat row: classic left | label | right for two players, label over a row of values for three or four
   function row(label,vals,k,text){
-    var nums=vals.map(num),best=null;
-    if(!text&&!NO_WINNER[k]&&nums.some(function(x){return x!==nums[0]}))best=LOWER_BETTER[k]?Math.min.apply(null,nums):Math.max.apply(null,nums);
-    var allSame=!text&&nums.every(function(x){return x===nums[0]})&&nums[0]!==0;
-    function cell(i,extra){var sh=String(vals[i]),cls="cv"+(text?" txt":"")+(best!==null&&nums[i]===best?" win":allSame?" tie":"")+(extra||"");
+    var nums=vals.map(num),best=null,has=vals.map(function(v){return v!=="\u2014"}),hn=nums.filter(function(x,i){return has[i]});
+    if(!text&&!NO_WINNER[k]&&hn.length>1&&hn.some(function(x){return x!==hn[0]}))best=LOWER_BETTER[k]?Math.min.apply(null,hn):Math.max.apply(null,hn);
+    var allSame=!text&&hn.length===nums.length&&nums.every(function(x){return x===nums[0]})&&nums[0]!==0;
+    function cell(i,extra){var sh=String(vals[i]),cls="cv"+(text?" txt":"")+(best!==null&&has[i]&&nums[i]===best?" win":allSame?" tie":"")+(extra||"");
       return '<span class="'+cls+'" style="--wc:'+TM[i].ac+(!text&&sh.length>8?';font-size:'+(n>2?15:18)+'px':'')+'">'+sh+(n>2?'<small>'+last(PL[i])+'</small>':'')+'</span>'}
     if(n===2)return '<div class="crow two">'+cell(0)+'<span class="cl">'+label+'</span>'+cell(1," r")+'</div>';
     return '<div class="crow"><span class="cl">'+label+'</span><div class="cvs" style="--n:'+n+'">'+PL.map(function(p,i){return cell(i)}).join("")+'</div></div>';
@@ -942,7 +970,7 @@ function renderCompare(v){
   h+='<div class="swap">'+(n<MAXCMP?'<button data-act="addp">+ Add player</button>':'')+(n===2?'<button data-act="swap">Swap sides</button>':'')+'</div>';
   if(!anyRet)h+='<div class="seg"><button data-act="cmode" data-m="season" aria-pressed="'+(!career)+'">This season</button><button data-act="cmode" data-m="career" aria-pressed="'+career+'">Career</button></div>';
   h+='<section class="sec"><h3>'+(career?'Career <span>regular season</span>':'This season <span>through Week '+META.week+'</span>')+'</h3>';
-  h+=row("Games",ST.map(function(s){return fmt(s.gp||0)}),"_gp");
+  h+=row("Games",ST.map(function(s){return s.gp?fmt(s.gp):"\u2014"}),"_gp");
   rows.forEach(function(r){h+=row(r[1],ST.map(function(s){return fmt(val(r[0],s))}),r[0])});
   if(!rows.length)h+='<p class="note">Different jobs, no stats in common. Here’s the rest.</p>';
   var part=PL.filter(function(p){return p.x===1});
@@ -1352,7 +1380,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="legends-1";   // bump on each release so phones fetch fresh data files
+var BUILD="favs-1";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 getJSON("data/reference.json").then(function(r){
