@@ -1,0 +1,900 @@
+[
+{
+"name": "Walter Payton",
+"ok": false
+},
+{
+"name": "Joe Montana",
+"ok": false
+},
+{
+"name": "Lawrence Taylor",
+"ok": true,
+"title": "Lawrence Taylor",
+"box": {
+"name": "Lawrence Taylor",
+"image": "Lawrence Taylor in 2025 (cropped).jpg",
+"image_size": "",
+"alt": "",
+"caption": "Taylor in 2025",
+"number": "56",
+"position": "[[Linebacker]]",
+"birth_date": "{{birth date and age|1959|02|04}}",
+"birth_place": "[[Williamsburg, Virginia]], U.S.",
+"height_ft": "6",
+"height_in": "3",
+"weight_lbs": "237",
+"high_school": "[[Lafayette High School (Virginia)|Lafayette]] (Williamsburg)",
+"college": "[[North Carolina Tar Heels football|North Carolina]] (1977–1980)",
+"draftyear": "1981",
+"draftround": "1",
+"draftpick": "2",
+"pastteams": "\n* [[New York Giants]] ({{NFL Year|1981|1993}})",
+"highlights": "\n* 2× [[List of Super Bowl champions|Super Bowl champion]] ([[Super Bowl XXI|XXI]], [[Super Bowl XXV|XXV]])\n* [[NFL Most Valuable Player]] (1986)\n* 3× [[AP NFL Defensive Player of the Year|NFL Defensive Player of the Year]] (1981, 1982, 1986)\n* [[NFL Defensive Rookie of the Year]] (1981)\n* 2× [[UPI NFC Player of the Year]] (1983, 1986)\n* 8× First-team [[All-Pro]] ([[1981 All-Pro Team|1981]]–[[1986 All-Pro Team|1986]], [[1988 All-Pro Team|1988]], [[1989 All-Pro Team|1989]])\n* 2× Second-team All-Pro ([[1987 All-Pro Team|1987]], [[1990 All-Pro Team|1990]])\n* 10× [[Pro Bowl]] ([[1982 Pro Bowl|1981]]–[[1991 Pro Bowl|1990]])\n* [[List of National Football League season sacks leaders|NFL sacks leader]] (1986)\n* [[NFL 1980s All-Decade Team]]\n* [[NFL 75th Anniversary All-Time Team]]\n* [[NFL 100th Anniversary All-Time Team]]\n* [[New York Giants#Ring of Honor|New York Giants Ring of Honor]]\n* [[New York Giants#Retired numbers|New York Giants No. 56]] retired\n* [[New York Giants#Top 100 greatest Giants of all-time|Greatest New York Giant of all-time]]\n* [[Unanimous All-American]] ([[1980 College Football All-America Team|1980]])\n* [[Atlantic Coast Conference football individual awards#Player of the Year|ACC Player of the Year]] (1980)\n* [[ACC 50th Anniversary men's football team|ACC 50th Anniversary Team]]\n* [[AP All-Time All-America college football team#Second team|Second-team AP All-Time All-American]] (2025)\n* [[North Carolina Tar Heels football#Honored jerseys|North Carolina Tar Heels Jersey No. 98]] honored",
+"statlabel1": "[[Tackle (football move)|Tackles]]",
+"statvalue1": "1,088",
+"statlabel2": "[[Quarterback sack|Sacks]]",
+"statvalue2": "142",
+"statlabel3": "[[Fumble|Fumble recoveries]]",
+"statvalue3": "11",
+"statlabel4": "[[Interception]]s",
+"statvalue4": "9",
+"statlabel5": "[[Touchdown|Defensive touchdowns]]",
+"statvalue5": "2",
+"pfr": "TaylLa00\n| HOF         = lawrence-taylor\n}}"
+}
+},
+{
+"name": "Terry Bradshaw",
+"ok": true,
+"title": "Terry Bradshaw",
+"box": {
+"name": "Terry Bradshaw",
+"image": "Terry Bradshaw Meet and Greet ASI Chicago show 071521-7 (51321819538).jpg",
+"caption": "Bradshaw in 2021",
+"number": "12",
+"position": "[[Quarterback]]",
+"birth_date": "{{birth date and age|mf=yes|1948|9|2}}",
+"birth_place": "[[Shreveport, Louisiana]], U.S.",
+"height_ft": "6",
+"height_in": "3",
+"weight_lbs": "215",
+"high_school": "[[Woodlawn Leadership Academy|Woodlawn]] {{nowrap|(Shreveport)}}",
+"college": "[[Louisiana Tech Bulldogs football|Louisiana Tech]] (1966–1969)",
+"draftyear": "1970",
+"draftround": "1",
+"draftpick": "1",
+"pastteams": "\n* [[Pittsburgh Steelers]] ({{NFL Year|1970|1983}})",
+"highlights": "\n* 4× [[List of Super Bowl champions|Super Bowl champion]] ([[Super Bowl IX|IX]], [[Super Bowl X|X]], [[Super Bowl XIII|XIII]], [[Super Bowl XIV|XIV]])\n* 2× [[Super Bowl Most Valuable Player Award|Super Bowl MVP]] ([[Super Bowl XIII|XIII]], [[Super Bowl XIV|XIV]])\n* [[NFL Most Valuable Player Award|NFL Most Valuable Player]] (1978)\n* First-team [[All-Pro]] ([[1978 All-Pro Team|1978]])\n* 3× [[Pro Bowl]] ([[1976 Pro Bowl|1975]], [[1979 Pro Bowl|1978]], [[1980 Pro Bowl|1979]])\n* 2× [[List of NFL annual passing touchdowns leaders|NFL passing touchdowns leader]] (1978, 1982)\n* [[NFL 1970s All-Decade Team]]\n* [[Sports Illustrated Sportsperson of the Year|''Sports Illustrated'' Sportsperson of the Year]] (1979)\n* [[Pittsburgh Steelers#Hall of Honor|Pittsburgh Steelers Hall of Honor]]\n* [[Pittsburgh Steelers All-Time Team]]\n* First-team [[Little All-America college football team|Little All-American]] ([[1969 Little All-America college football team|1969]])",
+"statlabel1": "[[Passing attempts]]",
+"statvalue1": "3,901",
+"statlabel2": "[[Passing completions]]",
+"statvalue2": "2,025",
+"statlabel3": "[[Completion percentage]]",
+"statvalue3": "51.9%",
+"statlabel4": "[[Touchdown|TD]]–[[Interception|INT]]",
+"statvalue4": "212–210",
+"statlabel5": "[[Passing yards]]",
+"statvalue5": "27,989",
+"statlabel6": "[[Passer rating]]",
+"statvalue6": "70.9",
+"statlabel7": "[[Rushing yards]]",
+"statvalue7": "2,257",
+"statlabel8": "[[Touchdown|Rushing touchdowns]]",
+"statvalue8": "32",
+"pfr": "BradTe00\n| HOF         = terry-bradshaw\n| CollegeHOF  = 1916\n}}"
+}
+},
+{
+"name": "Fran Tarkenton",
+"ok": true,
+"title": "Fran Tarkenton",
+"box": {
+"name": "Fran Tarkenton",
+"image": "Fran Tarkenton January 2010.jpg",
+"alt": "Tarkenton in January 2010 after a speech by General David Petraeus in Atlanta, Georgia",
+"caption": "Tarkenton in 2010",
+"number": "10",
+"position": "[[Quarterback]]",
+"birth_date": "{{Birth date and age|1940|2|3|mf=y}}",
+"birth_place": "[[Richmond, Virginia]], U.S.",
+"death_date": "",
+"death_place": "",
+"height_ft": "6",
+"height_in": "0",
+"weight_lb": "190",
+"high_school": "[[Clarke Central High School|Athens]] {{nowrap|([[Athens, Georgia]])}}",
+"college": "[[Georgia Bulldogs football|Georgia]] (1958–1960)",
+"draftyear": "1961",
+"draftround": "3",
+"draftpick": "29",
+"afldraftyear": "1961",
+"afldraftround": "5",
+"afldraftpick": "35",
+"pastteams": "* [[Minnesota Vikings]] ({{NFL Year|1961|1966}})\n* [[New York Giants]] ({{NFL Year|1967|1971}})\n* Minnesota Vikings ({{NFL Year|1972|1978}})",
+"highlights": "* [[NFL Most Valuable Player]] (1975)\n* [[NFL Offensive Player of the Year Award|NFL Offensive Player of the Year]] (1975)\n* First-team [[All-Pro]] ([[1975 All-Pro Team|1975]])\n* Second-team All-Pro ([[1973 All-Pro Team|1973]])\n* 9× [[Pro Bowl]] ([[1965 Pro Bowl|1964]], [[1966 Pro Bowl|1965]], [[1968 Pro Bowl|1967]]–[[1971 Pro Bowl|1970]], [[1975 Pro Bowl|1974]]–[[1977 Pro Bowl|1976]])\n* [[List of NFL annual passing yards leaders|NFL passing yards leader]] (1978)\n* [[List of NFL annual passing touchdowns leaders|NFL passing touchdowns leader]] (1975)\n* [[List of NFL annual pass completion percentage leaders|NFL completion percentage leader]] (1977)\n* [[Bert Bell Award]] (1975)\n* 50 Greatest Vikings\n* 50 Greatest Giants\n* Minnesota Vikings Anniversary Team (25th, 40th)\n* [[Minnesota Vikings Ring of Honor]]\n* [[Minnesota Vikings#Retired numbers|Minnesota Vikings No. 10]] retired\n* [[New York Giants#Top 100 greatest Giants of all-time|33rd greatest New York Giant of all-time]]\n* 2× First-team [[List of All-SEC football teams|All-SEC]] ([[1959 All-SEC football team|1959]], [[1960 All-SEC football team|1960]])\n* [[Orange Bowl]] champion ([[1960 Orange Bowl|1960]])",
+"statlabel1": "[[Passing attempts]]",
+"statvalue1": "6,467",
+"statlabel2": "[[Passing completions]]",
+"statvalue2": "3,686",
+"statlabel3": "[[Completion percentage]]",
+"statvalue3": "57.0%",
+"statlabel4": "[[Touchdown|TD]]–[[Interception|INT]]",
+"statvalue4": "342–266",
+"statlabel5": "[[Passer rating]]",
+"statvalue5": "80.4",
+"statlabel6": "[[Passing yards]]",
+"statvalue6": "47,003",
+"statlabel7": "[[Rushing yards]]",
+"statvalue7": "3,674",
+"statlabel8": "[[Touchdown|Rushing touchdowns]]",
+"statvalue8": "32",
+"pfr": "TarkFr00\n| HOF           = fran-tarkenton\n| CollegeHOF    = 1778\n}}"
+}
+},
+{
+"name": "Joe Greene",
+"ok": false
+},
+{
+"name": "Roger Staubach",
+"ok": false
+},
+{
+"name": "Joe Namath",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Bob Griese",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ken Stabler",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Dan Fouts",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Jim Kelly",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Phil Simms",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ken Anderson",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Joe Theismann",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Jim Plunkett",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Archie Manning",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Len Dawson",
+"ok": false
+},
+{
+"name": "Tony Dorsett",
+"ok": true,
+"title": "Tony Dorsett",
+"box": {
+"name": "Tony Dorsett",
+"image": "Tony Dorsett.jpg",
+"alt": "",
+"caption": "Dorsett in 2009",
+"number": "33",
+"position": "[[Running back]]",
+"birth_date": "{{Birth date and age|1954|4|7}}",
+"birth_place": "[[Rochester, Pennsylvania]], U.S.",
+"death_date": "",
+"death_place": "",
+"height_ft": "5",
+"height_in": "11",
+"weight_lb": "192",
+"high_school": "[[Hopewell High School (Pennsylvania)|Hopewell]] {{nowrap|([[Aliquippa, Pennsylvania]])}}",
+"college": "[[Pittsburgh Panthers football|Pittsburgh]] (1973–1976)",
+"draftyear": "1977",
+"draftround": "1",
+"draftpick": "2",
+"pastteams": "\n* [[Dallas Cowboys]] ({{NFL Year|1977|1987}})\n* [[Denver Broncos]] ({{NFL Year|1988}})",
+"highlights": "\n* [[List of Super Bowl champions|Super Bowl champion]] ([[Super Bowl XII|XII]])\n* [[NFL Offensive Rookie of the Year]] (1977)\n* First-team [[All-Pro]] ([[1981 All-Pro Team|1981]])\n* 2× Second-team All-Pro ([[1982 All-Pro Team|1982]], [[1983 All-Pro Team|1983]])\n* 4× [[Pro Bowl]] ([[1979 Pro Bowl|1978]], [[1982 Pro Bowl|1981]]–[[1984 Pro Bowl|1983]])\n* [[Dallas Cowboys Ring of Honor]]\n* [[College football national championships in NCAA Division I FBS|National champion]] ([[1976 Pittsburgh Panthers football team|1976]])\n* [[Heisman Trophy]] (1976)\n* [[List of unanimous All-Americans in college football|Unanimous All-American]] ([[1976 College Football All-America Team|1976]])\n* 2× First-team [[College Football All-America Team|All-American]] ([[1973 College Football All-America Team|1973]], [[1975 College Football All-America Team|1975]])\n* Second-team All-American ([[1974 College Football All-America Team|1974]])\n*[[AP All-Time All-America college football team#Second team|Second-team AP All-Time All-American]] (2025)\n* [[Pittsburgh Panthers football#Retired numbers|Pittsburgh Panthers No. 33]] retired\n; NFL record\n* 99-yard rushing touchdown{{efn|Tied with [[Derrick Henry]]}}",
+"statlabel1": "[[Rushing yards]]",
+"statvalue1": "12,739",
+"statlabel2": "[[Rushing average]]",
+"statvalue2": "4.3",
+"statlabel3": "[[Touchdown|Rushing touchdowns]]",
+"statvalue3": "77",
+"statlabel4": "[[Reception (gridiron football)|Receptions]]",
+"statvalue4": "398",
+"statlabel5": "[[Receiving yards]]",
+"statvalue5": "3,554",
+"statlabel6": "[[Touchdown|Receiving touchdowns]]",
+"statvalue6": "13",
+"pfr": "DorsTo00\n| HOF         = tony-dorsett\n| CollegeHOF  = 1965\n}}"
+}
+},
+{
+"name": "Earl Campbell",
+"ok": true,
+"title": "Earl Campbell",
+"box": {
+"name": "Earl Campbell",
+"image": "Earl campbell shaggybevo.jpg",
+"image_size": "",
+"alt": "",
+"caption": "Campbell signing autographs in 2009",
+"number": "34, 35",
+"position": "[[Running back]]",
+"birth_date": "{{birth date and age|1955|3|29|mf=y}}",
+"birth_place": "[[Tyler, Texas]], U.S.",
+"death_date": "",
+"death_place": "",
+"height_ft": "5",
+"height_in": "11",
+"weight_lb": "232",
+"high_school": "[[John Tyler High School|John Tyler]] (Texas)",
+"college": "[[Texas Longhorns football|Texas]] (1974–1977)",
+"draftyear": "1978",
+"draftround": "1",
+"draftpick": "1",
+"pastteams": "\n* [[Houston Oilers]] ({{NFL Year|1978|1984}})\n* [[New Orleans Saints]] ({{NFL Year|1984|1985}})",
+"highlights": "\n* [[NFL Most Valuable Player]] (1979)\n* 3× [[NFL Offensive Player of the Year]] (1978–1980)\n* [[NFL Offensive Rookie of the Year]] (1978)\n* 3× First-team [[All-Pro]] ([[1978 All-Pro Team|1978]]–[[1980 All-Pro Team|1980]])\n* 5× [[Pro Bowl]] ([[1979 Pro Bowl|1978]]–[[1982 Pro Bowl|1981]], [[1984 Pro Bowl|1983]])\n* [[Touchdown Club of Columbus#Joe F. Carr Trophy|Joe F. Carr Trophy]] (1978)\n* 3× [[List of National Football League annual rushing yards leaders|NFL rushing yards leader]] (1978–1980)\n* 2× [[List of National Football League annual rushing touchdowns leaders|NFL rushing touchdowns leader]] (1979, 1980)\n* [[NFL 1970s All-Decade Team]]\n* [[NFL 100th Anniversary All-Time Team]]\n* [[Tennessee Titans#Titans Ring of Honor|Titans/Oilers Ring of Honor]]\n* [[Tennessee Titans#Retired numbers|Houston Oilers No. 34]] retired\n* [[Heisman Trophy]] (1977)\n* [[List of unanimous All-Americans in college football|Unanimous All-American]] ([[1977 College Football All-America Team|1977]])\n* First-team [[College Football All-America Team|All-American]] ([[1975 College Football All-America Team|1975]])\n* [[Texas Longhorns football#Retired numbers|Texas Longhorns No. 20]] retired",
+"statlabel1": "[[Rushing yards]]",
+"statvalue1": "9,407",
+"statlabel2": "[[Rushing average]]",
+"statvalue2": "4.3",
+"statlabel3": "[[Touchdown|Rushing touchdowns]]",
+"statvalue3": "74",
+"statlabel4": "[[Reception (gridiron football)|Receptions]]",
+"statvalue4": "121",
+"statlabel5": "[[Receiving yards]]",
+"statvalue5": "806",
+"pfr": "C/CampEa00\n| HOF         = earl-campbell\n| CollegeHOF  = 1959\n}}"
+}
+},
+{
+"name": "Eric Dickerson",
+"ok": true,
+"title": "Eric Dickerson",
+"box": {
+"name": "Eric Dickerson",
+"image": "Eric Dickerson.jpg",
+"caption": "Dickerson in 2014",
+"number": "29",
+"position": "[[Running back]]",
+"birth_date": "{{Birth date and age|1960|9|2|mf=y}}",
+"birth_place": "[[Sealy, Texas]], U.S.",
+"height_ft": "6",
+"height_in": "3",
+"weight_lb": "220",
+"high_school": "[[Sealy High School|Sealy]]",
+"college": "[[SMU Mustangs football|SMU]] (1979–1982)",
+"draftyear": "1983",
+"draftround": "1",
+"draftpick": "2",
+"teams": "\n* [[Los Angeles Rams]] ({{NFL Year|1983|1987}})\n* [[Indianapolis Colts]] ({{NFL Year|1987|1991}})\n* [[Los Angeles Raiders]] ({{NFL Year|1992}})\n* [[Atlanta Falcons]] ({{NFL Year|1993}})\n<!-- Do not add anything regarding 1 day contract with the Rams. This was a unofficial ceremonial contract-->",
+"highlights": "\n* [[NFL Offensive Player of the Year]] (1986)\n* [[NFL Offensive Rookie of the Year]] (1983)\n* 3× [[UPI NFC Player of the Year|UPI NFC Offensive Player of the Year]] (1983, 1984, 1986)\n* 5× First-team [[All-Pro]] ([[1983 All-Pro Team|1983]], [[1984 All-Pro Team|1984]], [[1986 All-Pro Team|1986]]–[[1988 All-Pro Team|1988]])\n* 6× [[Pro Bowl]] ([[1984 Pro Bowl|1983]], [[1985 Pro Bowl|1984]], [[1987 Pro Bowl|1986]]–[[1990 Pro Bowl|1989]])\n* 4× [[List of NFL rushing champions|NFL rushing yards leader]] (1983, 1984, 1986, 1988)\n* [[List of National Football League season rushing touchdowns leaders|NFL rushing touchdowns co-leader]] (1984)\n* [[NFL 1980s All-Decade Team]]\n* [[NFL 100th Anniversary All-Time Team]]\n* [[PFWA All-Rookie Team]] ([[PFWA All-Rookie Team#1983|1983]])\n* [[Los Angeles Rams awards#St. Louis Football Ring of Fame|St. Louis Football Ring of Fame]]\n* [[Indianapolis Colts Ring of Honor]]\n* [[Los Angeles Rams#Retired numbers|Los Angeles Rams No. 29]] retired\n* [[List of unanimous All-Americans in college football|Unanimous All-American]] ([[1982 College Football All-America Team|1982]])\n* Second-team [[College Football All-America Team|All-American]] ([[1981 College Football All-America Team|1981]])\n* 2× First-team All-[[Southwest Conference|SWC]] (1981, [[1982 All-Southwest Conference football team|1982]])\n* 2× [[Southwest Conference|SWC]] Offensive Player of the Year (1981, 1982)\n* [[SMU Mustangs football#Honored jerseys|SMU Mustangs Jersey No. 19]] honored\n;NFL records\n* Most rushing yards in a season: [[2,000-yard club|2,105]]\n* Most rushing yards in a season by a rookie: 1,808\n* Most rushing yards in a playoff game: 248",
+"statlabel1": "[[Rushing yards]]",
+"statvalue1": "13,259",
+"statlabel2": "[[Average|Rushing average]]",
+"statvalue2": "4.4",
+"statlabel3": "[[Touchdown|Rushing touchdowns]]",
+"statvalue3": "90",
+"statlabel4": "[[Reception (American football)|Receptions]]",
+"statvalue4": "281",
+"statlabel5": "[[Receiving yards]]",
+"statvalue5": "2,137",
+"statlabel6": "[[Touchdown|Receiving touchdowns]]",
+"statvalue6": "6",
+"pfr": "D/DickEr00\n| HOF         = eric-dickerson\n| CollegeHOF  = 2451\n}}"
+}
+},
+{
+"name": "Franco Harris",
+"ok": false
+},
+{
+"name": "O. J. Simpson",
+"ok": false
+},
+{
+"name": "Larry Csonka",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "John Riggins",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ottis Anderson",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Roger Craig",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Bo Jackson",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Billy Sims",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Chuck Foreman",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Steve Largent",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "James Lofton",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Lynn Swann",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "John Stallworth",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Charlie Joiner",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Fred Biletnikoff",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Paul Warfield",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Kellen Winslow",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ozzie Newsome",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Dave Casper",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Drew Pearson",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Harold Carmichael",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Cliff Branch",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Wes Chandler",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Sterling Sharpe",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Anthony Muñoz",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "John Hannah",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Mike Webster",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Jackie Slater",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Art Shell",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Gene Upshaw",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Dwight Stephenson",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Jim Langer",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Larry Little",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ron Yary",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Dan Dierdorf",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Joe DeLamielleure",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Jimbo Covert",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Russ Grimm",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Mike Munchak",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Jack Youngblood",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Lee Roy Selmon",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Randy White",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Howie Long",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Dan Hampton",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Alan Page",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Carl Eller",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Elvin Bethea",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Fred Dean",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ed \"Too Tall\" Jones",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "L. C. Greenwood",
+"ok": true,
+"title": "L. C. Greenwood",
+"box": {
+"image": "LC Greenwood USS Albany June 13, 2007.jpg",
+"caption": "Greenwood in 2007,<br>aboard the [[USS Albany (SSN-753)|USS ''Albany'' (SSN-753)]]",
+"position": "[[Defensive end]]",
+"number": "68",
+"birth_date": "{{Birth date|1946|9|8}}",
+"birth_place": "[[Canton, Mississippi]], U.S.",
+"death_date": "{{death date and age|2013|9|29|1946|9|8}}",
+"death_place": "[[Point Breeze, Pittsburgh|Pittsburgh, Pennsylvania]], U.S.",
+"height_ft": "6",
+"height_in": "6",
+"weight_lbs": "245",
+"draftyear": "1969",
+"draftround": "[[1969 NFL/AFL draft#Round ten|10]]",
+"draftpick": "238",
+"high_school": "Rogers (Canton)",
+"college": "[[Arkansas–Pine Bluff Golden Lions football|Arkansas-Pine Bluff]]",
+"teams": "* [[Pittsburgh Steelers]] ([[1969 Pittsburgh Steelers season|1969]]–[[1981 Pittsburgh Steelers season|1981]])",
+"statlabel1": "Games",
+"statvalue1": "170",
+"statlabel2": "[[Safety (American football score)|Safeties]]",
+"statvalue2": "1",
+"statlabel3": "[[Fumble|Fumble recoveries]]",
+"statvalue3": "14",
+"pfr": "GreeL.00",
+"highlights": "* 4× [[List of Super Bowl champions|Super Bowl champion]] ([[Super Bowl IX|IX]], [[Super Bowl X|X]], [[Super Bowl XIII|XIII]], [[Super Bowl XIV|XIV]])\n* 2× First-team [[All-Pro]] ([[1974 All-Pro Team|1974]], [[1975 All-Pro Team|1975]])\n* 6× [[Pro Bowl]] ([[1974 Pro Bowl|1973]]–[[1977 Pro Bowl|1976]], [[1979 Pro Bowl|1978]], [[1980 Pro Bowl|1979]])\n* [[NFL 1970s All-Decade Team]]\n* [[Pittsburgh Steelers All-Time Team]]\n* [[Pittsburgh Steelers#Hall of Honor|Pittsburgh Steelers Hall of Honor]]\n| HOF         =\n| CollegeHOF  =\n}}"
+}
+},
+{
+"name": "Harvey Martin",
+"ok": true,
+"title": "Harvey Martin",
+"box": {
+"name": "Harvey Martin",
+"image": "File:Ed \"Too Tall\" Jones, Gerald R. Ford, Harvey Martin.jpg",
+"image_size": "",
+"alt": "Ed \"Too Tall\" Jones and Harvey Martin present President Gerald R. Ford with a football jersey at the Texas Stadium Club, April 9, 1976.",
+"caption": "Martin and [[Ed \"Too Tall\" Jones]] present President [[Gerald Ford]] with a football jersey at the Texas Stadium Club, April 9, 1976.",
+"number": "79",
+"position": "[[Defensive end]]",
+"birth_date": "{{birth date|1950|11|16}}",
+"birth_place": "[[Dallas|Dallas, Texas]], U.S.",
+"death_date": "{{death date and age|2001|12|24|1950|11|16}}",
+"death_place": "[[Grapevine, Texas]], U.S.",
+"height_ft": "6",
+"height_in": "5",
+"weight_lb": "262",
+"high_school": "[[South Oak Cliff High School|South Oak Cliff]] {{nowrap|(Dallas)}}",
+"college": "[[Texas A&M–Commerce Lions football|East Texas State]] (1969–1972)",
+"draftyear": "1973",
+"draftround": "3",
+"draftpick": "53",
+"pastteams": "\n* [[Dallas Cowboys]] ({{NFL Year|1973|1983}})",
+"highlights": "\n* [[List of Super Bowl champions|Super Bowl champion]] ([[Super Bowl XII|XII]])\n* [[Super Bowl Most Valuable Player Award|Super Bowl MVP]] ([[Super Bowl XII|XII]]){{efn|Co-winner with [[Randy White (American football)|Randy White]]}}\n* [[AP NFL Defensive Player of the Year|NFL Defensive Player of the Year]] (1977)\n* First-team [[All-Pro]] ([[1977 All-Pro Team|1977]])\n* 3× Second-team All-Pro ([[1976 All-Pro Team|1976]], [[1979 All-Pro Team|1979]], [[1982 All-Pro Team|1982]])\n* 4× [[Pro Bowl]] ([[1977 Pro Bowl|1976]]–[[1980 Pro Bowl|1979]])\n* [[List of National Football League season sacks leaders|NFL sacks leader]] (1977)\n* [[NFL 1970s All-Decade Team]]\n* Third-team [[Little All-America college football team|Little All-American]] ([[1972 Little All-America college football team|1972]])",
+"statlabel1": "[[Quarterback sack|Sacks]]",
+"statvalue1": "10.0",
+"statlabel2": "Safeties",
+"statvalue2": "2",
+"statlabel3": "[[Interceptions]]",
+"statvalue3": "2",
+"statlabel4": "Interception yards",
+"statvalue4": "7",
+"statlabel5": "[[Fumble|Fumble recoveries]]",
+"statvalue5": "6",
+"pfr": "MartHa00\n}}"
+}
+},
+{
+"name": "Mark Gastineau",
+"ok": true,
+"title": "Mark Gastineau",
+"box": {
+"name": "Mark Gastineau",
+"image": "",
+"image_size": "",
+"alt": "",
+"caption": "",
+"number": "99",
+"position": "[[Defensive end]]",
+"birth_date": "{{Birth date and age|1956|11|20}}",
+"birth_place": "[[Ardmore, Oklahoma]], U.S.",
+"death_date": "",
+"death_place": "",
+"height_ft": "6",
+"height_in": "5",
+"weight_lb": "266",
+"high_school": "[[Round Valley High School|Round Valley]] {{avoid wrap|([[Eagar, Arizona]])}}",
+"college": "[[Eastern Arizona Gila Monsters football|Eastern Arizona]] (1975) <br> [[Arizona State Sun Devils football|Arizona State]] (1976) <br> [[East Central Tigers football|East Central]] (1977–1978)",
+"draftyear": "1979",
+"draftround": "2",
+"draftpick": "41",
+"pastteams": "\n* [[New York Jets]] ({{NFL Year|1979|1988}})\n* [[BC Lions]] ({{CFL Year|1990}})",
+"highlights": "\n* [[NFL Defensive Player of the Year]] ([[NEA NFL Defensive Player of the Year|NEA]]) (1982)\n* 3× First-team [[All-Pro]] ([[1982 All-Pro Team|1982]]–[[1984 All-Pro Team|1984]])\n* Second-team All-Pro ([[1981 All-Pro Team|1981]])\n* 5× [[Pro Bowl]] ([[1982 Pro Bowl|1981]]–[[1986 Pro Bowl|1985]])\n* 2× [[List of NFL annual sacks leaders|NFL sacks leader]] (1983, 1984)\n* [[New York Jets Ring of Honor]]\n* [[New York Jets#All-Time Four Decade Team|New York Jets All-Time Four Decade Team]]\n; NFL record\n* {{abbr|Consec.|Consecutive}} seasons leading NFL in sacks: 2{{efn|Tied with [[Reggie White]] and [[T. J. Watt]]}}",
+"statlabel1": "[[Quarterback sack|Sacks]]",
+"statvalue1": "107.5",
+"statlabel2": "[[Fumble|Fumble recoveries]]",
+"statvalue2": "9",
+"statlabel3": "[[Touchdown|Defensive touchdowns]]",
+"statvalue3": "2",
+"pfr": "G/GastMa00\n}}"
+}
+},
+{
+"name": "Joe Klecko",
+"ok": true,
+"title": "Joe Klecko",
+"box": {
+"image": "coach and klecko.jpg",
+"image_size": "",
+"caption": "Klecko, pictured next to Temple coach [[Wayne Hardin]]",
+"position": "[[Defensive tackle]]",
+"number": "73",
+"birth_date": "{{birth date and age|1953|10|15|mf=y}}",
+"birth_place": "[[Chester, Pennsylvania]], U.S.",
+"height_ft": "6",
+"height_in": "3",
+"weight_lbs": "263",
+"draftyear": "1977",
+"draftround": "6",
+"draftpick": "144",
+"high_school": "[[St. James High School for Boys|St. James]] {{nowrap|(Chester)}}",
+"college": "[[Temple Owls football|Temple]]",
+"teams": "\n* [[New York Jets]] ([[1977 NFL season|1977]]–[[1987 NFL season|1987]])\n* [[Indianapolis Colts]] ([[1988 NFL season|1988]])",
+"statlabel1": "Games played",
+"statvalue1": "155",
+"statlabel2": "[[Quarterback sack|Sacks]]",
+"statvalue2": "78.0",
+"statlabel3": "[[Fumbles|Fumble recoveries]]",
+"statvalue3": "9",
+"highlights": "\n* [[NFL Defensive Player of the Year]] ([[NEA NFL Defensive Player of the Year|NEA]], [[Pro Football Writers Association|PFWA]]) (1981)\n* 2× First-team [[All-Pro]] ([[1981 All-Pro Team|1981]], [[1985 All-Pro Team|1985]])\n* Second-team All-Pro ([[1983 All-Pro Team|1983]])\n* 4× [[Pro Bowl]] ([[1982 Pro Bowl|1981]], [[1984 Pro Bowl|1983]]–[[1986 Pro Bowl|1985]])\n* [[List of National Football League season sacks leaders|NFL sacks leader]] (1981)\n* [[George Halas Award]] (1982)\n* [[New York Jets|New York Jets Ring of Honor]]\n* [[New York Jets#Retired numbers|New York Jets No. 73]] retired\n* 2× First-team All-East ([[1974 All-East football team|1974]], [[1975 All-East football team|1975]])",
+"pfr": "K/KlecJo00\n| HOF         = Joe-Klecko\n}}"
+}
+},
+{
+"name": "Steve McMichael",
+"ok": false
+},
+{
+"name": "Deacon Jones",
+"ok": false
+},
+{
+"name": "Jack Lambert",
+"ok": true,
+"title": "Jack Lambert (American football)",
+"box": {
+"name": "Jack Lambert",
+"image": "Jack Lambert Ohio.jpg",
+"image_size": "",
+"alt": "",
+"caption": "Lambert in 1980",
+"number": "58",
+"position": "[[Linebacker]]",
+"birth_date": "{{birth date and age|1952|7|8|mf=y}}",
+"birth_place": "[[Mantua, Ohio]], U.S.",
+"death_date": "",
+"death_place": "",
+"height_ft": "6",
+"height_in": "4",
+"weight_lb": "220",
+"high_school": "[[Crestwood High School (Mantua, Ohio)|Crestwood]] (Mantua)",
+"college": "[[Kent State Golden Flashes football|Kent State]] (1971–1973)",
+"draftyear": "1974",
+"draftround": "2",
+"draftpick": "46",
+"pastteams": "\n* [[Pittsburgh Steelers]] ({{NFL Year|1974|1984}})",
+"highlights": "\n* 4× [[List of Super Bowl champions|Super Bowl champion]] ([[Super Bowl IX|IX]], [[Super Bowl X|X]], [[Super Bowl XIII|XIII]], [[Super Bowl XIV|XIV]])\n* [[AP NFL Defensive Player of the Year|NFL Defensive Player of the Year]] (1976)\n* [[NFL Defensive Rookie of the Year]] (1974)\n* 6× First-team [[All-Pro]] ([[1976 All-Pro Team|1976]], [[1979 All-Pro Team|1979]]–[[1983 All-Pro Team|1983]])\n* 2× Second-team All-Pro ([[1975 All-Pro Team|1975]], [[1978 All-Pro Team|1978]])\n* 9× [[Pro Bowl]] ([[1976 Pro Bowl|1975]]–[[1984 Pro Bowl|1983]])\n* [[NFL 1970s All-Decade Team]]\n* [[NFL 1980s All-Decade Team]]\n* [[NFL 75th Anniversary All-Time Team]]\n* [[NFL 100th Anniversary All-Time Team]]\n* [[Pro Football Writers of America NFL All-Rookie Team|PFWA All-Rookie Team]] ([[Pro Football Writers of America NFL All-Rookie Team#1974|1974]])\n* [[Pittsburgh Steelers All-Time Team]]\n* [[Pittsburgh Steelers Hall of Honor]]\n* [[Mid-American Conference football individual awards#Defensive Player of the Year|MAC Defensive Player of the Year]] (1972)\n* [[Kent State Golden Flashes football#Retired numbers|Kent State Golden Flashes No. 99]] retired",
+"statlabel1": "[[Tackle (football move)|Tackle]]s",
+"statvalue1": "1,479<ref name=\"psacard_612\">{{cite web |url=https://www.psacard.com/autographfacts/football/jack-lambert/612 |title=Jack Lambert {{pipe}} PSA AutographFacts |access-date=April 13, 2019 |archive-date=April 14, 2019 |archive-url=https://web.archive.org/web/20190414065657/https://www.psacard.com/autographfacts/football/jack-lambert/612 |url-status=live }}</ref>",
+"statlabel2": "[[Quarterback sack|Sacks]]",
+"statvalue2": "8<ref name=\"psacard_612\"/>",
+"statlabel3": "[[Interception]]s",
+"statvalue3": "28",
+"statlabel4": "Interception yards",
+"statvalue4": "243",
+"statlabel5": "[[Fumble|Fumble recoveries]]",
+"statvalue5": "17",
+"pfr": "LambJa00\n| HOF         = jack-lambert\n}}"
+}
+},
+{
+"name": "Jack Ham",
+"ok": true,
+"title": "Jack Ham",
+"box": {
+"name": "Jack Ham",
+"image": "JackHamPIT.png",
+"image_size": "",
+"caption": "Ham in 1982 card",
+"position": "[[Linebacker]]",
+"number": "59",
+"birth_date": "{{Birth date and age|1948|12|23|mf=y}}",
+"birth_place": "[[Johnstown, Pennsylvania]], U.S.",
+"height_ft": "6",
+"height_in": "1",
+"weight_lbs": "225",
+"draftyear": "1971",
+"draftround": "2",
+"draftpick": "34",
+"high_school": "[[Bishop McCort High School|Bishop McCort]] (Johnstown)",
+"college": "[[Penn State Nittany Lions football|Penn State]] (1968–1970)",
+"teams": "\n* [[Pittsburgh Steelers]] ({{nfly|1971}}–{{nfly|1982}})",
+"highlights": "\n* 4× [[List of Super Bowl champions|Super Bowl champion]] ([[Super Bowl IX|IX]], [[Super Bowl X|X]], [[Super Bowl XIII|XIII]], [[Super Bowl XIV|XIV]])\n* 6× First-team [[All-Pro]] ([[1974 All-Pro Team|1974]]–[[1979 All-Pro Team|1979]])\n* 2× Second-team All-Pro ([[1973 All-Pro Team|1973]], [[1980 All-Pro Team|1980]])\n* 8× [[Pro Bowl]] ([[1974 Pro Bowl|1973]]–[[1981 Pro Bowl|1980]])\n* [[NFL 1970s All-Decade Team]]\n* [[NFL 75th Anniversary All-Time Team]]\n* [[NFL 100th Anniversary All-Time Team]]\n* [[Pittsburgh Steelers All-Time Team]]\n* [[Pittsburgh Steelers Hall of Honor]]\n* Consensus [[College Football All-America Team|All-American]] ([[1970 College Football All-America Team|1970]])\n* 2× First-team All-East ([[1969 All-East football team|1969]], [[1970 All-East football team|1970]])",
+"statlabel1": "[[Interception]]s",
+"statvalue1": "32",
+"statlabel2": "[[Touchdowns]]",
+"statvalue2": "2",
+"pfr": "HamxJa00\n| HOF         = jack-ham\n| CollegeHOF  = 1864\n}}"
+}
+},
+{
+"name": "Mike Singletary",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ted Hendricks",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Andre Tippett",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Harry Carson",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Randy Gradishar",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Robert Brazile",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Nick Buoniconti",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Willie Lanier",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Pat Swilling",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ronnie Lott",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Mel Blount",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Mike Haynes",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Lester Hayes",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ken Houston",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Paul Krause",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Kenny Easley",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Donnie Shell",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Cliff Harris",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Mel Renfro",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Roger Wehrli",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Lem Barney",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Willie Brown",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Everson Walls",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Jan Stenerud",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Ray Guy",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+},
+{
+"name": "Nick Lowery",
+"ok": false,
+"err": "HTTP Error 429: Too Many Requests"
+}
+]
