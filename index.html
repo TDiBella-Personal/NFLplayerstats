@@ -405,6 +405,24 @@ button.badge{cursor:pointer}
 .fsort{display:inline-flex;background:var(--panel);border-radius:9px;padding:2px;margin-left:10px;vertical-align:middle}
 .fsort button{font-size:12px;padding:4px 9px;border-radius:7px;color:var(--muted)}
 .fsort button[aria-pressed="true"]{background:var(--panel2);color:var(--text);font-weight:600}
+
+/* ref signals */
+.zs{display:block;width:30px;height:22px;border-radius:5px;background:repeating-linear-gradient(90deg,#111 0 4px,#F4F4F4 4px 8px);border:1.5px solid #F4F4F4;flex:none}
+#side button.zeb{color:var(--text)}
+@media (min-width:900px){#side button.zeb .zs{width:20px;height:15px;border-radius:3px}}
+.phdr.zebra{background:linear-gradient(180deg,rgba(17,21,27,.55),var(--base)),repeating-linear-gradient(90deg,#1c1f24 0 16px,#2c3037 16px 32px)}
+.sigs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;grid-auto-flow:dense}
+.sigs li{display:flex}.sigs .sigc{flex:1;justify-content:space-between}
+.sigc{width:100%;background:var(--panel);border-radius:12px;padding:8px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:13.5px;line-height:1.25}
+.sigc b{font-weight:600}
+.sigfig{width:100%;height:auto;display:block;max-height:210px}
+.sigs li:has(.sigfig.two){grid-column:span 2}
+.sigbig .sigfig{max-height:360px;background:radial-gradient(circle at 50% 45%,#232B37,var(--panel) 70%);border-radius:14px;padding:8px}
+.sigcard{width:100%;display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:12px;align-items:center;background:var(--panel);border-radius:14px;padding:10px 14px 10px 6px;text-align:left;border:1px solid var(--line)}
+.sigcard .sigfig{max-height:200px}
+.sigcard small{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}
+.sigcard b{display:block;font-weight:500;font-size:15px;line-height:1.4}
+.sigcard em{display:block;font-style:normal;font-size:13px;color:var(--ac);margin-top:6px}
 </style>
 </head>
 <body class="home">
@@ -708,6 +726,7 @@ function back(){
 function goHome(){closeCard();$("#q").value="";renderList();window.scrollTo(0,0)}
 function navTo(k){
   if(k==="home"){goHome();return}
+  if(k==="signals"){var t=stack.length&&cur();if(t&&t.t==="signals"){$("#card").scrollTop=0;return}deepOpen=false;show({t:"signals"});return}
   // jump from wherever you are; Back returns to the screen you left
   var v=stack.length&&cur();if(v&&((v.t==="hub"&&v.k===k)||(k==="compare"&&(v.t==="compare"||v.t==="pick")))){$("#card").scrollTop=0;return}
   deepOpen=false;$("#q").value="";renderList();
@@ -722,6 +741,7 @@ function renderNav(active){
   var hub=hubOf(active);
   $("#side").innerHTML='<h1>Our Guys</h1><button data-nav="home" style="--cc:#F3F5F8" aria-current="'+(!stack.length)+'"><i aria-hidden="true"></i>'+navIc("home")+'Home</button><hr>'+HUB_ORDER.map(function(h){var H=HUBS[h];
     return '<button data-nav="'+h+'" style="--cc:'+H.c+'" aria-current="'+(!!stack.length&&hub===h)+'"><i aria-hidden="true"></i>'+navIc(h)+(H.short||H.n)+'</button>'+
+      (h==="rules"?'<button class="zeb" data-nav="signals" aria-current="'+(!!stack.length&&/^sig/.test(cur().t))+'"><span class="zs" aria-hidden="true"></span>Signals</button>':'')+
       (hub===h&&H.subs?H.subs.map(function(k){return '<button class="sub" data-nav="'+k+'" style="--cc:'+subColor(k)+'" aria-current="'+(active===k)+'">'+SUBS[k][0]+'</button>'}).join(""):'')}).join("");
   if(!$("#grid").innerHTML)$("#grid").innerHTML=HUB_ORDER.map(function(h){var H=HUBS[h];return '<button data-nav="'+h+'" style="--cc:'+H.c+'"><b>'+H.n+'</b><small>'+H.d+'</small></button>'}).join("");
 }
@@ -750,6 +770,8 @@ function render(){
   else if(v.t==="theme")renderTheme();
   else if(v.t==="game")renderGame(v);
   else if(v.t==="team")renderTeam(v);
+  else if(v.t==="signals")renderSignals();
+  else if(v.t==="sig")renderSig(v);
   else if(v.t==="annp")renderAnn(v.id);
   else if(v.t==="ref")renderRef(REFMAP[v.id]);
   else if(v.t==="browse")renderBrowse();
@@ -828,9 +850,11 @@ function renderRef(e){
      '<div class="kick"><span class="tag">'+c.one+'</span>'+(e.rule?'<span class="rulecite">'+esc(e.rule)+'</span>':'')+(e.changed?'<span class="chg">'+esc(e.changed)+'</span>':'')+'</div>'+
      '<h2>'+esc(e.name)+'</h2></header>';
   h+='<p class="lead">'+esc(e.short)+'</p>';
+  if(e.penalty&&SIGOF[e.id]){var sg=sigByKey(SIGOF[e.id]);h+='<section class="sec"><button class="sigcard" data-sig="'+sg[0]+'">'+sigSVG(sg[0])+'<span><small>Ref&#8217;s signal</small><b>'+esc(e.penalty.signal)+'</b><em>All signals &#8250;</em></span></button></section>'}
+  else if(e.penalty&&e.penalty.signal)h+='<section class="sec"><p class="thin"><b>Ref&#8217;s signal:</b> '+esc(e.penalty.signal)+'</p></section>';
   if(e.penalty){var pz=e.penalty;
     h+='<section class="sec"><dl class="facts"><div><dt>Yards</dt><dd>'+esc(pz.yards)+'</dd></div><div><dt>Automatic first down</dt><dd>'+esc(pz.firstDown)+'</dd></div>'+
-       '<div class="w"><dt>Usually on</dt><dd>'+esc(pz.on)+'</dd></div>'+(pz.signal?'<div class="w"><dt>Ref\'s signal</dt><dd>'+esc(pz.signal)+'</dd></div>':'')+'</dl></section>';
+       '<div class="w"><dt>Usually on</dt><dd>'+esc(pz.on)+'</dd></div></dl></section>';
   }
   if(e.diagram)h+='<section class="sec"><div class="dia">'+diagramSVG(e.diagram)+legendHTML(e.diagram)+(e.diagram.caption?'<p>'+esc(e.diagram.caption)+'</p>':'')+'</div></section>';
   if(e.watch)h+='<section class="sec"><p class="onTV"><b>On TV:</b> '+esc(e.watch)+'</p></section>';
@@ -997,6 +1021,119 @@ function renderCompare(v){
 }
 
 // ================= retired players + career =================
+
+// ================= referee signals =================
+// Original drawings of a referee in each official signal pose, with yellow arrows for the motion.
+// Coordinates: figure in a 200 x 260 box, head at (100,40). Arms are [elbow, hand, "fist"|"open"].
+var SIGFIG=0;
+var POSES={
+ holding:{L:[[74,114],[98,104],"fist"],R:[[128,114],[104,100],"fist"]},
+ pi:{L:[[62,98],[64,70],"open"],R:[[138,98],[136,70],"open"],A:["M52 60 l-16 -12","M148 60 l16 -12"]},
+ roll:{L:[[70,112],[116,100],"fist"],R:[[130,98],[86,112],"fist"],A:["M76 84 A30 20 0 1 1 74 124"]},
+ hips:{L:[[54,112],[76,144],"fist"],R:[[146,112],[124,144],"fist"]},
+ fold:{L:[[72,118],[122,98],"fist"],R:[[128,118],[78,98],"fist"]},
+ arc2:{L:[[64,110],[72,132],"open"],R:[[136,110],[128,132],"open"],A:["M40 146 Q100 172 160 146"],D:1},
+ arc1:{R:[[142,104],[152,124],"open"],A:["M162 134 Q124 166 76 140"]},
+ uoh:{L:[[74,114],[100,104],"fist"],R:[[130,112],[110,86],"open"]},
+ contact:{R:[[148,84],[176,78],"open"],A:["M186 78 h16"]},
+ pf:{L:[[68,46],[104,12],"fist"],R:[[132,46],[96,12],"fist"],M:["M100 0 v-10","M86 2 l-7 -7","M114 2 l7 -7"]},
+ throw:{R:[[150,62],[146,26],"fist"],A:["M156 18 Q186 44 168 92"]},
+ kick:{legR:[[128,196],[156,176]],A:["M132 244 Q170 236 166 184"]},
+ armsout:{L:[[46,76],[14,78],"open"],R:[[154,76],[186,78],"open"]},
+ facemask:{R:[[134,98],[106,60],"fist"],A:["M120 58 v34"]},
+ grounding:{L:[[96,90],[126,62],"open"],R:[[148,96],[178,68],"open"],A:["M58 130 L110 86"],D:1},
+ behindback:{R:[[130,114],[100,142],"open"],B:"R",A:["M78 152 q8 -9 16 0 t16 0 t16 0"]},
+ hhead:{L:[[54,54],[90,30],"fist"],R:[[146,54],[110,30],"fist"],B:"LR"},
+ cap:{R:[[142,58],[112,24],"open"]},
+ bib:{L:[[72,118],[84,150],"open"],R:[[128,118],[116,150],"open"],A:["M80 158 v18","M120 158 v18"]},
+ clip:{R:[[134,130],[118,216],"open"],B:"R",M:["M128 210 l10 -4","M128 218 h11","M128 226 l10 4"]},
+ chop:{L:[[60,130],[70,182],"open"],R:[[140,130],[130,182],"open"],M:["M58 176 l-10 -4","M58 186 l-10 4","M142 176 l10 -4","M142 186 l10 4"]},
+ trip:{legR:[[108,212],[92,240]],A:["M124 236 q-8 -12 -20 -6"],M:["M84 236 l-8 -2","M84 244 l-8 2"]},
+ head:{L:[[56,50],[92,22],"fist"],R:[[144,50],[108,22],"fist"]}
+};
+var SIGS=[
+ ["holding","Holding",["holding-offensive","holding-defensive"],["holding"]],
+ ["pi","Pass interference",["pass-interference-defensive","pass-interference-offensive"],["pi"]],
+ ["pf","Personal foul",["personal-foul","unnecessary-roughness","horse-collar","lowering-the-helmet","hit-on-defenseless-player","hip-drop-tackle","blindside-block","illegal-crackback"],["pf"]],
+ ["roll","False start, illegal formation",["false-start","illegal-formation"],["roll"]],
+ ["hips","Offside, encroachment",["offside","encroachment","neutral-zone-infraction"],["hips"]],
+ ["usc","Unsportsmanlike conduct",["unsportsmanlike-conduct","taunting"],["armsout"]],
+ ["fm","Face mask",["face-mask"],["facemask"]],
+ ["fold","Delay of game",["delay-of-game"],["fold"]],
+ ["rp","Roughing the passer",["roughing-the-passer"],["pf","throw"]],
+ ["ig","Intentional grounding",["intentional-grounding"],["grounding"]],
+ ["bib","Block in the back",["illegal-block-in-the-back"],["bib"]],
+ ["uoh","Illegal use of hands",["illegal-use-of-hands"],["uoh"]],
+ ["contact","Illegal contact",["illegal-contact"],["contact"]],
+ ["arc1","Illegal motion",["illegal-motion"],["arc1"]],
+ ["arc2","Illegal shift",["illegal-shift"],["arc2"]],
+ ["cap","Ineligible downfield",["ineligible-downfield"],["cap"]],
+ ["tmm","Too many men",["too-many-men"],["head"]],
+ ["ifp","Illegal forward pass",["illegal-forward-pass"],["behindback","hhead"]],
+ ["rk","Roughing the kicker",["roughing-the-kicker"],["pf","kick"]],
+ ["kick","Running into the kicker",["running-into-the-kicker"],["kick"]],
+ ["clip","Clipping",["clipping"],["clip"]],
+ ["chop","Chop block",["chop-block"],["chop"]],
+ ["trip","Tripping",["tripping"],["trip"]]
+];
+var SIGOF={};SIGS.forEach(function(s){s[2].forEach(function(id){SIGOF[id]=s[0]})});
+function sigByKey(k){return SIGS.filter(function(s){return s[0]===k})[0]}
+function figG(p,u){
+  var DL={L:[[70,112],[66,148],"fist"],R:[[130,112],[134,148],"fist"]},SH={L:[78,72],R:[122,72]},HIP={L:[92,172],R:[108,172]};
+  function arm(side){var a=p[side]||DL[side],s=SH[side],e=a[0],h=a[1],beh=(p.B||"").indexOf(side)>=0,o=beh?' opacity=".55"':'';
+    var g='<g'+o+'>'+'<path d="M'+s+' L'+e+'" stroke="#111" stroke-width="16" stroke-linecap="round"/><path d="M'+s+' L'+e+'" stroke="#F4F4F4" stroke-width="12" stroke-linecap="round"/>'+
+      '<path d="M'+s+' L'+e+'" stroke="#111" stroke-width="12" stroke-dasharray="3 4"/>'+
+      '<path d="M'+e+' L'+h+'" stroke="#3A2A20" stroke-width="14" stroke-linecap="round"/><path d="M'+e+' L'+h+'" stroke="#C99572" stroke-width="10.5" stroke-linecap="round"/>';
+    g+=a[2]==="open"?'<ellipse cx="'+h[0]+'" cy="'+h[1]+'" rx="9" ry="11" fill="#D9A684" stroke="#3A2A20" stroke-width="2"/><path d="M'+(h[0]-4)+' '+(h[1]-6)+'v-5M'+h[0]+' '+(h[1]-7)+'v-6M'+(h[0]+4)+' '+(h[1]-6)+'v-5" stroke="#3A2A20" stroke-width="1.6" stroke-linecap="round"/>':
+      '<circle cx="'+h[0]+'" cy="'+h[1]+'" r="9" fill="#C99572" stroke="#3A2A20" stroke-width="2"/>';
+    return g+'</g>'}
+  function leg(side){var l=p["leg"+side]||(side==="L"?[[90,208],[88,242]]:[[110,208],[112,242]]),hp=HIP[side];
+    return '<path d="M'+hp+' L'+l[0]+'" stroke="#16181C" stroke-width="17" stroke-linecap="round"/><path d="M'+l[0]+' L'+l[1]+'" stroke="#16181C" stroke-width="14" stroke-linecap="round"/>'+
+      '<path d="M'+(l[1][0]-3)+' '+(l[1][1]-2)+' h14" stroke="#000" stroke-width="9" stroke-linecap="round"/>'}
+  var back=(p.B||"").split("").map(arm).join(""),front=["L","R"].filter(function(sd){return (p.B||"").indexOf(sd)<0}).map(arm).join("");
+  var g='<g>'+leg("L")+leg("R")+back+
+    '<clipPath id="tc'+u+'"><path d="M76 68 Q100 62 124 68 L128 150 Q100 156 72 150 Z"/></clipPath>'+
+    '<path d="M76 68 Q100 62 124 68 L128 150 Q100 156 72 150 Z" fill="#F4F4F4" stroke="#111" stroke-width="2.5"/>'+
+    '<g clip-path="url(#tc'+u+')" stroke="#111" stroke-width="5">'+[80,89,98,107,116,125].map(function(x){return '<path d="M'+x+' 60 V160"/>'}).join("")+'</g>'+
+    '<path d="M72 150 Q100 156 128 150 L128 176 L72 176 Z" fill="#16181C"/>'+
+    '<rect x="94" y="54" width="12" height="12" fill="#C99572"/>'+
+    '<circle cx="100" cy="40" r="17" fill="#C99572" stroke="#3A2A20" stroke-width="2"/>'+
+    '<path d="M83 36 Q100 14 117 36 Z" fill="#FFFFFF" stroke="#222" stroke-width="2"/><path d="M83 35 h34" stroke="#111" stroke-width="3"/><path d="M100 35 q14 2 22 6" stroke="#EEE" stroke-width="4" stroke-linecap="round"/>'+
+    front+'</g>';
+  (p.M||[]).forEach(function(d){g+='<path d="'+d+'" stroke="#FFD43B" stroke-width="3" stroke-linecap="round"/>'});
+  (p.A||[]).forEach(function(d){g+='<path d="'+d+'" stroke="#FFD43B" stroke-width="4.5" fill="none" stroke-linecap="round" marker-end="url(#ah'+u+')"'+(p.D?' marker-start="url(#as'+u+')"':'')+'/>'});
+  return g;
+}
+function sigSVG(k,big){
+  var s=sigByKey(k);if(!s)return "";var u=++SIGFIG,poses=s[3];
+  // crop each panel to the figure's reach so it fills the frame
+  var spans=poses.map(function(pk){var p=POSES[pk],xs=[62,138];["L","R"].forEach(function(sd){if(p[sd]){xs.push(p[sd][0][0],p[sd][1][0])}});
+    ["legL","legR"].forEach(function(sd){if(p[sd])xs.push(p[sd][1][0])});
+    (p.A||[]).concat(p.M||[]).forEach(function(d){var m=d.match(/^M\s*(-?\d+)/);if(m)xs.push(+m[1])});
+    var lo=Math.min.apply(0,xs)-22,hi=Math.max.apply(0,xs)+28;if(hi-lo<150){var c=(hi+lo)/2;lo=c-75;hi=c+75}return [lo,hi]});
+  var gap=poses.length===2?44:0,w=spans.reduce(function(a,x){return a+x[1]-x[0]},0)+gap;
+  var h='<svg class="sigfig'+(big?' big':'')+(poses.length===2?' two':'')+'" viewBox="0 -20 '+w+' 278" role="img" aria-label="Referee signal: '+esc(s[1])+'">'+
+    '<defs><marker id="ah'+u+'" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FFD43B"/></marker>'+
+    '<marker id="as'+u+'" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#FFD43B"/></marker></defs>';
+  var x0=0;poses.forEach(function(pk,i){h+='<g transform="translate('+(x0-spans[i][0])+' 0)">'+figG(POSES[pk],u+"_"+i)+'</g>';x0+=spans[i][1]-spans[i][0]+gap});
+  if(poses.length===2){var mx=spans[0][1]-spans[0][0]+gap/2;h+='<text x="'+mx+'" y="150" text-anchor="middle" font-size="17" font-weight="700" fill="#C9D1DC">then</text><path d="M'+(mx-12)+' 120 h20" stroke="#C9D1DC" stroke-width="3" marker-end="url(#ah'+u+')"/>'}
+  return h+'</svg>';
+}
+function sigText(s){var e=REFMAP[s[2][0]];return e&&e.penalty?e.penalty.signal:""}
+function renderSignals(){
+  var h='<div class="wrap" style="--ac:#F4F4F4"><header class="phdr zebra"><div class="bar">'+BACK+'</div><h2>Ref signals</h2></header>'+
+    '<p class="lead">See the ref&#8217;s arms, find the picture. Yellow arrows show the motion.</p><section class="sec"><ul class="sigs">'+
+    SIGS.map(function(s){return '<li><button class="sigc" data-sig="'+s[0]+'">'+sigSVG(s[0])+'<b>'+esc(s[1])+'</b></button></li>'}).join("")+'</ul>'+
+    '<p class="note">No signal of their own (the ref just announces them): leverage, leaping, fair catch interference, kick catch interference, illegal bat. Drawings are ours, not the NFL&#8217;s official chart.</p></section></div>';
+  $("#card").innerHTML=h;
+}
+function renderSig(v){
+  var s=sigByKey(v.k);if(!s){back();return}
+  var h='<div class="wrap" style="--ac:#F4F4F4"><header class="phdr zebra"><div class="bar">'+BACK+'</div><h2>'+esc(s[1])+'</h2></header>'+
+    '<section class="sec"><div class="sigbig">'+sigSVG(s[0],1)+'</div><p class="lead" style="padding:0;margin:14px 0 0">'+esc(sigText(s))+'</p></section>'+
+    '<section class="sec"><h3>Called for</h3><ul class="list">'+s[2].map(function(id){return REFMAP[id]?refHTML(REFMAP[id]):""}).join("")+'</ul></section></div>';
+  $("#card").innerHTML=h;
+}
 
 // ================= team theme =================
 var DIVS=[["AFC East",["BUF","MIA","NE","NYJ"]],["AFC North",["BAL","CIN","CLE","PIT"]],["AFC South",["HOU","IND","JAX","TEN"]],["AFC West",["DEN","KC","LV","LAC"]],
@@ -1322,6 +1459,7 @@ $("#card").addEventListener("click",function(e){var b=e.target.closest("[data-th
 $("#grid").addEventListener("click",function(e){var b=e.target.closest("[data-nav]");if(b)navTo(b.dataset.nav)});
 $("#today").addEventListener("click",function(e){if(e.target.closest("#allg")){GALL=true;renderToday()}});
 document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-sig]");if(b){show({t:"sig",k:b.dataset.sig});return}
   var b=e.target.closest("[data-game]");if(b){show({t:"game",id:b.dataset.game});return}
   b=e.target.closest("[data-team]");if(b&&!b.dataset.act&&!b.hasAttribute("data-theme")){show({t:"team",k:b.dataset.team});return}
   b=e.target.closest('[data-act="gstory"]');if(b)getGameStory(cur(),b.dataset.refresh);
@@ -1380,7 +1518,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="favs-1";   // bump on each release so phones fetch fresh data files
+var BUILD="signals-1";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 getJSON("data/reference.json").then(function(r){
