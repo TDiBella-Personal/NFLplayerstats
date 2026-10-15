@@ -3,15 +3,20 @@
 Runs in GitHub Actions (the build sandbox can't reach Wikipedia). The output is raw material: career totals,
 size, college and draft are reviewed and turned into legend entries by scripts/add_old_legends.py.
 """
-import json, os, re, urllib.request, urllib.parse, time
+import json, os, re, urllib.request, urllib.parse, urllib.error, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 API = "https://en.wikipedia.org/w/api.php?action=parse&prop=wikitext&format=json&redirects=1&page="
 
 def wikitext(title):
     req = urllib.request.Request(API + urllib.parse.quote(title), headers={"User-Agent": "our-guys/1.0 (personal fan app; github.com/TDiBella-Personal/NFLplayerstats)"})
-    for attempt in range(4):
-        with urllib.request.urlopen(req, timeout=60) as r:
-            d = json.loads(r.read().decode("utf-8"))
+    for attempt in range(6):
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                d = json.loads(r.read().decode("utf-8"))
+        except urllib.error.HTTPError as ex:
+            if ex.code != 429 or attempt == 5: raise
+            wait = int(ex.headers.get("Retry-After") or 0) or 20 * (attempt + 1)
+            print("   throttled, waiting", wait); time.sleep(wait); continue
         if "parse" in d or (d.get("error") or {}).get("code") == "missingtitle": break
         print("   retrying:", (d.get("error") or {}).get("code"))
         time.sleep(5 * (attempt + 1))
@@ -57,7 +62,7 @@ def main():
                     rec.update({"ok": True, "title": real, "box": box}); break
             except Exception as ex:
                 rec["err"] = str(ex)
-            time.sleep(2)
+            time.sleep(4)
         out.append(rec)
         print(("ok  " if rec["ok"] else "MISS"), name, rec.get("title", ""))
     json.dump(out, open(path, "w"), indent=0, ensure_ascii=False)
