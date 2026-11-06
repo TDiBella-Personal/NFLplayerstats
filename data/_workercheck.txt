@@ -1,0 +1,12 @@
+== /theme
+{"team":"IND"} [200]
+
+== /game/1
+{"error":"no storylines yet"} [404]
+
+== /asks
+[{"q":"best chili recipe for game day","key":"best-chili-recipe-for-game-day","title":"Game Day Chili","short":"This isn't a football question, but a solid game day chili is beef, beans, tomatoes, chili powder, cumin and onion, simmered at least an hour.","at":"2026-11-06T02:30:45.787Z"},{"q":"What 
+
+== /ask POST (non-football test)
+{"q":"best chili recipe for game day","title":"Game Day Chili","cat":"other","short":"This isn't a football question, but a solid game day chili is beef, beans, tomatoes, chili powder, cumin and onion, simmered at least an hour.","deep":[],"at":"2026-11-06T02:30:45.787Z","key":"best-chili-recipe-for-game-day"} [200]
+
