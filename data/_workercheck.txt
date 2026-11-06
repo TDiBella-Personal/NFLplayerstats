@@ -1,9 +1,0 @@
-== /theme
-{"team":"IND"} [200]
-
-== /news
-{"error":"not found"} [404]
-
-== /ask POST
-{"q":"Who leads the NFL in rushing yards this season?","title":"2026 NFL Rushing Leader","cat":"other","short":"Atlanta's Bijan Robinson leads the NFL in rushing yards this season with 780 through Week 8. Detroit's Jahmyr Gibbs (773) and Kansas City's Kenneth Walker III (770) are right behind him.","deep":["The top three are separated by 10 yards. Robinson has 780 on 150 carries, a 5.2 average. Gibbs has 773 and Walker has 770 on 141 carries, a 5.5 average.","Rushing yards per game is a different race. Gibbs leads at 110.4 and Walker is at 110.0. Robinson is fourth at 97.5, because he has play
-
