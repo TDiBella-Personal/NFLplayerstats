@@ -437,6 +437,17 @@ button.badge{cursor:pointer}
 .fpos[aria-expanded="true"]::after{transform:rotate(45deg)}
 .fpos small{grid-area:s;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fpt{margin-top:8px}
+
+/* home games, players, ask */
+.livedot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#FF5A4F;margin-right:8px;vertical-align:1px;box-shadow:0 0 0 3px rgba(255,90,79,.25)}
+.pbox{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--th,var(--line));border-radius:14px;padding:0 14px;color:var(--muted)}
+.pbox input{flex:1;background:none;border:0;color:var(--text);font:inherit;font-size:18px;padding:15px 0;outline:none;min-width:0}
+#pres:not(:empty){margin-top:14px}
+.srcs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.srcs a{color:var(--ac);text-decoration:none;font-size:14.5px}
+
+body.noq .dock{display:none}
+.thb{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 </style>
 </head>
 <body class="home">
@@ -657,7 +668,7 @@ function renderList(){
       [bestR,group("r","Rules &amp; penalties",rules.map(function(x){return x[1]}),5,refHTML)],
       [bestT,group("t","Terms",terms.map(function(x){return x[1]}),5,refHTML)]
     ].filter(function(x){return x[1]}).sort(function(a,b){return b[0]-a[0]});
-    $("#lh").textContent="Results";$("#lc").textContent="";
+    $("#lh").parentNode.style.display="";$("#lh").textContent="Results";$("#lc").textContent="";
     var past=asks.filter(function(a){return norm(a.q).indexOf(norm(q))>=0||norm(a.title).indexOf(norm(q))>=0}).slice(0,3);
     var askHTML=WORKER&&q.length>=3?'<button class="askrow'+(rf.length?'':' big')+'" data-ask="'+esc(q)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask about “'+esc(q)+'”</b><small>'+(rf.length?'Not what you meant? Get a researched answer.':'Not in the rulebook. Get a researched answer.')+'</small></span></button>':'';
     var total=pl.length+rf.length+an.length+tm.length;
@@ -667,8 +678,9 @@ function renderList(){
       (retFirst?"":retBlock(q))+
       (past.length?'<div class="grp" style="margin-top:20px"><span>Asked before</span></div><ul class="list">'+past.map(askRowHTML).join("")+'</ul>':'')+askHTML;
   }else{
-    expandGroup={};
-    var list=favs.map(function(id){return byIdMap[id]}).filter(Boolean);
+    expandGroup={};$("#lh").parentNode.style.display="none";box.innerHTML="";
+    if(cur()&&cur().t==="players")renderPlayers(cur());
+    return;
     $("#lh").innerHTML=collBtn("favs","Favorites");$("#lc").textContent=list.length?list.length+(WORKER?", shared":", this phone only"):"";
     if(COLL.favs){box.innerHTML="";return}
     if(list.length>1)$("#lc").innerHTML=esc($("#lc").textContent)+'<span class="fsort" role="group" aria-label="Sort favorites"><button data-fsort="pos" aria-pressed="'+(FSORT!=="az")+'">Position</button><button data-fsort="az" aria-pressed="'+(FSORT==="az")+'">A-Z</button></span>';
@@ -686,8 +698,9 @@ function favsHTML(list){
     h+='<button class="fpos" data-fpos="'+pos+'" aria-expanded="'+open+'"><b>'+(FPN[pos]||"Other")+'</b><span>'+g.length+'</span>'+(open?'':'<small>'+esc(g.map(lastName).join(", "))+'</small>')+'</button>'+(open?'<ul class="tiles fpt">'+g.map(tileHTML).join("")+'</ul>':'')});
   return h;
 }
-document.addEventListener("click",function(e){var b=e.target.closest("[data-fpos]");if(b){var k="fp_"+b.dataset.fpos;COLL[k]=!COLL[k];save("og_coll",COLL);renderList()}});
-document.addEventListener("click",function(e){var b=e.target.closest("[data-fsort]");if(b){FSORT=b.dataset.fsort;save("og_favsort",FSORT);renderList()}});
+function favsChanged(){var v=stack.length&&cur();if(v&&v.t==="players"){var y=$("#card").scrollTop;renderPlayers(v);$("#card").scrollTop=y}}
+document.addEventListener("click",function(e){var b=e.target.closest("[data-fpos]");if(b){var k="fp_"+b.dataset.fpos;COLL[k]=!COLL[k];save("og_coll",COLL);favsChanged()}});
+document.addEventListener("click",function(e){var b=e.target.closest("[data-fsort]");if(b){FSORT=b.dataset.fsort;save("og_favsort",FSORT);favsChanged()}});
 function askRowHTML(a){return '<li><button class="ref" style="'+cc("other")+'" data-askkey="'+esc(a.key)+'"><span class="rt"><span class="rn">'+esc(a.q)+'</span><span class="tag">Asked</span></span><span class="rs">'+esc(a.short||"")+'</span></button></li>'}
 
 // ================= diagrams =================
@@ -731,7 +744,7 @@ function show(view,replace){
   var b=c.querySelector('[data-act="back"]');if(b)b.focus({preventScroll:true});
 }
 function closeCard(){
-  stack.length=0;current=null;document.body.classList.add("home");
+  stack.length=0;current=null;document.body.classList.add("home");document.body.classList.remove("noq");
   var c=$("#card");c.classList.remove("open");c.setAttribute("aria-hidden","true");$("#home").removeAttribute("aria-hidden");
   markNav("home");
 }
@@ -740,9 +753,11 @@ function back(){
   if(stack.length){render();$("#card").scrollTop=0;return}
   closeCard();renderList();
 }
-function goHome(){closeCard();$("#q").value="";renderList();window.scrollTo(0,0)}
+function goHome(){document.body.classList.remove("noq");closeCard();$("#q").value="";renderList();window.scrollTo(0,0)}
 function navTo(k){
   if(k==="home"){goHome();return}
+  if(k==="players"||k==="ask"){var t0=stack.length&&cur();if(t0&&t0.t===k){$("#card").scrollTop=0;return}deepOpen=false;show(k==="ask"?{t:"ask",q:"",state:""}:{t:"players",q:""});
+    if(k==="ask")setTimeout(function(){var i=$("#askq");if(i)i.focus()},250);return}
   if(k==="signals"){var t=stack.length&&cur();if(t&&t.t==="signals"){$("#card").scrollTop=0;return}deepOpen=false;show({t:"signals"});return}
   // jump from wherever you are; Back returns to the screen you left
   var v=stack.length&&cur();if(v&&((v.t==="hub"&&v.k===k)||(k==="compare"&&(v.t==="compare"||v.t==="pick")))){$("#card").scrollTop=0;return}
@@ -752,11 +767,13 @@ function navTo(k){
   else openSub(k);
 }
 function openSub(k){if(CATS[k]){browseCat=k;show({t:"browse"})}else if(k==="announcers")show({t:"ann"})}
-var NAVIC={"home": "<path d=\u0022M3 11l9-7 9 7\u0022/><path d=\u0022M5 10v10h14V10\u0022/>", "rules": "<path d=\u0022M5 21V4\u0022/><path d=\u0022M5 4h12l-2 4 2 4H5\u0022/>", "football": "<ellipse cx=\u002212\u0022 cy=\u002212\u0022 rx=\u00229\u0022 ry=\u00225.5\u0022 transform=\u0022rotate(-35 12 12)\u0022/><path d=\u0022M9.5 14.5l5-5\u0022/><path d=\u0022M10.5 11.5l2 2M12 10l2 2\u0022/>", "booth": "<rect x=\u00229\u0022 y=\u00223\u0022 width=\u00226\u0022 height=\u002211\u0022 rx=\u00223\u0022/><path d=\u0022M5 11a7 7 0 0 0 14 0\u0022/><path d=\u0022M12 18v3\u0022/>", "compare": "<path d=\u0022M6 20V10\u0022/><path d=\u0022M12 20V4\u0022/><path d=\u0022M18 20v-7\u0022/>"};
+var NAVIC={"home": "<path d=\"M3 11l9-7 9 7\"/><path d=\"M5 10v10h14V10\"/>", "rules": "<path d=\"M5 21V4\"/><path d=\"M5 4h12l-2 4 2 4H5\"/>", "football": "<ellipse cx=\"12\" cy=\"12\" rx=\"9\" ry=\"5.5\" transform=\"rotate(-35 12 12)\"/><path d=\"M9.5 14.5l5-5\"/><path d=\"M10.5 11.5l2 2M12 10l2 2\"/>", "booth": "<rect x=\"9\" y=\"3\" width=\"6\" height=\"11\" rx=\"3\"/><path d=\"M5 11a7 7 0 0 0 14 0\"/><path d=\"M12 18v3\"/>", "compare": "<path d=\"M6 20V10\"/><path d=\"M12 20V4\"/><path d=\"M18 20v-7\"/>", "players": "<circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c0-4 4-6 8-6s8 2 8 6\"/>", "ask": "<path d=\"M4 5h16v11H9l-5 4z\"/><path d=\"M10 9.5a2 2 0 1 1 2.8 1.8c-.5.2-.8.7-.8 1.2\"/><path d=\"M12 14.5h.01\"/>"};
 function navIc(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+NAVIC[k]+'</svg>'}
 function renderNav(active){
   var hub=hubOf(active);
-  $("#side").innerHTML='<h1>Our Guys</h1><button data-nav="home" style="--cc:#F3F5F8" aria-current="'+(!stack.length)+'"><i aria-hidden="true"></i>'+navIc("home")+'Home</button><hr>'+HUB_ORDER.map(function(h){var H=HUBS[h];
+  $("#side").innerHTML='<h1>Our Guys</h1><button data-nav="home" style="--cc:#F3F5F8" aria-current="'+(!stack.length)+'"><i aria-hidden="true"></i>'+navIc("home")+'Home</button>'+
+    '<button data-nav="players" style="--cc:#7DDC9A" aria-current="'+(!!stack.length&&cur().t==="players")+'"><i aria-hidden="true"></i>'+navIc("players")+'Players</button>'+
+    '<button data-nav="ask" style="--cc:#6FA8FF" aria-current="'+(!!stack.length&&cur().t==="ask")+'"><i aria-hidden="true"></i>'+navIc("ask")+'Ask</button><hr>'+HUB_ORDER.map(function(h){var H=HUBS[h];
     return '<button data-nav="'+h+'" style="--cc:'+H.c+'" aria-current="'+(!!stack.length&&hub===h)+'"><i aria-hidden="true"></i>'+navIc(h)+(H.short||H.n)+'</button>'+
       (h==="rules"?'<button class="zeb" data-nav="signals" aria-current="'+(!!stack.length&&/^sig/.test(cur().t))+'"><span class="zs" aria-hidden="true"></span>Signals</button>':'')+
       (hub===h&&H.subs?H.subs.map(function(k){return '<button class="sub" data-nav="'+k+'" style="--cc:'+subColor(k)+'" aria-current="'+(active===k)+'">'+SUBS[k][0]+'</button>'}).join(""):'')}).join("");
@@ -780,6 +797,7 @@ function need(ids,v){ // make sure retired / career data is loaded for these pla
 }
 function render(){
   var v=cur();current=null;markNav(navKey(v));
+  document.body.classList.toggle("noq",v.t==="players"||v.t==="ask");   // these screens have their own box
   if(v.t==="player"){if(!need([v.id],v))return;current=byIdMap[v.id];if(!current){back();return}
     if(current.ret)renderRetired(current);else renderPlayer(current);if(WORKER&&!stories[v.id])fetchStory(v.id)}
   else if(v.t==="ann")renderAnnList();
@@ -793,6 +811,7 @@ function render(){
   else if(v.t==="ref")renderRef(REFMAP[v.id]);
   else if(v.t==="browse")renderBrowse();
   else if(v.t==="ask")renderAsk(v);
+  else if(v.t==="players")renderPlayers(v);
   else if(v.t==="pick")renderPick(v);
   else if(v.t==="compare")renderCompare(v);
 }
@@ -903,6 +922,35 @@ function renderBrowse(){
   $("#card").innerHTML=h;
 }
 
+
+// ================= players =================
+function favBlock(){
+  var list=favs.map(function(id){return byIdMap[id]}).filter(Boolean);
+  var h='<div class="listhead" style="margin-top:22px"><h2>Favorites</h2><span>'+(list.length?list.length+(WORKER?', shared':', this device only'):'')+
+    (list.length>1?'<span class="fsort" role="group" aria-label="Sort favorites"><button data-fsort="pos" aria-pressed="'+(FSORT!=="az")+'">Position</button><button data-fsort="az" aria-pressed="'+(FSORT==="az")+'">A-Z</button></span>':'')+'</span></div>';
+  return h+(list.length?favsHTML(list):'<p class="thin">No favorites yet. Search above, open a player and tap the star.</p>');
+}
+function teamsBlock(){
+  return '<div class="listhead" style="margin-top:26px"><h2>Teams</h2><span>32</span></div>'+DIVS.map(function(d){return '<div class="thd">'+d[0]+'</div><div class="thg">'+d[1].map(function(k){return '<button class="thb" style="'+tv(k)+'" data-team="'+k+'">'+logo(k)+esc(team(k).n)+'</button>'}).join("")+'</div>'}).join("");
+}
+function playersResults(v){
+  var box=$("#pres");if(!box)return;var q=(v.q||"").trim();
+  if(q.length<2){box.innerHTML="";$("#prest").style.display="";return}
+  $("#prest").style.display="none";
+  var pl=searchPlayers(q).slice(0,30);
+  box.innerHTML=(pl.length?'<div class="grp"><span>Active</span><span>'+pl.length+'</span></div><ul class="rows">'+pl.map(function(p){return rowHTML(p,true)}).join("")+'</ul>':'')+retBlock(q)+
+    (!pl.length&&WORKER?'<button class="askrow" data-ask="'+esc(q)+'" style="margin-top:14px"><span><b>Ask this</b><small>'+esc(q)+'</small></span></button>':'');
+}
+function renderPlayers(v){
+  var h='<div class="wrap"><header class="phdr"><div class="bar">'+BACK+'</div><h2>Players</h2></header>'+
+    '<section class="sec" style="padding-top:2px"><div class="pbox"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>'+
+    '<input id="pq" type="search" placeholder="Any player" value="'+esc(v.q||"")+'" autocomplete="off" autocapitalize="words" aria-label="Search players"></div>'+
+    '<div id="pres"></div><div id="prest">'+favBlock()+teamsBlock()+'</div></section></div>';
+  $("#card").innerHTML=h;
+  var inp=$("#pq");inp.addEventListener("input",function(){v.q=inp.value;playersResults(v)});
+  playersResults(v);
+}
+
 // ================= ask =================
 function answerHTML(a){
   var c=CATS[a.cat]||CATS.other;
@@ -913,13 +961,15 @@ function answerHTML(a){
     '<div class="deep'+(deepOpen?' on':'')+'" id="dp"><ul>'+a.deep.map(function(d){return '<li>'+esc(d)+'</li>'}).join("")+'</ul></div>';
   var hit=searchRef(a.title||a.q).filter(function(x){return x[0]>=500}).slice(0,3).map(function(x){return x[1]});
   if(hit.length)h+='<div style="margin-top:18px"><div class="grp"><span>In the rulebook</span></div><div class="chips">'+hit.map(function(r){return '<button class="chip" data-ref="'+r.id+'">'+esc(r.name)+'</button>'}).join("")+'</div></div>';
+  if(a.src&&a.src.length)h+='<div style="margin-top:16px"><div class="grp"><span>Sources</span></div><ul class="srcs">'+a.src.map(function(x){return '<li><a href="'+esc(x.u)+'" target="_blank" rel="noopener">'+esc(x.t||x.u)+' &#8250;</a></li>'}).join("")+'</ul></div>';
   return h+'<p class="note">Researched answer, saved for both of you.</p></section>';
 }
 function renderAsk(v){
   var h='<div class="wrap" style="--ac:#6FA8FF"><header class="phdr"><div class="bar">'+BACK+'</div><h2>Ask</h2></header>';
-  h+='<form class="askbox" id="askf"><input id="askq" type="text" placeholder="What’s a trips bunch?" value="'+esc(v.q||"")+'" enterkeyhint="send" autocomplete="off" aria-label="Your question"><button type="submit">Ask</button></form>';
+  h+='<form class="askbox" id="askf"><input id="askq" type="text" placeholder="Ask anything about the NFL" value="'+esc(v.q||"")+'" enterkeyhint="send" autocomplete="off" aria-label="Your question"><button type="submit">Ask</button></form>';
   h+='<div id="askout">';
-  if(v.state==="working")h+='<section class="sec"><div class="working"><span class="spin"></span><span id="askmsg">Checking the current rules</span></div></section>';
+  if(!v.state&&!v.ans)h+='<p class="note" style="margin:8px 2px 0">Stats, history, players, teams, strategy, rules. It looks things up, so current facts are current.</p>';
+  if(v.state==="working")h+='<section class="sec"><div class="working"><span class="spin"></span><span id="askmsg">Looking it up</span></div></section>';
   else if(v.state==="error")h+='<section class="sec"><p class="thin">Could not get an answer right now ('+esc(v.err)+').</p><button class="btn" data-act="askagain">Try again</button></section>';
   else if(v.ans)h+=answerHTML(v.ans);
   h+='</div>';
@@ -1206,21 +1256,28 @@ function collBtn(k,label){return '<button class="coll" data-coll="'+k+'" aria-ex
 document.addEventListener("click",function(e){var b=e.target.closest("[data-coll]");if(!b)return;COLL[b.dataset.coll]=!COLL[b.dataset.coll];save("og_coll",COLL);
   if(b.dataset.coll==="week")renderToday();else renderList()});
 function renderToday(){
-  var box=$("#today"),gs=GAMES&&GAMES.games?GAMES.games.slice().sort(function(a,b){return new Date(a.kickoff)-new Date(b.kickoff)}):[];
-  if(!gs.length){box.innerHTML="";return}
-  var today=dayKey(new Date()),t0=new Date();t0.setHours(0,0,0,0);
-  var days=[],by={};gs.forEach(function(g){var d=dayKey(new Date(g.kickoff));if(!by[d]){by[d]=[];days.push(d)}by[d].push(g)});
-  days.forEach(function(d){by[d].sort(function(a,b){return isColts(b)-isColts(a)||new Date(a.kickoff)-new Date(b.kickoff)})});
-  var n=gs.length,more=n>6&&!GALL,show=days,pin=null;
-  if(more){var f=days.filter(function(d){return new Date(by[d][0].kickoff)>=t0})[0]||days[days.length-1];show=[f];
-    pin=gs.filter(isColts)[0];if(pin&&dayKey(new Date(pin.kickoff))===f)pin=null}
-  function dh(d){var k=new Date(by[d][0].kickoff);return '<div class="dayh">'+(d===today?'<b>Today</b>':'')+'<span>'+k.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})+'</span></div>'}
-  if(COLL.week){box.innerHTML='<div class="listhead" style="margin-top:14px"><h2>'+collBtn("week","This week")+'</h2><span>'+(GAMES.week?'Week '+GAMES.week+', ':'')+n+' games</span></div>';return}
-  box.innerHTML='<div class="listhead" style="margin-top:14px"><h2>'+collBtn("week","This week")+'</h2><span>'+(GAMES.week?'Week '+GAMES.week+', ':'')+n+' games</span></div>'+
-    (pin?dh(dayKey(new Date(pin.kickoff)))+'<ul class="gms">'+gameRow(pin)+'</ul>':'')+
-    show.map(function(d){return dh(d)+'<ul class="gms">'+by[d].map(gameRow).join("")+'</ul>'}).join("")+
-    (more?'<button class="ghost" id="allg" style="width:100%;margin-top:8px;padding:6px">Show all '+n+' games</button>':'');
+  var box=$("#today");if(!GAMES||!GAMES.games){box.innerHTML="";return}
+  var now=Date.now(),gs=GAMES.games.slice().sort(function(a,b){return new Date(a.kickoff)-new Date(b.kickoff)});
+  var live=gs.filter(function(g){return !isFinal(g)&&(new Date(g.kickoff)<=now||g.state==="in")});
+  var up=gs.filter(function(g){return !isFinal(g)&&live.indexOf(g)<0});
+  var fin=gs.filter(isFinal).reverse();
+  var today=dayKey(new Date());
+  function byDay(list){var days=[],by={};list.forEach(function(g){var d=dayKey(new Date(g.kickoff));if(!by[d]){by[d]=[];days.push(d)}by[d].push(g)});
+    return days.map(function(d){var k=new Date(by[d][0].kickoff);by[d].sort(function(a,b){return isColts(b)-isColts(a)||new Date(a.kickoff)-new Date(b.kickoff)});
+      return '<div class="dayh">'+(d===today?'<b>Today</b>':'')+'<span>'+k.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})+'</span></div><ul class="gms">'+by[d].map(gameRow).join("")+'</ul>'}).join("")}
+  function head(k,label,right){return '<div class="listhead" style="margin-top:16px"><h2>'+collBtn(k,label)+'</h2><span>'+right+'</span></div>'}
+  var h='';
+  if(live.length)h+='<div class="listhead" style="margin-top:16px"><h2><span class="livedot" aria-hidden="true"></span>Underway</h2><span>'+live.length+' game'+(live.length>1?'s':'')+'</span></div><ul class="gms">'+live.map(gameRow).join("")+'</ul><p class="note" style="margin:6px 2px 0">No live scores. Finals show up within about an hour of the end.</p>';
+  h+=head("week","This week",(GAMES.week?'Week '+GAMES.week+', ':'')+(up.length?up.length+' to play':'all played'));
+  if(!COLL.week)h+=up.length?byDay(up):'<p class="thin">Every game this week has kicked off.</p>';
+  if(fin.length){var open=!!COLL.finOpen;
+    h+='<button class="fpos" data-finals aria-expanded="'+open+'" style="margin-top:12px"><b>Final scores</b><span>'+fin.length+'</span>'+(open?'':'<small>'+esc(fin.slice(0,4).map(function(g){return g.away.abbr+' '+g.away.score+', '+g.home.abbr+' '+g.home.score}).join(" · "))+'</small>')+'</button>'+
+      (open?'<ul class="gms" style="margin-top:8px">'+fin.map(gameRow).join("")+'</ul>':'')}
+  var nx=GAMES.next&&GAMES.next.games||[];
+  if(nx.length){h+=head("next","Next week",'Week '+GAMES.next.week+', '+nx.length+' games');if(!COLL.next)h+=byDay(nx)}
+  box.innerHTML=h;
 }
+document.addEventListener("click",function(e){if(e.target.closest("[data-finals]")){COLL.finOpen=!COLL.finOpen;save("og_coll",COLL);renderToday()}});
 function keyPlayers(abbr){
   var pl=P.filter(function(p){return p.team===abbr&&S[p.id]});
   function top(pos,key,n){return pl.filter(function(p){return pos.indexOf(p.pos)>=0}).sort(function(a,b){return g(S[b.id],key)-g(S[a.id],key)}).slice(0,n)}
@@ -1287,7 +1344,7 @@ function getGameStory(v,refresh){
      if(cur()===v){if(st&&st.bullets&&st.bullets.length)box.innerHTML=gstoryHTML(gm);else box.innerHTML='<p class="thin">Nothing solid turned up yet. Try again closer to kickoff.</p>'}})
    .catch(function(e){if(cur()===v)box.innerHTML='<p class="thin">Could not get the storylines'+(/not found|404/i.test(e.message)?'. The backend needs its update first.':': '+esc(e.message))+'</p>'});
 }
-function teamGame2(id){return GAMES&&GAMES.games.filter(function(x){return x.id===id})[0]}
+function teamGame2(id){return GAMES&&GAMES.games.concat(GAMES.next&&GAMES.next.games||[]).filter(function(x){return x.id===id})[0]}
 function renderGame(v){
   var gm=teamGame2(v.id);if(!gm){back();return}
   var A=gm.away.abbr,H=gm.home.abbr,k=new Date(gm.kickoff),inj=gameInj(gm),fin=isFinal(gm),colts=isColts(gm)&&COLTS&&COLTS.game&&COLTS.game.id===gm.id,news=colts?(COLTS.headlines||[]):[];
@@ -1480,7 +1537,7 @@ $("#side").addEventListener("click",function(e){var b=e.target.closest("[data-na
 $("#thbtn").addEventListener("click",function(){show({t:"theme"})});
 $("#card").addEventListener("click",function(e){var b=e.target.closest("[data-theme]");if(b){setTheme(b.dataset.theme);renderTheme()}});
 $("#grid").addEventListener("click",function(e){var b=e.target.closest("[data-nav]");if(b)navTo(b.dataset.nav)});
-$("#today").addEventListener("click",function(e){if(e.target.closest("#allg")){GALL=true;renderToday()}});
+
 document.addEventListener("click",function(e){
   var b=e.target.closest("[data-sig]");if(b){show({t:"sig",k:b.dataset.sig});return}
   var b=e.target.closest("[data-game]");if(b){show({t:"game",id:b.dataset.game});return}
@@ -1499,7 +1556,7 @@ $("#card").addEventListener("click",function(e){
   if(b.dataset.act==="roster"&&v.t==="game"){v.full[b.dataset.team]=!v.full[b.dataset.team];var y=$("#card").scrollTop;renderGame(v);$("#card").scrollTop=y;return}
   if(b.dataset.chg!=null&&v.t==="compare"){show({t:"pick",ids:v.ids,at:+b.dataset.chg,mode:v.mode},true);return}
   if(b.dataset.rm!=null&&v.t==="compare"){v.ids.splice(+b.dataset.rm,1);save("og_cmp",v.ids);renderCompare(v);return}
-  if(b.dataset.ret!=null){retSearch(b,function(){if(cur()===v&&v.t==="pick")pickResults(v)});return}
+  if(b.dataset.ret!=null){retSearch(b,function(){if(cur()===v&&v.t==="pick")pickResults(v);if(cur()===v&&v.t==="players")playersResults(v)});return}
   if(b.dataset.ann){show({t:"annp",id:b.dataset.ann});return}
   if(b.dataset.ref){deepOpen=false;show({t:"ref",id:b.dataset.ref});return}
   if(b.dataset.cat){browseCat=b.dataset.cat;var sx=$(".cats").scrollLeft;renderBrowse();var cs=$(".cats");cs.scrollLeft=sx;var on=cs.querySelector('[aria-pressed="true"]');if(on)on.scrollIntoView({inline:"nearest",block:"nearest"});return}
@@ -1541,7 +1598,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="favfold-1";   // bump on each release so phones fetch fresh data files
+var BUILD="redesign-1";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 // if a newer release is out, reload once so nobody sits on a cached copy

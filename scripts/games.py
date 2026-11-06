@@ -163,7 +163,30 @@ def main(hourly=False, week=None, out_path=OUT):
     if not games:
         print("games: feed returned no games, keeping the old file"); return
     games.sort(key=lambda g: g["kickoff"])
-    json.dump({"updated": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "week": wk, "games": games}, open(out_path, "w"), separators=(",", ":"), ensure_ascii=False)
+    out = {"updated": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "week": wk, "games": games}
+    # next week's schedule (kickoff, TV, records): fetched by the daily run, carried over by hourly runs
+    nxt = oldfile.get("next") if hourly else None
+    if not hourly and wk and not week:
+        try:
+            nd = get(API + f"scoreboard?seasontype={stype}&week={wk + 1}")
+            ng = []
+            for e in nd.get("events") or []:
+                comp = (e.get("competitions") or [{}])[0]
+                home = away = None
+                for c in comp.get("competitors") or []:
+                    if c.get("homeAway") == "home": home = side(c)
+                    else: away = side(c)
+                if not home or not away: continue
+                home["score"] = away["score"] = ""
+                venue = comp.get("venue") or {}; addr = venue.get("address") or {}
+                ng.append({"id": str(e.get("id")), "kickoff": when(e["date"]).strftime("%Y-%m-%dT%H:%M:%SZ"), "home": home, "away": away, "tv": tv(comp),
+                           "venue": venue.get("fullName") or "", "city": ", ".join(x for x in [addr.get("city"), addr.get("state") or addr.get("country")] if x),
+                           "state": "pre", "status": ""})
+            if ng: nxt = {"week": wk + 1, "games": sorted(ng, key=lambda g: g["kickoff"])}
+        except Exception as ex: print("games: next week skipped,", ex)
+    if nxt and nxt.get("week") == (wk or 0) + 1: out["next"] = nxt
+    json.dump(out, open(out_path, "w"), separators=(",", ":"), ensure_ascii=False)
+    if nxt: print("games: next week", nxt.get("week"), "-", len(nxt.get("games") or []), "games")
     print("games: week", wk, "-", len(games), "games,", sum(1 for g in games if "inj" in g), "with injury reports,", sum(1 for g in games if "box" in g), "with box scores")
 
 if __name__ == "__main__":

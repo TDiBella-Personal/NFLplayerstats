@@ -74,3 +74,8 @@ Open the app URL in Safari > Share > **Add to Home Screen**. Do it on both phone
 ## Navigation
 - A left bar is always on screen: slim icons on phones and iPad portrait, the full menu with sub-sections on wider screens. Jumping from it keeps your place, so Back returns to the screen you left.
 - Releases: bump `BUILD` in index.html and set the same value in `version.json`. Open copies of the app check `version.json` on launch and reload once if they're behind.
+
+## Home, Players, Ask (Nov 2026 redesign)
+- Home is games only: Underway, the rest of this week, Final scores (folded), and Next week. `scripts/games.py` adds next week's schedule to `data/games.json` as `next` on the daily run.
+- Players (left bar): player search, favorites by position, and all 32 teams.
+- Ask (left bar): any NFL question, researched by the worker's `/ask`, with sources. Needs the current `worker/worker.js` deployed.

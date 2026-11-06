@@ -6,7 +6,7 @@
 // GET  /theme           -> {team:"IND"}   PUT /theme <- same ("" = no team)
 // GET  /story/:id       -> {bullets:[...], hometown:"..."} or 404
 // POST /story/:id       <- {name, team, pos, college, drafted}  researches, saves, returns the story
-// POST /ask             <- {q}  answers a rules/terms question, saves it, returns {q, title, cat, short, deep}
+// POST /ask             <- {q}  answers any NFL question (researched), saves it, returns {q, title, cat, short, deep, src}
 // GET  /ask/:key        -> saved answer or 404
 // GET  /game/:id        -> {bullets:[...], at} or 404   POST /game/:id <- {away, home, when, refresh}
 // GET  /asks            -> recent questions [{q, key, title, short, at}]
@@ -144,7 +144,7 @@ async function callClaude(prompt, env, maxUses) {
     },
     body: JSON.stringify({
       model: env.MODEL || DEFAULT_MODEL,
-      max_tokens: 1500,
+      max_tokens: 2000,
       messages: [{ role: "user", content: prompt }],
       tools: [{ type: "web_search_20250305", name: "web_search", max_uses: maxUses }],
     }),
@@ -204,27 +204,29 @@ Respond with ONLY a JSON object, no markdown fences, no preamble:
 }
 
 async function answer(q, env) {
-  const year = new Date().getUTCFullYear();
-  const prompt = `Two people are watching an NFL game on TV and one of them just asked: "${q}"
+  const today = new Date().toISOString().slice(0, 10);
+  const prompt = `Today is ${today}. Two people watching NFL football asked: "${q}"
 
-Answer it for them. One is a newer fan, the other is learning schemes.
+Answer it for them. One is a newer fan, the other knows the game well. It can be about anything NFL: stats, records, history, players, teams, coaches, strategy, schemes, rules, the schedule, or the league itself.
 
 Rules:
-- If the question is about an NFL rule, penalty, clock, replay, kickoff, overtime or anything that could have changed recently, use web search to confirm the CURRENT ${year} NFL rule before answering. Do not rely on memory for rules.
-- If it's announcer slang or a scheme term, explain what announcers mean by it. Search if you're not sure.
-- If it isn't about football, say so in the short answer and leave deep empty.
-- Plain English. No em dashes. No hype. Don't mention sources or searching in the text.
+- Use web search for anything that could have changed or that needs exact numbers: current stats, standings, records, injuries, rosters, recent results, current rules. Do not rely on memory for those.
+- Only state facts you found or are certain of. If sources disagree or you can't confirm something, say so plainly.
+- If the question isn't about football, say in the short answer that you only handle football questions, and leave deep and sources empty.
+- No betting picks or odds. Plain English. No em dashes. No hype. Don't mention searching in the text.
 
 Respond with ONLY a JSON object, no markdown fences, no preamble:
-{"title":"2-5 word name of the thing","cat":"penalty|rule|offense|defense|position|lingo|other","short":"ONE sentence, max 30 words, the answer a newer fan gets","deep":["3 to 5 bullets for the scheme nerd, each max 35 words: details, variants, why it matters, how it plays out"]}`;
-  const out = await callClaude(prompt, env, 4);
+{"title":"2-6 word name of the topic","cat":"penalty|rule|offense|defense|position|lingo|other","short":"ONE or two sentences, max 45 words, the direct answer","deep":["2 to 5 bullets, each max 35 words: the numbers, context, how it compares, why it matters"],"sources":[{"t":"page or outlet name","u":"https://..."}]}`;
+  const out = await callClaude(prompt, env, 5);
   return {
     ok: !!clean(out.short),
     q,
     title: clean(out.title).slice(0, 60) || q,
     cat: ["penalty", "rule", "offense", "defense", "position", "lingo", "other"].includes(out.cat) ? out.cat : "other",
-    short: clean(out.short).slice(0, 300) || "Couldn't get a clean answer on that one. Try rewording it.",
+    short: clean(out.short).slice(0, 400) || "Couldn't get a clean answer on that one. Try rewording it.",
     deep: (Array.isArray(out.deep) ? out.deep : []).slice(0, 5).map(s => clean(s).slice(0, 260)),
+    src: (Array.isArray(out.sources) ? out.sources : []).filter(x => x && /^https:\/\//.test(String(x.u || ""))).slice(0, 3)
+      .map(x => ({ t: clean(x.t).slice(0, 60), u: String(x.u).slice(0, 400) })),
     at: new Date().toISOString(),
   };
 }
