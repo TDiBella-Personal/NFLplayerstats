@@ -8,6 +8,9 @@ on:
       boxtest_week:
         description: "Test only: build box scores for this week number (written to /tmp, not published)"
         required: false
+      check_worker:
+        description: "One-off: record which worker endpoints respond"
+        required: false
       wiki_legends:
         description: "One-off: fetch Wikipedia infoboxes for scripts/legends_wishlist.txt"
         required: false
@@ -22,7 +25,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Full pull
-        if: github.event.schedule != '20 * * * *' && github.event.inputs.wiki_legends == ''
+        if: github.event.schedule != '20 * * * *' && github.event.inputs.wiki_legends == '' && github.event.inputs.check_worker == ''
         run: python scripts/pull.py
       - name: Colts game-day refresh
         if: github.event.schedule == '20 * * * *'
@@ -35,6 +38,13 @@ jobs:
       - name: Fetch legend infoboxes
         if: github.event.inputs.wiki_legends != ''
         run: python scripts/fetch_legends_wiki.py
+      - name: Check worker
+        if: github.event.inputs.check_worker != ''
+        run: |
+          W=https://our-guys.tdibella1.workers.dev
+          O="Origin: https://tdibella-personal.github.io"
+          { for p in theme game/1 asks; do echo "== /$p"; curl -s -m 20 -H "$O" -w " [%{http_code}]" "$W/$p" | cut -c1-300; echo; done
+            echo "== /ask POST (non-football test)"; curl -s -m 90 -H "$O" -H "Content-Type: application/json" -X POST -d '{"q":"best chili recipe for game day"}' -w " [%{http_code}]" "$W/ask" | cut -c1-600; echo; } > data/_workercheck.txt
       - name: Commit data
         run: |
           git config user.name "our-guys-bot"
