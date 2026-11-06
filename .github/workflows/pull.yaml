@@ -43,8 +43,8 @@ jobs:
         run: |
           W=https://our-guys.tdibella1.workers.dev
           O="Origin: https://tdibella-personal.github.io"
-          { for p in theme game/1 asks; do echo "== /$p"; curl -s -m 20 -H "$O" -w " [%{http_code}]" "$W/$p" | cut -c1-300; echo; done
-            echo "== /ask POST (non-football test)"; curl -s -m 90 -H "$O" -H "Content-Type: application/json" -X POST -d '{"q":"best chili recipe for game day"}' -w " [%{http_code}]" "$W/ask" | cut -c1-600; echo; } > data/_workercheck.txt
+          { for p in theme news; do echo "== /$p"; curl -s -m 20 -H "$O" -w " [%{http_code}]" "$W/$p" | cut -c1-300; echo; done
+            echo "== /ask POST"; curl -s -m 120 -H "$O" -H "Content-Type: application/json" -X POST -d '{"q":"Who leads the NFL in rushing yards this season?"}' -w " [%{http_code}]" "$W/ask" | cut -c1-600; echo; } > data/_workercheck.txt
       - name: Commit data
         run: |
           git config user.name "our-guys-bot"
