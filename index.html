@@ -458,6 +458,8 @@ body.home .dock .askbtn{padding:11px 16px;font-size:16px}
 /* tappable position on player cards */
 .posb{font:inherit;color:inherit;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);border-radius:7px;padding:1px 8px;line-height:1.5;display:inline-flex;align-items:center;gap:5px}
 .posb::after{content:"";width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);opacity:.75}
+
+.linkbtn{font:inherit;color:var(--muted);text-decoration:underline;padding:0 0 0 6px}
 </style>
 </head>
 <body class="home">
@@ -620,7 +622,8 @@ function searchPlayers(q,list){
   var terms=norm(q).split(" ").filter(Boolean);if(!terms.length)return [];
   function score(p){var ln=p.name.split(" ").pop().toLowerCase(),hit=terms.some(function(t){return ln.indexOf(t)===0})?1000:0,s;
     if(p.ret){s=p.car||{};return hit+(p.x===2?400:0)+g(s,"gp")+g(s,"passing_yards")/60+g(s,"rushing_yards")/25+g(s,"receiving_yards")/25+g(s,"def_sacks")*4+g(s,"def_interceptions")*6+g(s,"tackles")/8+g(s,"fg_made")/2}
-    s=S[p.id]||{};return hit+g(s,"fantasy_points")+g(s,"tackles")*2+g(s,"def_sacks")*10+g(s,"def_pass_defended")*5+g(s,"gp")*3}
+    s=S[p.id]||{};if(!g(s,"gp"))return hit-500;   // no snaps this season: below retired stars with the same name
+    return hit+g(s,"fantasy_points")+g(s,"tackles")*2+g(s,"def_sacks")*10+g(s,"def_pass_defended")*5+g(s,"gp")*3}
   var r=(list||P).filter(function(p){return terms.every(function(t){return POSQ[t]?p.pos.toLowerCase()===t:p._k.indexOf(t)>=0})});
   r.forEach(function(p){p._s=score(p)});
   return r.sort(function(a,b){return b._s-a._s||a.name.localeCompare(b.name)});
@@ -684,7 +687,7 @@ function renderList(){
     var askHTML=WORKER&&q.length>=3?'<button class="askrow'+(rf.length?'':' big')+'" data-ask="'+esc(q)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask about “'+esc(q)+'”</b><small>'+(rf.length?'Not what you meant? Get a researched answer.':'Get a researched answer.')+'</small></span></button>':'';
     var total=pl.length+rf.length+an.length+tm.length;
     // a retired star whose last name matches beats active players who only match on team or college
-    var sp=STARS?searchPlayers(q,STARS):[],retFirst=sp.length&&sp[0]._s>=1000&&norm(sp[0].name).indexOf(norm(q))>=0&&!(pl.length&&pl[0]._s>=1000)&&!searchTeams(q).length;
+    var sp=STARS?searchPlayers(q,STARS):[],retFirst=sp.length&&sp[0]._s>=1000&&!(pl.length&&pl[0]._s>=1000)&&!searchTeams(q).length;
     if(isQuestion(q))box.innerHTML=askHTML.replace('class="askrow','class="askrow top')+(retFirst?retBlock(q):"")+(groups.map(function(x){return x[1]}).join(""))+(retFirst?"":retBlock(q));
     else box.innerHTML=(retFirst?retBlock(q):"")+(groups.map(function(x){return x[1]}).join("")||(total?'':'<ul class="rows"><li class="empty"><strong>Nothing by that name.</strong>Try a last name, a team, a position, or what the announcer said.</li></ul>'))+
       (retFirst?"":retBlock(q))+
@@ -991,7 +994,7 @@ function answerHTML(a){
   var hit=searchRef(a.title||a.q).filter(function(x){return x[0]>=500}).slice(0,3).map(function(x){return x[1]});
   if(hit.length)h+='<div style="margin-top:18px"><div class="grp"><span>In the rulebook</span></div><div class="chips">'+hit.map(function(r){return '<button class="chip" data-ref="'+r.id+'">'+esc(r.name)+'</button>'}).join("")+'</div></div>';
   if(a.src&&a.src.length)h+='<div style="margin-top:16px"><div class="grp"><span>Sources</span></div><ul class="srcs">'+a.src.map(function(x){return '<li><a href="'+esc(x.u)+'" target="_blank" rel="noopener">'+esc(x.t||x.u)+' &#8250;</a></li>'}).join("")+'</ul></div>';
-  return h+'<p class="note">Researched answer, saved for both of you.</p></section>';
+  return h+'<p class="note">Researched answer, saved for both of you. <button class="linkbtn" data-act="askdel" data-key="'+esc(a.key||"")+'">Remove from history</button></p></section>';
 }
 function renderAsk(v){
   var h='<div class="wrap" style="--ac:#6FA8FF"><header class="phdr"><div class="bar">'+BACK+'</div><h2>Ask</h2></header>';
@@ -1007,6 +1010,15 @@ function renderAsk(v){
   $("#card").innerHTML=h+'</div>';
   $("#askf").addEventListener("submit",function(ev){ev.preventDefault();var q=$("#askq").value.trim();if(q)doAsk(q)});
 }
+function askDelete(b){
+  if(!b.dataset.sure){b.dataset.sure="1";b.textContent="Tap again to remove it for both of you";return}
+  var k=b.dataset.key;b.textContent="Removing";
+  api("/ask/"+k,{method:"DELETE"}).then(function(){
+    asks=asks.filter(function(a){return a.key!==k});save("og_asks",asks);delete askCache[k];save("og_askcache",askCache);
+    var v=cur();if(v&&v.t==="ask"){v.ans=null;v.state="";v.q="";render()}
+  }).catch(function(e){b.textContent=/404|not found/i.test(e.message)?"The backend needs its update first":"Could not remove it"});
+}
+document.addEventListener("click",function(e){var b=e.target.closest('[data-act="askdel"]');if(b){e.stopPropagation();askDelete(b)}},true);
 function doAsk(q){
   var v=cur();if(!v||v.t!=="ask")return;
   v.q=q;v.state="working";v.ans=null;renderAsk(v);$("#askq").blur();
@@ -1296,7 +1308,10 @@ function renderToday(){
       return '<div class="dayh">'+(d===today?'<b>Today</b>':'')+'<span>'+k.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})+'</span></div><ul class="gms">'+by[d].map(gameRow).join("")+'</ul>'}).join("")}
   function head(k,label,right){return '<div class="listhead" style="margin-top:16px"><h2>'+collBtn(k,label)+'</h2><span>'+right+'</span></div>'}
   var h='';
-  if(live.length)h+='<div class="listhead" style="margin-top:16px"><h2><span class="livedot" aria-hidden="true"></span>Underway</h2><span>'+live.length+' game'+(live.length>1?'s':'')+'</span></div><ul class="gms">'+live.map(gameRow).join("")+'</ul><p class="note" style="margin:6px 2px 0">No live scores. Finals show up within about an hour of the end.</p>';
+  if(live.length>3){var lo=!!COLL.liveOpen;
+    h+='<button class="fpos" data-live aria-expanded="'+lo+'" style="margin-top:16px"><b><span class="livedot" aria-hidden="true"></span>'+live.length+' games underway</b><span></span>'+(lo?'':'<small>'+esc(live.map(function(g){return g.away.abbr+' at '+g.home.abbr}).join(" · "))+'</small>')+'</button>'+
+      (lo?'<ul class="gms" style="margin-top:8px">'+live.map(gameRow).join("")+'</ul><p class="note" style="margin:6px 2px 0">No live scores. Finals show up within about an hour of the end.</p>':'')}
+  else if(live.length)h+='<div class="listhead" style="margin-top:16px"><h2><span class="livedot" aria-hidden="true"></span>Underway</h2><span>'+live.length+' game'+(live.length>1?'s':'')+'</span></div><ul class="gms">'+live.map(gameRow).join("")+'</ul><p class="note" style="margin:6px 2px 0">No live scores. Finals show up within about an hour of the end.</p>';
   h+=head("week","This week",(GAMES.week?'Week '+GAMES.week+', ':'')+(up.length?up.length+' to play':'all played'));
   if(!COLL.week)h+=up.length?byDay(up):'<p class="thin">Every game this week has kicked off.</p>';
   if(fin.length){var open=!!COLL.finOpen;
@@ -1306,6 +1321,7 @@ function renderToday(){
   if(nx.length){h+=head("next","Next week",'Week '+GAMES.next.week+', '+nx.length+' games');if(!COLL.next)h+=byDay(nx)}
   box.innerHTML=h;
 }
+document.addEventListener("click",function(e){if(e.target.closest("[data-live]")){COLL.liveOpen=!COLL.liveOpen;save("og_coll",COLL);renderToday()}});
 document.addEventListener("click",function(e){if(e.target.closest("[data-finals]")){COLL.finOpen=!COLL.finOpen;save("og_coll",COLL);renderToday()}});
 function keyPlayers(abbr){
   var pl=P.filter(function(p){return p.team===abbr&&S[p.id]});
@@ -1630,7 +1646,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="qa-1";   // bump on each release so phones fetch fresh data files
+var BUILD="qa-2";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 // if a newer release is out, reload once so nobody sits on a cached copy

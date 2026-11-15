@@ -9,6 +9,7 @@
 // POST /ask             <- {q}  answers any NFL question (researched), saves it, returns {q, title, cat, short, deep, src}
 // GET  /ask/:key        -> saved answer or 404
 // GET  /game/:id        -> {bullets:[...], at} or 404   POST /game/:id <- {away, home, when, refresh}
+// DELETE /ask/:key      -> removes a saved answer from the shared history
 // GET  /asks            -> recent questions [{q, key, title, short, at}]
 
 const DEFAULT_MODEL = "claude-sonnet-5-5";
@@ -21,7 +22,7 @@ export default {
     const ok = allowed.length === 0 || allowed.includes(origin) || origin.startsWith("http://localhost");
     const cors = {
       "Access-Control-Allow-Origin": ok ? origin || "*" : "null",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,OPTIONS",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
       "Content-Type": "application/json",
     };
@@ -91,6 +92,12 @@ export default {
         return json((await env.OG.get("asks:recent", "json")) || []);
       }
       const a = url.pathname.match(/^\/ask\/([\w-]+)$/);
+      if (a && req.method === "DELETE") {
+        await env.OG.delete("ask:" + a[1]);
+        const recent = ((await env.OG.get("asks:recent", "json")) || []).filter(r => r.key !== a[1]);
+        await env.OG.put("asks:recent", JSON.stringify(recent));
+        return json({ removed: a[1] });
+      }
       if (a && req.method === "GET") {
         const s = await env.OG.get("ask:" + a[1], "json");
         return s ? json(s) : json({ error: "not asked yet" }, 404);
