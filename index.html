@@ -681,10 +681,10 @@ function renderList(){
     ].filter(function(x){return x[1]}).sort(function(a,b){return b[0]-a[0]});
     $("#lh").parentNode.style.display="";$("#lh").textContent="Results";$("#lc").textContent="";
     var past=asks.filter(function(a){return norm(a.q).indexOf(norm(q))>=0||norm(a.title).indexOf(norm(q))>=0}).slice(0,3);
-    var askHTML=WORKER&&q.length>=3?'<button class="askrow'+(rf.length?'':' big')+'" data-ask="'+esc(q)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask about “'+esc(q)+'”</b><small>'+(rf.length?'Not what you meant? Get a researched answer.':'Not in the rulebook. Get a researched answer.')+'</small></span></button>':'';
+    var askHTML=WORKER&&q.length>=3?'<button class="askrow'+(rf.length?'':' big')+'" data-ask="'+esc(q)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6FA8FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></svg><span><b>Ask about “'+esc(q)+'”</b><small>'+(rf.length?'Not what you meant? Get a researched answer.':'Get a researched answer.')+'</small></span></button>':'';
     var total=pl.length+rf.length+an.length+tm.length;
     // a retired star whose last name matches beats active players who only match on team or college
-    var sp=STARS?searchPlayers(q,STARS):[],retFirst=sp.length&&sp[0]._s>=1000&&!(pl.length&&pl[0]._s>=1000);
+    var sp=STARS?searchPlayers(q,STARS):[],retFirst=sp.length&&sp[0]._s>=1000&&norm(sp[0].name).indexOf(norm(q))>=0&&!(pl.length&&pl[0]._s>=1000)&&!searchTeams(q).length;
     if(isQuestion(q))box.innerHTML=askHTML.replace('class="askrow','class="askrow top')+(retFirst?retBlock(q):"")+(groups.map(function(x){return x[1]}).join(""))+(retFirst?"":retBlock(q));
     else box.innerHTML=(retFirst?retBlock(q):"")+(groups.map(function(x){return x[1]}).join("")||(total?'':'<ul class="rows"><li class="empty"><strong>Nothing by that name.</strong>Try a last name, a team, a position, or what the announcer said.</li></ul>'))+
       (retFirst?"":retBlock(q))+
@@ -1279,7 +1279,7 @@ function gameRow(g){
   var k=new Date(g.kickoff),fin=isFinal(g),aw=fin&&+g.away.score>+g.home.score,hw=fin&&+g.home.score>+g.away.score;
   return '<li><button class="gm'+(isColts(g)?' colts':'')+'" data-game="'+g.id+'"><span class="mt">'+logo(g.away.abbr)+esc(team(g.away.abbr).n)+' <em>at</em> '+logo(g.home.abbr)+esc(team(g.home.abbr).n)+'</span>'+
     '<span class="wh">'+(fin?(aw?'<b>':'')+esc(g.away.score)+(aw?'</b>':'')+'-'+(hw?'<b>':'')+esc(g.home.score)+(hw?'</b>':'')+'<small>Final</small>':
-      (g.state==="in"||g.state==="post"?'Underway':k.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}))+'<small>'+esc(g.tv||"")+'</small>')+'</span></button></li>';
+      (g.state==="in"||g.state==="post"||(!fin&&k<=Date.now())?'Underway':k.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}))+'<small>'+esc(g.tv||"")+'</small>')+'</span></button></li>';
 }
 function collBtn(k,label){return '<button class="coll" data-coll="'+k+'" aria-expanded="'+!COLL[k]+'">'+label+'</button>'}
 document.addEventListener("click",function(e){var b=e.target.closest("[data-coll]");if(!b)return;COLL[b.dataset.coll]=!COLL[b.dataset.coll];save("og_coll",COLL);
@@ -1630,7 +1630,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&stack.lengt
 renderNav();
 THEME=load("og_theme","IND");applyTheme();
 favs=load("og_favs",[]);stories=load("og_stories",{});asks=load("og_asks",[]);askCache=load("og_askcache",{});
-var BUILD="posbtn-1";   // bump on each release so phones fetch fresh data files
+var BUILD="qa-1";   // bump on each release so phones fetch fresh data files
 var bust="?v="+BUILD+"-"+Math.floor(Date.now()/3600000);
 function getJSON(u){return fetch(u+bust).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 // if a newer release is out, reload once so nobody sits on a cached copy
