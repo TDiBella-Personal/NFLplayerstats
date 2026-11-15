@@ -166,7 +166,7 @@ def main():
         if p["draft_year"]:
             drafted = f"{p['draft_year']}, round {p['draft_round']}, pick {p['draft_pick']}"
         out_players.append({
-            "id": p["gsis_id"], "name": p["display_name"], "pos": pos_of(p), "team": p["latest_team"],
+            "id": p["gsis_id"], "name": p["display_name"], "pos": pos_of(p), "rp": p.get("position") or "", "team": p["latest_team"],
             "num": p["jersey_number"], "headshot": p["headshot"], "college": p["college_name"],
             "age": age, "drafted": drafted, **hw(p),
             "past": runs(hist.get(p["gsis_id"], {})) or [[p["latest_team"], str(season)]],
